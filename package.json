@@ -1,0 +1,26 @@
+{
+  "name": "capstone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "build:dev": "npm run build -- --watch --mode=development",
+    "start:dev": "nodemon server.js --ignore dist/ --ignore src/ & npm run build:dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "pg": "^8.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
