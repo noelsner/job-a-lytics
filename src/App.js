@@ -3,7 +3,7 @@ import fetchJobs from './api.js';
 import Jobs from './Jobs.js';
 
 const App = ()=> {
-  const [jobs, setJobs] = useState({});
+  const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
     console.log("In useEffect");
@@ -11,6 +11,8 @@ const App = ()=> {
   }, []);
 
   console.log("In job_listings App")
+  return( <h1> Hello </h1>);
+  /*
   return (
     <div className="App">
       <header>
@@ -18,7 +20,7 @@ const App = ()=> {
       </header>
       <Jobs jobs={jobs}/>
     </div>
-  );
+  );*/
 }
 
 export default App;

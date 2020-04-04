@@ -49,12 +49,6 @@ const read_job_listings = async() => {
   return( await client.query('SELECT * from job_listings')).rows;
 };
 
-sync()
-  .then(() => {
-    console.log("job_listings table has been created.");
-  })
-  .catch(console.error);
-
 module.exports = {
     sync,
     create_job_listing,
