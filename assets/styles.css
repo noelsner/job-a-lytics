@@ -21,13 +21,6 @@ form > * {
   display: flex;
 }
 
-.horizontal > * {
-  flex: 1;
-  margin: 1rem;
-  border: solid 1px dodgerBlue;
-  padding: 1rem;
-}
-
 ul {
   padding: 0;
 }
@@ -38,17 +31,8 @@ li {
   flex-direction: column;
 }
 
-div > ul > li {
-  border-bottom: solid 1px teal;
-}
-
 li > * {
   margin-bottom: 0.5rem;
-}
-
-.quantity {
-  color: teal;
-  font-weight: bold;
 }
 
 
