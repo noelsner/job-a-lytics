@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Route } from 'react-router-dom';
 import fetchJobs from './api.js';
 import Jobs from './Jobs.js';
-import Navbar from './navbar/Navbar';
+import Navbar from './navbar';
 import SearchBar from './SearchBar';
 import SavedJobs from './SavedJobs.js';
 
