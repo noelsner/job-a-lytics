@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const db = require('./db');
+const db = require('./data_layer/db');
+const { createListing, readListings } = require("./data_layer/index.js");
 
 // body parser
 app.use(express.json());
@@ -17,14 +18,17 @@ app.get('/', (req, res, next)=> {
 // Database Creation Routes
 app.post('/api/job_listings', async(req, res, next)=> {
   const company_name = req.body;
-  db.create_job_listing(company_name)
+  console.log("In server.js, app.post")
+  console.log(req.body);
+  console.log(req.params);
+  createListing(company_name)
   .then( response => res.send(response) )
   .catch( next )
 });
 
 //Database Read Routes
 app.get('/api/job_listings', async(req, res, next)=> {
-  db.read_job_listings()
+  readListings()
   .then( response => res.send(response) )
   .catch( next )
 });
@@ -49,7 +53,6 @@ const port = process.env.PORT || 3000;
 
 db.sync()
   .then(()=> {
-    app.listen(port, ()=> {
-    console.log(`listening on port ${port}`)
-  });
-});
+    app.listen(port, ()=> { console.log(`listening on port ${port}`) } )
+  })
+  .catch(console.error);
