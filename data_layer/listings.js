@@ -9,15 +9,25 @@ const createListing = async({ listing_date, listing_url, company_name, location,
 
 const readListings = async() => {
   console.log("In read_job_listings");
-  return( await client.query('SELECT * from job_listings')).rows;
+  response = await client.query('SELECT * from job_listings');
+  console.log(response.rows);
+  return response.rows;
 };
 
-const updateListing = async()=> {
-  console.log("In updateListing");
-};
+const updateListing = async(listing)=> {
+  console.log("In updateListing, listing = ", listing);
 
-const deleteListing = async()=> {
-  console.log("In deleteListing");
+  const SQL = 'UPDATE job_listings SET listing_date = $1, listing_url = $2, company_name = $3, location = $4, job_title = $5, job_type = $6, contact = $7, company_url = $8, annual_salary = $9, job_description = $10 WHERE id = $11 returning *';
+
+  const response = await client.query(SQL, [ listing.listing_date, listing.listing_url, listing.company_name, listing.location, listing.job_title, listing.job_type, listing.contact, listing.company_url, listing.annual_salary, listing.job_description ]);
+
+  return response.rows[0];
+}
+
+const deleteListing = async(id)=> {
+  console.log("In deleteListing, id = ", id);
+  const SQL = 'DELETE FROM job_listings WHERE id = $1';
+  return (await client.query(SQL, [id])).rows;
 };
 
 module.exports = {

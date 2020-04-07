@@ -69,7 +69,8 @@ const sync = async() => {
                               location: "New York City",
                               job_title: "software developer",
                               job_type: "FULL-TIME",
-                              contact: "Eric P. Katz" })
+                              contact: "Eric P. Katz",
+                            job_description: "Recommend delicious recipes while coding flawlessly." })
     ]);
 } //end sync
 
