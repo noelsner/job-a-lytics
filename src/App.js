@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import { Route } from 'react-router-dom';
-import fetchJobs from './api.js';
+import fetchJobs from './fetchJobs.js';
 import Navbar from './navbar';
 import SearchBar from './SearchBar';
 import Jobs from './jobs';
 import Sidebar from './jobs/Sidebar.js';
 import Details from './jobs/Details'
 import SavedJobs from './SavedJobs.js';
+const API = require('../api');
+
+console.log(API.gitHub.get());
 
 const fakeAPIResponse =
   {  
