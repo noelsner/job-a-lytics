@@ -65,13 +65,10 @@ app.post("/api/users", async (req, res, next) => {
   console.log("In app.post ",req.body)
   try {
     const user = await createUser({ ...req.body });
-    /*
     const token = jwt.encode({ id: user.id }, process.env.JWT);
     delete user.password;
     //need the delete for security purposes
     res.send({ user, token });
-    */
-    res.send({ user });
   } catch (error) {
     next(error);
   }
