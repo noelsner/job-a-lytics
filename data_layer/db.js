@@ -1,5 +1,6 @@
 const { client } = require("./client");
 const { createListing } = require("./index");
+const { createUser } = require("./users");
 
 const sync = async() => {
 
@@ -21,7 +22,7 @@ const sync = async() => {
       username VARCHAR(100) NOT NULL UNIQUE,
       "firstName" VARCHAR(100) NOT NULL,
       "lastName" VARCHAR(100) NOT NULL,
-      password VARCHAR(100) NOT NULL,
+      password VARCHAR(100),
       CHECK (char_length(username) > 0),
       CHECK (char_length("firstName") > 0),
       role_id UUID REFERENCES roles(id)
@@ -54,16 +55,8 @@ const sync = async() => {
     await client.query(SQL);
 
     // Seed data
-    //Job types are FULL-TIME, PART-TIME, CONTRACT, TEMPORARY, INTERNSHIP
-    const _job = {
-      company_name: "Fullstack",
-      location: "New York City",
-      job_title: "software developer",
-      job_type: "FULL-TIME",
-      contact: "Eric P. Katz",
-      job_description:"Recommend delicious recipes while coding flawlessly."
-    }
 
+    //Job types are FULL-TIME, PART-TIME, CONTRACT, TEMPORARY, INTERNSHIP
     const[ Fullstack ] = await Promise.all([
       createListing({company_name: 'Fullstack',
                               location: "New York City",
@@ -72,6 +65,13 @@ const sync = async() => {
                               contact: "Eric P. Katz",
                             job_description: "Recommend delicious recipes while coding flawlessly." })
     ]);
+
+    const[ jobSeeker ] = await Promise.all([
+      createUser({username: "jobSeeker",
+                    firstName: "Susan",
+                    lastName: "Johnson"})
+    ]);
+
 } //end sync
 
 module.exports = {
