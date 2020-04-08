@@ -19,7 +19,7 @@ const Jobs = ({ jobs }) => {
                 <div className='text-gray-500 text-lg font-bold'>{job.company}</div>
                 <div className='text-gray-500 text-lg'>{job.location}</div>
                 <div className='text-gray-600 text-md mt-4'>
-                  <span className='capitalize'>{'snippet data here'}</span>
+                  <span className='capitalize'>{job.description.slice(0,100)}</span>
                   <span>{/*results.snippet.slice(1, results.snippet.length)*/}</span>
                 </div>
               </div>
