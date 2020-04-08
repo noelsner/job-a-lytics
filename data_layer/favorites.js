@@ -20,7 +20,7 @@ const deleteFavorite = async()=> {
   console.log("In deleteFavorite");
 };
 
-const checkForListings = async (id) => {
+const checkForFavorites = async (id) => {
   const sql = 'SELECT * FROM favorite_listings WHERE user_id = $1';
   const data = client.query(sql, [id]);
   if ( data.length === 0 ) {
@@ -34,5 +34,5 @@ module.exports = {
   readFavorites,
   updateFavorite,
   deleteFavorite,
-  checkForListings
+  checkForFavorites
 }
