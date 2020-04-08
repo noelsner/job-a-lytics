@@ -7,9 +7,10 @@ import Jobs from './jobs';
 import Sidebar from './jobs/Sidebar.js';
 import Details from './jobs/Details'
 import SavedJobs from './SavedJobs.js';
+import axios from 'axios';
 const API = require('../api');
 
-console.log(API.gitHub.get('react'));
+
 
 const fakeAPIResponse =
   {  
@@ -56,6 +57,13 @@ const App = ()=> {
     console.log("In useEffect");
     fetchJobs().then((jobs) => setSavedJobs(jobs));
   }, []);
+
+  useEffect(()=>{
+    axios.get('/api/github')
+            .then(res => console.log(res))
+            .catch(ex => console.log(ex));
+    
+  },[])
 
   console.log("In job_listings App")
   return (

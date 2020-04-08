@@ -1,13 +1,17 @@
 const axios = require('axios')
-const url = 'https://jobs.github.com/positions.json'
+const url = 'placeholder'
 
-const get = (desc) =>{
-    //return '%c GitHub Axios function will run here';
+const get = () =>{
+    let data = [];
     console.log('%c *** GitHub Axios call initiated ***', 'color: green');
-    //axios.get(`https://jobs.github.com/positions.json?description=angular&page=1`)
-    //.then(res => console.log(res.data))
-    //.catch(ex => console.log(ex));
-
+    /*
+    axios.get(`/api/github`)
+    .then( response => { 
+    console.log('%c *** GitHub Axios call finished ***', 'color: red' )
+    console.log(response);
+    
+    });  
+    return data;*/
 };
     
-module.exports = {get}
+module.exports = { get };

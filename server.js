@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const axios = require('axios');
 const db = require('./data_layer/db');
 const { createListing, readListings, updateListing, deleteListing } = require("./data_layer/index.js");
 
@@ -15,7 +16,20 @@ app.get('/', (req, res, next)=> {
 
 });
 
+
+app.get('/api/github', (req, res, next) => { 
+
+  console.log("initiating Axios call to GitHub");
+  axios.get('https://jobs.github.com/positions.json?description=react&page=1')
+    .then( response => {
+      res.send(response.data);
+    })
+
+})
+// Database Creation Routes
+
 // Database job_listing Create Route
+
 app.post('/api/job_listings', async(req, res, next)=> {
   const company_name = req.body;
   console.log("In server.js, app.post")
