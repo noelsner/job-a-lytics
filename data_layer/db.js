@@ -69,7 +69,8 @@ const sync = async() => {
     const[ jobSeeker ] = await Promise.all([
       createUser({username: "jobSeeker",
                     firstName: "Susan",
-                    lastName: "Johnson"})
+                    lastName: "Johnson",
+                    password: "simple"})
     ]);
 
 } //end sync
