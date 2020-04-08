@@ -9,7 +9,7 @@ import Details from './jobs/Details'
 import SavedJobs from './SavedJobs.js';
 const API = require('../api');
 
-console.log(API.gitHub.get());
+console.log(API.gitHub.get('react'));
 
 const fakeAPIResponse =
   {  
