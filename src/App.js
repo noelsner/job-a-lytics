@@ -60,8 +60,10 @@ const App = ()=> {
 
   useEffect(()=>{
     axios.get('/api/github')
-            .then(res => console.log(res))
-            .catch(ex => console.log(ex));
+          .then(res => {
+            setJobs(res.data);
+          })
+          .catch(ex => console.log(ex));
     
   },[])
 
