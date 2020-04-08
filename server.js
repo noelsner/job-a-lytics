@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const axios = require('axios');
 const db = require('./data_layer/db');
-const { createListing, readListings } = require("./data_layer/index.js");
+const { createListing, readListings, updateListing, deleteListing } = require("./data_layer/index.js");
 
 // body parser
 app.use(express.json());
@@ -16,6 +16,7 @@ app.get('/', (req, res, next)=> {
 
 });
 
+
 app.get('/api/github', (req, res, next) => { 
 
   console.log("initiating Axios call to GitHub");
@@ -26,19 +27,36 @@ app.get('/api/github', (req, res, next) => {
 
 })
 // Database Creation Routes
+
+// Database job_listing Create Route
+
 app.post('/api/job_listings', async(req, res, next)=> {
   const company_name = req.body;
   console.log("In server.js, app.post")
   console.log(req.body);
   console.log(req.params);
-  createListing(company_name)
+  createListing(listing_date, listing_url, company_name, location, job_title, job_type, contact, company_url, annual_salary, job_description)
   .then( response => res.send(response) )
   .catch( next )
 });
 
-//Database Read Routes
+// Database job_listings Read Route
 app.get('/api/job_listings', async(req, res, next)=> {
   readListings()
+  .then( response => res.send(response) )
+  .catch( next )
+});
+
+// Database job_listings Update Route
+app.put('/api/job_listings/:id', async(req, res, next)=> {
+  updateListing({...req.body, id: req.params.id})
+  .then( response => res.send(response) )
+  .catch( next )
+});
+
+// Database job_listings Delete Route
+app.delete('/api/job_listings/:id', async(req, res, next)=> {
+  deleteListing( req.params.id )
   .then( response => res.send(response) )
   .catch( next )
 });
