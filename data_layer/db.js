@@ -11,12 +11,6 @@ const sync = async() => {
     DROP TABLE IF EXISTS users;
     DROP TABLE IF EXISTS roles;
 
-    CREATE TABLE roles(
-      id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      title VARCHAR(20) NOT NULL,
-      CHECK (char_length(title) > 0)
-    );
-
     CREATE TABLE users(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       username VARCHAR(100) NOT NULL UNIQUE,
@@ -25,7 +19,7 @@ const sync = async() => {
       password VARCHAR(100),
       CHECK (char_length(username) > 0),
       CHECK (char_length("firstName") > 0),
-      role_id UUID REFERENCES roles(id)
+      role VARCHAR(20) NOT NULL,
     );
 
     CREATE TABLE job_listings(
@@ -44,7 +38,7 @@ const sync = async() => {
       job_description TEXT
     );
 
-    CREATE TABLE favorite_listings(
+    CREATE TABLE favorites(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       date TIMESTAMP default CURRENT_TIMESTAMP,
       listing_id UUID REFERENCES job_listings(id),
@@ -59,7 +53,7 @@ const sync = async() => {
     //Job types are FULL-TIME, PART-TIME, CONTRACT, TEMPORARY, INTERNSHIP
     const[ Fullstack ] = await Promise.all([
       createListing({company_name: 'Fullstack',
-                              location: "New York City",
+                              location: "California",
                               job_title: "software developer",
                               job_type: "FULL-TIME",
                               contact: "Eric P. Katz",
@@ -73,6 +67,11 @@ const sync = async() => {
                     password: "simple"})
     ]);
 
+    const [ susanFavorite ] = await Promise.all([
+      createFavorite({ listing_id: Fullstack.id, user_id: jobSeeker.id })
+    ]);
+
+    return { susanFavorite }
 } //end sync
 
 module.exports = {
