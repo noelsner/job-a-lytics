@@ -17,14 +17,14 @@ const isLoggedIn = (req, res, next) => {
   }
   next();
 };
-/*
+
 const isAdmin = (req, res, next) => {
   if (req.user.role !== "ADMIN") {
     return next(Error("not authorized"));
   }
   next();
 };
-*/
+
 app.use((req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
