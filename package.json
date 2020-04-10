@@ -8,7 +8,7 @@
     "build": "webpack",
     "build:css": "postcss tailwind.css -o assets/tailwind2.css",
     "build:dev": "npm run build -- --watch --mode=development",
-    "start:dev": "nodemon server.js --ignore dist/ --ignore src/ & npm run build:dev & npm run build:css"
+    "start:dev": "npm run build:css & npm run build:dev & nodemon server.js --ignore dist/ --ignore src/"
   },
   "keywords": [],
   "author": "",

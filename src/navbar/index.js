@@ -48,8 +48,10 @@ const Navbar = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <div 
-             className="ml-3 relative">
+            <div className="ml-3 relative">
+              <button onClick={ev => history.push('/account/login')} className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-pink-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Sign In</button>
+            </div>
+            <div className="ml-3 relative">
               <div>
                 <button onClick={() => setOpenUserDropdown(!openUserDropdown)} className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-400 transition duration-150 ease-in-out p-2">
                   <UserPlaceholder classes={'fill-current text-gray-400 h-6 w-6'} />
