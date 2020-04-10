@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 
-const SavedJobs = (user_id) => {
+const SavedJobs = ({user_id}) => {
   console.log("In SavedJobs, user_id = ", user_id);
   //TODO: pass user_id into axios call
   try {
-    const response = await axios.get(`/api/favorites`);
+    const response = axios.get(`/api/favorites`);
     console.log(response.data);
     return response.data;
   } catch(error){

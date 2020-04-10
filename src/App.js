@@ -8,6 +8,8 @@ import Sidebar from './jobs/Sidebar.js';
 import Details from './jobs/Details'
 import SavedJobs from './SavedJobs.js';
 import seedJobData from './seedJobData';
+import CreateAccount from './account/CreateAccount';
+import Login from './account/Login';
 
 console.log(seedJobData);
 const App = ()=> {
@@ -18,6 +20,9 @@ const App = ()=> {
     console.log("In useEffect");
     fetchJobs().then((jobs) => setSavedJobs(jobs));
   }, []);
+
+  const createAccount = () => console.log('create account');
+  const login = () => console.log('login');
 
   console.log("In job_listings App")
   return (
@@ -37,8 +42,14 @@ const App = ()=> {
           </div>
         </div>
       </Route>
-      <Route path='jobs/saved' exact>
+      <Route path='/jobs/saved' exact>
         <SavedJobs />
+      </Route>
+      <Route path='/account/login' exact>
+        <Login login={login} />
+      </Route>
+      <Route path='/account/create' exact>
+        <CreateAccount createAccount={createAccount} />
       </Route>
     </div>
   );
