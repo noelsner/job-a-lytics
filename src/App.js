@@ -30,14 +30,14 @@ const App = ()=> {
       <Navbar />
       <Route path='/' exact>
         <SearchBar />
-        <div className='flex flex-row w-full h-screen px-6 mt-12'>
-          <div className='w-1/5'>
+        <div className='flex flex-col md:flex-row w-full h-screen px-6 mt-12'>
+          <div className='md:w-1/5'>
             <Sidebar jobs={jobs} />
           </div>
-          <div className='w-2/5'>
+          <div className='md:w-2/5'>
             <Jobs jobs={jobs} />
           </div>
-          <div className='w-2/5'>
+          <div className='hidden md:block md:w-2/5'>
             <Details jobs={jobs} />
           </div>
         </div>

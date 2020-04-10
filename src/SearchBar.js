@@ -10,7 +10,7 @@ const SearchBar = () => {
   };
 
   return (
-    <form className='my-6' onSubmit={onSubmit}>
+    <form className='my-6 mx-6 md:mx-0' onSubmit={onSubmit}>
       <div className='flex'>
         <div className='flex flex-col w-full md:flex-row'>
           <div className='flex-1 pl-3 md:pl-6 pr-3'>
