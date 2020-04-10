@@ -15,14 +15,7 @@ app.get('/', (req, res, next)=> {
 
 });
 
-<<<<<<< HEAD
-
 app.get('/api/github', (req, res, next) => { 
- 
-=======
-app.get('/api/github/description=:inputQuery&location=:inputLocation', (req, res, next) => { 
-  
->>>>>>> a72d42b1c4a8b4059377753b8b52504ce75ad525
   console.log("***** server.js Initiating Axios call to GitHub *****");
   console.log("Recieved parameters: ");
   console.log(req.query);
@@ -31,11 +24,11 @@ app.get('/api/github/description=:inputQuery&location=:inputLocation', (req, res
   axios.get(url)
     .then( response => {
       res.send(response);
-    })
+      })
     .catch( ex => {
       res.send(ex);
       next;
-  })
+      })
   
 })
 
