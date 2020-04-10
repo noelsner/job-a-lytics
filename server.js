@@ -17,19 +17,16 @@ app.get('/', (req, res, next)=> {
 });
 
 
-app.get('/api/github/description=:inputQuery&location=:inputLocation', (req, res, next) => { 
-  
+app.get('/api/github', (req, res, next) => { 
+ 
   console.log("***** server.js Initiating Axios call to GitHub *****");
   console.log("Recieved parameters: ");
-  console.log(req.params);
-  const { inputQuery, inputLocation } = req.params; 
-  console.log(inputQuery);
-  console.log(inputLocation);
-  
-  const url = `https://jobs.github.com/positions.json?description=${inputQuery}&location=${inputLocation}`;
+  console.log(req.query);
+  const {description, location} = req.query;
+  const url = `https://jobs.github.com/positions.json?description=${description}&location=${location}`;
   axios.get(url)
     .then( response => {
-      res.send(response.data);
+      res.send(response);
     })
     .catch( ex => {
       res.send(ex);
