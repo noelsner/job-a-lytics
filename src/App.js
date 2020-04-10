@@ -29,7 +29,7 @@ const App = ()=> {
     <div>
       <Navbar />
       <Route path='/' exact>
-        <SearchBar />
+        <SearchBar setJobs = {setJobs}/>
         <div className='flex flex-row w-full h-screen px-6 mt-12'>
           <div className='w-1/5'>
             <Sidebar jobs={jobs} />
