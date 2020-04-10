@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 
-const SearchBar = () => {
-  const [inputQuery, setInputQuery] = useState('');
-  const [inputLocation, setInputLocation] = useState('');
+const SearchBar = ({setJobs}) => {
+  const [inputQuery, setInputQuery] = useState(' ');
+  const [inputLocation, setInputLocation] = useState(' ');
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    
+    axios.get(`/api/github/description=${inputQuery}&location=${inputLocation}`)
+      .then( response => setJobs(response.data))
+      .catch(ex => console.log(ex))
   };
 
   return (
