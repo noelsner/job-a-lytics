@@ -1,21 +1,15 @@
 const { client } = require("./client");
 const { createListing } = require("./index");
 const { createUser } = require("./users");
+const { createFavorite } = require("./favorites");
 
 const sync = async() => {
 
   const SQL = `
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-    DROP TABLE IF EXISTS favorite_listings;
+    DROP TABLE IF EXISTS favorites;
     DROP TABLE IF EXISTS job_listings;
     DROP TABLE IF EXISTS users;
-    DROP TABLE IF EXISTS roles;
-
-    CREATE TABLE roles(
-      id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      title VARCHAR(20) NOT NULL,
-      CHECK (char_length(title) > 0)
-    );
 
     CREATE TABLE users(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -25,7 +19,7 @@ const sync = async() => {
       password VARCHAR(100),
       CHECK (char_length(username) > 0),
       CHECK (char_length("firstName") > 0),
-      role_id UUID REFERENCES roles(id)
+      role VARCHAR(20)
     );
 
     CREATE TABLE job_listings(
@@ -44,16 +38,16 @@ const sync = async() => {
       job_description TEXT
     );
 
-    CREATE TABLE favorite_listings(
+    CREATE TABLE favorites(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       date TIMESTAMP default CURRENT_TIMESTAMP,
       listing_id UUID REFERENCES job_listings(id),
       user_id UUID REFERENCES users(id)
     );
     `
-
+console.log("calling client.query")
     await client.query(SQL);
-
+console.log("returned from client.query")
     // Seed data
 
     //Job types are FULL-TIME, PART-TIME, CONTRACT, TEMPORARY, INTERNSHIP
@@ -72,7 +66,11 @@ const sync = async() => {
                     lastName: "Johnson",
                     password: "simple"})
     ]);
+    const [ susanFavorite ] = await Promise.all([
+      createFavorite({ listing_id: Fullstack.id, user_id: jobSeeker.id })
+    ]);
 
+    return { susanFavorite }
 } //end sync
 
 module.exports = {

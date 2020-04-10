@@ -3,7 +3,6 @@ const app = express();
 const path = require('path');
 const axios = require('axios');
 const db = require('./data_layer/db');
-const { createListing, readListings, updateListing, deleteListing } = require("./data_layer/index.js");
 
 // body parser
 app.use(express.json());
@@ -16,50 +15,26 @@ app.get('/', (req, res, next)=> {
 
 });
 
-
-app.get('/api/github', (req, res, next) => { 
-
-  console.log("initiating Axios call to GitHub");
-  axios.get('https://jobs.github.com/positions.json?description=react&page=1')
+app.get('/api/github/description=:inputQuery&location=:inputLocation', (req, res, next) => { 
+  
+  console.log("***** server.js Initiating Axios call to GitHub *****");
+  console.log("Recieved parameters: ");
+  console.log(req.params);
+  const { inputQuery, inputLocation } = req.params; 
+  console.log(inputQuery);
+  console.log(inputLocation);
+  
+  const url = `https://jobs.github.com/positions.json?description=${inputQuery}&location=${inputLocation}`;
+  axios.get(url)
     .then( response => {
       res.send(response.data);
     })
-
+    .catch( ex => {
+      res.send(ex);
+      next;
+  })
+  
 })
-// Database Creation Routes
-
-// Database job_listing Create Route
-
-app.post('/api/job_listings', async(req, res, next)=> {
-  const company_name = req.body;
-  console.log("In server.js, app.post")
-  console.log(req.body);
-  console.log(req.params);
-  createListing(listing_date, listing_url, company_name, location, job_title, job_type, contact, company_url, annual_salary, job_description)
-  .then( response => res.send(response) )
-  .catch( next )
-});
-
-// Database job_listings Read Route
-app.get('/api/job_listings', async(req, res, next)=> {
-  readListings()
-  .then( response => res.send(response) )
-  .catch( next )
-});
-
-// Database job_listings Update Route
-app.put('/api/job_listings/:id', async(req, res, next)=> {
-  updateListing({...req.body, id: req.params.id})
-  .then( response => res.send(response) )
-  .catch( next )
-});
-
-// Database job_listings Delete Route
-app.delete('/api/job_listings/:id', async(req, res, next)=> {
-  deleteListing( req.params.id )
-  .then( response => res.send(response) )
-  .catch( next )
-});
 
 // Error handlers
 app.use((req, res, next)=> {
