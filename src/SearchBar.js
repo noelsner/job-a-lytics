@@ -7,8 +7,12 @@ const SearchBar = ({setJobs}) => {
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    axios.get(`/api/github/description=${inputQuery}&location=${inputLocation}`)
-      .then( response => setJobs(response.data))
+
+    axios.get(`/api/github?description=${inputQuery}&location=${inputLocation}`)
+      .then( response => {
+        console.log(response);
+        //setJobs(response.data);
+      })
       .catch(ex => console.log(ex))
   };
 
