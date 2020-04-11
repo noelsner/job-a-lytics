@@ -46,14 +46,14 @@ app.get("/", (req, res, next) =>
   res.sendFile(path.join(__dirname, "index.html"))
 );
 
-app.post("/api/auth", (req, res, next) => {
+app.post('/api/auth', (req, res, next)=> {
   db.authenticate(req.body)
-    .then((token) => res.send({ token }))
-    .catch(() => {
-      const error = Error("not authorized");
+    .then( token => res.send({ token }))
+    .catch( ()=> {
+      const error = Error('not authorized');
       error.status = 401;
       next(error);
-    });
+    } );
 });
 
 app.get("/api/auth", isLoggedIn, (req, res, next) => {
@@ -62,7 +62,6 @@ app.get("/api/auth", isLoggedIn, (req, res, next) => {
 
 // Create a new user in the database
 app.post("/api/users", async (req, res, next) => {
-  console.log("In app.post ",req.body)
   try {
     const user = await createUser({ ...req.body });
     const token = jwt.encode({ id: user.id }, process.env.JWT);
