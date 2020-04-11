@@ -5,8 +5,6 @@ const axios = require('axios');
 const db = require('./data_layer/db');
 const favorites = require('./favorites_routes');
 
-console.log(router);
-
 // body parser
 app.use(express.json());
 
