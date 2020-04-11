@@ -1,13 +1,8 @@
 const express = require("express");
-const app = express();
+const router = express.Router();
 const path = require("path");
-const db = require("./data_layer/index.js");
+const db = require("../data_layer/index.js");
 const jwt = require("jwt-simple");
-
-app.use("/dist", express.static(path.join(__dirname, "dist")));
-app.use("/assets", express.static(path.join(__dirname, "assets")));
-
-app.use(express.json());
 
 const isLoggedIn = (req, res, next) => {
   if (!req.user) {
@@ -25,7 +20,7 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-app.use((req, res, next) => {
+router.use((req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
     return next();
@@ -42,11 +37,7 @@ app.use((req, res, next) => {
     });
 });
 
-app.get("/", (req, res, next) =>
-  res.sendFile(path.join(__dirname, "index.html"))
-);
-
-app.post('/api/auth', (req, res, next)=> {
+router.post('/auth', (req, res, next)=> {
   db.authenticate(req.body)
     .then( token => res.send({ token }))
     .catch( ()=> {
@@ -56,12 +47,12 @@ app.post('/api/auth', (req, res, next)=> {
     } );
 });
 
-app.get("/api/auth", isLoggedIn, (req, res, next) => {
+router.get("/auth", isLoggedIn, (req, res, next) => {
   res.send(req.user);
 });
 
 // Create a new user in the database
-app.post("/api/users", async (req, res, next) => {
+router.post("", async (req, res, next) => {
   try {
     const user = await createUser({ ...req.body });
     const token = jwt.encode({ id: user.id }, process.env.JWT);
@@ -73,7 +64,7 @@ app.post("/api/users", async (req, res, next) => {
   }
 });
 
-app.put("/api/users/:id", async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const user = await updateUser(req.body);
     delete user.password;
@@ -83,7 +74,7 @@ app.put("/api/users/:id", async (req, res, next) => {
   }
 });
 
-app.use((req, res, next) => {
+router.use((req, res, next) => {
   const error = {
     message: `page not found ${req.url} for ${req.method}`,
     status: 404,
@@ -91,9 +82,9 @@ app.use((req, res, next) => {
   next(error);
 });
 
-app.use((err, req, res, next) => {
+router.use((err, req, res, next) => {
   console.log(err.status, err.message);
   res.status(err.status || 500).send({ message: err.message });
 });
 
-module.exports = app;
+module.exports = {router};
