@@ -3,6 +3,9 @@ const app = express();
 const path = require('path');
 const axios = require('axios');
 const db = require('./data_layer/db');
+const favorites = require('./favorites_routes');
+
+console.log(router);
 
 // body parser
 app.use(express.json());
@@ -10,10 +13,14 @@ app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
+app.use('/api/favorites', favorites.router);
+
 app.get('/', (req, res, next)=> {
   res.sendFile(path.join(__dirname, 'index.html'));
 
 });
+
+
 
 app.get('/api/github/description=:inputQuery&location=:inputLocation', (req, res, next) => { 
   
