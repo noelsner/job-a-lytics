@@ -3,7 +3,9 @@ const app = express();
 const path = require('path');
 const axios = require('axios');
 const db = require('./data_layer/db');
-const favorites = require('./favorites_routes');
+const favorites = require('./routes/favorites_routes');
+const users = require('./routes/users_routes');
+const job_listings = require('./routes/job_listings_routes');
 
 // body parser
 app.use(express.json());
@@ -11,7 +13,10 @@ app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
+//routes imported from routes folder
 app.use('/api/favorites', favorites.router);
+app.use('/api/users', users.router);
+app.use('/api/job_listings', job_listings.router);
 
 app.get('/', (req, res, next)=> {
   res.sendFile(path.join(__dirname, 'index.html'));

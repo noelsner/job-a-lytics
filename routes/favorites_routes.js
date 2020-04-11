@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const { createFavorite, readFavorites, updateFavorite, deleteFavorite } = require("./data_layer/index.js");
+const { createFavorite, readFavorites, updateFavorite, deleteFavorite } = require("../data_layer/index.js");
 
 // Database favorites Create Route
 
