@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Route } from 'react-router-dom';
+import axios from 'axios';
+
 import fetchJobs from './fetchJobs.js';
 import Navbar from './navbar';
 import SearchBar from './SearchBar';
@@ -11,20 +13,51 @@ import seedJobData from './seedJobData';
 import CreateAccount from './account/CreateAccount';
 import Login from './account/Login';
 
-console.log(seedJobData);
+const headers = () => {
+  const token = window.localStorage.getItem('token');
+  return {
+    headers: {
+      authorization: token
+    }
+  };
+};
+
 const App = ()=> {
+  const [auth, setAuth] = useState({});
   const [jobs, setJobs] = useState(seedJobData);
   const [savedJobs, setSavedJobs] = useState([]);
 
+  const login = async (credentials) => {
+    const token = (await axios.post('/api/auth', credentials)).data.token;
+    console.log('token :', token);
+    window.localStorage.setItem('token', token);
+    exchangeTokenForAuth();
+  };
+
+  const exchangeTokenForAuth = async () => {
+    const response = await axios.get('/api/auth', headers());
+    console.log('response :', response);
+    setAuth(response.data);
+  };
+
+  const logout = () => {
+    window.localStorage.removeItem('token');
+    window.location.hash = '#';
+    setAuth({});
+  };
+
   useEffect(() => {
-    console.log("In useEffect");
+    exchangeTokenForAuth();
+  }, []);
+
+  useEffect(() => {
     fetchJobs().then((jobs) => setSavedJobs(jobs));
   }, []);
 
   const createAccount = () => console.log('create account');
-  const login = () => console.log('login');
 
-  console.log("In job_listings App")
+  console.log('auth :', auth);
+  
   return (
     <div>
       <Navbar />

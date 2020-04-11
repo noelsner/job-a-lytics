@@ -4,14 +4,14 @@ import UserPlaceholder from '../icons/user_placeholder';
 import Hamburger from '../icons/hamburger';
 import { useHistory } from 'react-router-dom';
 import outsideClick from './OutsideClick';
-import HamburgerMenu from './HamurgerMenu';
+import HamburgerMenu from './HamburgerMenu';
 import UserDropdown from './UserDropdown';
 import NavButtons from './NavButtons';
 
 const Navbar = () => {
   const history = useHistory();
   const [openUserDropdown, setOpenUserDropdown] = useState(false);
-  const [openHambuger, setOpenHamburger] = useState(false);
+  const [openHamburger, setOpenHamburger] = useState(false);
   const userRef = useRef();
   const hamRef = useRef();
 
@@ -22,7 +22,7 @@ const Navbar = () => {
   });
 
   outsideClick(hamRef, () => {
-    if(openHambuger) {
+    if(openHamburger) {
       setOpenHamburger(false);
     }
   });
@@ -32,7 +32,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            <button onClick={() => setOpenHamburger(!openHambuger)} className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out">
+            <button onClick={() => setOpenHamburger(!openHamburger)} className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white transition duration-150 ease-in-out">
               <Hamburger />
             </button>
           </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      { openHambuger && (
+      { openHamburger && (
         <HamburgerMenu hamRef={hamRef} history={history} />
       )}
     </nav>

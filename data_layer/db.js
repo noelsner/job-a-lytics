@@ -52,19 +52,31 @@ console.log("returned from client.query")
 
     //Job types are FULL-TIME, PART-TIME, CONTRACT, TEMPORARY, INTERNSHIP
     const[ Fullstack ] = await Promise.all([
-      createListing({company_name: 'Fullstack',
-                              location: "New York City",
-                              job_title: "software developer",
-                              job_type: "FULL-TIME",
-                              contact: "Eric P. Katz",
-                            job_description: "Recommend delicious recipes while coding flawlessly." })
+      createListing({
+        company_name: 'Fullstack',
+        location: "New York City",
+        job_title: "software developer",
+        job_type: "FULL-TIME",
+        contact: "Eric P. Katz",
+        job_description: "Recommend delicious recipes while coding flawlessly." 
+      })
     ]);
 
     const[ jobSeeker ] = await Promise.all([
-      createUser({username: "jobSeeker",
-                    firstName: "Susan",
-                    lastName: "Johnson",
-                    password: "simple"})
+      createUser(
+        {
+          username: "jobSeeker",
+          firstName: "Susan",
+          lastName: "Johnson",
+          password: "simple"
+        },
+        {
+          username: "moe",
+          firstName: "Moe",
+          lastName: "Stooge",
+          password: "MOE"
+        },
+      )
     ]);
     const [ susanFavorite ] = await Promise.all([
       createFavorite({ listing_id: Fullstack.id, user_id: jobSeeker.id })
