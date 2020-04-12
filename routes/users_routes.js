@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require("path");
 const db = require("../data_layer/index.js");
 const jwt = require("jwt-simple");
+const { authenticate, compare, findUserFromToken, hash } = require('../data_layer/auth');
 
 const isLoggedIn = (req, res, next) => {
   if (!req.user) {
@@ -25,7 +26,7 @@ router.use((req, res, next) => {
   if (!token) {
     return next();
   }
-  db.findUserFromToken(token)
+  findUserFromToken(token)
     .then((auth) => {
       req.user = auth;
       next();
@@ -38,7 +39,7 @@ router.use((req, res, next) => {
 });
 
 router.post('/auth', (req, res, next)=> {
-  db.authenticate(req.body)
+  authenticate(req.body)
     .then( token => res.send({ token }))
     .catch( ()=> {
       const error = Error('not authorized');

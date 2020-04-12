@@ -8,9 +8,9 @@ const { createListing, readListings, updateListing, deleteListing } = require(".
 
 router.post('', async(req, res, next)=> {
   const company_name = req.body;
-  console.log("In server.js, router.post")
-  console.log(req.body);
-  console.log(req.params);
+  // console.log("In server.js, router.post")
+  // console.log(req.body);
+  // console.log(req.params);
   createListing(listing_date, listing_url, company_name, location, job_title, job_type, contact, company_url, annual_salary, job_description)
   .then( response => res.send(response) )
   .catch( next )

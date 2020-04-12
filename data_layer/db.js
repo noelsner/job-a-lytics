@@ -1,4 +1,5 @@
-const { client } = require("./client");
+const client = require("./client");
+const { authenticate, compare, findUserFromToken, hash } = require('./auth');
 const { createListing } = require("./index");
 const { createUser } = require("./users");
 const { createFavorite } = require("./favorites");
@@ -13,13 +14,13 @@ const sync = async() => {
 
     CREATE TABLE users(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      username VARCHAR(100) NOT NULL UNIQUE,
       "firstName" VARCHAR(100) NOT NULL,
       "lastName" VARCHAR(100) NOT NULL,
-      password VARCHAR(100),
+      username VARCHAR(100) NOT NULL UNIQUE,
+      password VARCHAR(100) NOT NULL,
       CHECK (char_length(username) > 0),
       CHECK (char_length("firstName") > 0),
-      role VARCHAR(20)
+      role VARCHAR(20) DEFAULT 'USER'
     );
 
     CREATE TABLE job_listings(
@@ -44,12 +45,26 @@ const sync = async() => {
       listing_id UUID REFERENCES job_listings(id),
       user_id UUID REFERENCES users(id)
     );
-    `
-console.log("calling client.query")
+    `;
     await client.query(SQL);
-console.log("returned from client.query")
-    // Seed data
 
+    // Seed data
+    const _users = {
+      jobSeeker: {
+        firstName: "Susan",
+        lastName: "Johnson",
+        username: "jobSeeker",
+        password: "simple"
+      },
+      moe: {
+        username: "moe",
+        firstName: "Moe",
+        lastName: "Stooge",
+        password: "MOE"
+      }
+    };
+
+    const [jobSeeker, moe] = await Promise.all(Object.values(_users).map( user => createUser(user)));
     //Job types are FULL-TIME, PART-TIME, CONTRACT, TEMPORARY, INTERNSHIP
     const[ Fullstack ] = await Promise.all([
       createListing({
@@ -62,22 +77,6 @@ console.log("returned from client.query")
       })
     ]);
 
-    const[ jobSeeker ] = await Promise.all([
-      createUser(
-        {
-          username: "jobSeeker",
-          firstName: "Susan",
-          lastName: "Johnson",
-          password: "simple"
-        },
-        {
-          username: "moe",
-          firstName: "Moe",
-          lastName: "Stooge",
-          password: "MOE"
-        },
-      )
-    ]);
     const [ susanFavorite ] = await Promise.all([
       createFavorite({ listing_id: Fullstack.id, user_id: jobSeeker.id })
     ]);
@@ -87,4 +86,6 @@ console.log("returned from client.query")
 
 module.exports = {
     sync,
+    authenticate,
+    findUserFromToken,
 }

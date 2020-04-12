@@ -1,17 +1,17 @@
-const { client } = require("./client");
+const client = require("./client");
 const { hash } = require("./auth");
 
 const readUsers = async() => {
   return (await client.query("SELECT * from users")).rows;
 };
 
-const createUser = async ({ username, firstName, lastName, password }) => {
-  const SQL = `INSERT INTO users(username, "firstName", "lastName", password) values($1, $2, $3, $4) returning *`;
+const createUser = async ({ firstName, lastName, username, password }) => {
+  const SQL = `INSERT INTO users("firstName", "lastName", username, password) values($1, $2, $3, $4) returning *`;
   return (
     await client.query(SQL, [
-      username,
       firstName,
       lastName,
+      username,
       await hash(password),
     ])
   ).rows[0];
