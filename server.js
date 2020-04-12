@@ -19,7 +19,7 @@ app.use(express.json());
 //authentication
 const isLoggedIn = (req, res, next)=> {
   if(!req.user){
-    const error = Error('not authorized 1');
+    const error = Error('not authorized');
     error.status = 401;
     return next(error);
   }
@@ -28,7 +28,7 @@ const isLoggedIn = (req, res, next)=> {
 
 const isAdmin = (req, res, next)=> {
   if(req.user.role !== 'ADMIN'){
-    return next(Error('not authorized 2'));
+    return next(Error('not authorized'));
   }
   next();
 };
@@ -38,15 +38,13 @@ app.use((req, res, next)=> {
   if(!token){
     return next();
   }
-  console.log('token (app.use route in server.js) :', token);
   dl.findUserFromToken(token)
     .then( auth => {
       req.user = auth;
-      console.log('req.user :', req.user);
       next();
     })
     .catch(ex => {
-      const error = Error('not authorized 3');
+      const error = Error('not authorized');
       error.status = 401;
       next(error);
     });
@@ -79,10 +77,9 @@ app.post('/api/auth', (req, res, next)=> {
   dl.authenticate(req.body)
     .then( token => {
       res.send({ token })
-      console.log('token (auth POST):', token);
     })
     .catch( ()=> {
-      const error = Error('not authorized 4');
+      const error = Error('not authorized');
       error.status = 401;
       next(error);
     } );
