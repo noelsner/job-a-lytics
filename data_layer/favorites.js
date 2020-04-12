@@ -1,4 +1,4 @@
-const { client } = require("./client");
+const client = require("./client");
 
 // favorite_listings Methods
 const createFavorite = async({ listing_id, user_id })=> {

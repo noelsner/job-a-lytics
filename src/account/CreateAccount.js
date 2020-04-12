@@ -14,14 +14,12 @@ const CreateAccount = ({ createAccount }) => {
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    createAccount({ username, firstName, lastName, password })
-      .then(() => {
-        setError('');
-        window.location.hash = '#';
-      })
-      .catch((ex) => {
-        setError(ex.response.data.message);
-      });
+    createAccount({
+      firstName,
+      lastName,
+      username,
+      password
+    });
   };
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>

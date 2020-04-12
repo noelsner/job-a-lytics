@@ -8,7 +8,7 @@ import HamburgerMenu from './HamburgerMenu';
 import UserDropdown from './UserDropdown';
 import NavButtons from './NavButtons';
 
-const Navbar = () => {
+const Navbar = ({logout}) => {
   const history = useHistory();
   const [openUserDropdown, setOpenUserDropdown] = useState(false);
   const [openHamburger, setOpenHamburger] = useState(false);
@@ -58,7 +58,7 @@ const Navbar = () => {
                 </button>
               </div>
               {openUserDropdown && (
-                <UserDropdown userRef={userRef} />
+                <UserDropdown userRef={userRef} logout={logout} />
               )}
             </div>
           </div>

@@ -1,4 +1,4 @@
-const { client } = require("./client");
+const client = require("./client");
 
 // job_listings Methods
 const createListing = async({ listing_date, listing_url, company_name, location, job_title, job_type, contact, company_url, annual_salary, job_description })=> {
@@ -11,9 +11,9 @@ const createListing = async({ listing_date, listing_url, company_name, location,
 };
 
 const readListings = async() => {
-  console.log("In read_job_listings");
+  // console.log("In read_job_listings");
   response = await client.query('SELECT * from job_listings');
-  console.log(response.rows);
+  // console.log(response.rows);
   return response.rows;
 };
 

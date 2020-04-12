@@ -6,21 +6,22 @@ import { useHistory } from 'react-router-dom';
 const CreateAccount = ({ login }) => {
   const history = useHistory();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [ username, setUsername ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ error, setError ] = useState('');
 
   const onSubmit = (ev) => {
     ev.preventDefault();
     login({ username, password })
       .then(() => {
+        history.push('/');
         setError("");
-        window.location.hash = "#";
       })
-      .catch((ex) => {
-        setError(ex.response.data.message);
-      });
+      .catch((ex) => setError(ex.response.data.message));
   };
+
+  if(error) {console.log(error)};
+
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
       <div className='max-w-md w-full'>

@@ -7,9 +7,9 @@ const { createFavorite, readFavorites, updateFavorite, deleteFavorite } = requir
 
 router.post('', async(req, res, next)=> {
   const company_name = req.body;
-  console.log("In favorites_routes.js, router.post")
-  console.log(req.body);
-  console.log(req.params);
+  // console.log("In favorites_routes.js, router.post")
+  // console.log(req.body);
+  // console.log(req.params);
   createFavorite(listing_id, user_id)
   .then( response => res.send(response) )
   .catch( next )

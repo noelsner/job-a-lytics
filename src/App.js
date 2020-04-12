@@ -29,21 +29,13 @@ const App = ()=> {
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
-    console.log('token :', token);
     window.localStorage.setItem('token', token);
     exchangeTokenForAuth();
   };
 
   const exchangeTokenForAuth = async () => {
     const response = await axios.get('/api/auth', headers());
-    console.log('response :', response);
     setAuth(response.data);
-  };
-
-  const logout = () => {
-    window.localStorage.removeItem('token');
-    window.location.hash = '#';
-    setAuth({});
   };
 
   useEffect(() => {
@@ -54,13 +46,25 @@ const App = ()=> {
     fetchJobs().then((jobs) => setSavedJobs(jobs));
   }, []);
 
-  const createAccount = () => console.log('create account');
+  const createAccount = (user) => {
+    axios.post('/api/users', user)
+      .then(response => {
+        window.localStorage.setItem('token', response.data.token);
+        setAuth(response.data.user);
+      });
+  };
+
+  const logout = () => {
+    window.localStorage.removeItem('token');
+    setAuth({});
+    window.location.hash = '#'
+  };
 
   console.log('auth :', auth);
   
   return (
     <div>
-      <Navbar />
+      <Navbar logout={logout} />
       <Route path='/' exact>
         <SearchBar setJobs = {setJobs}/>
         <div className='flex flex-col md:flex-row w-full h-screen px-6 mt-12'>
