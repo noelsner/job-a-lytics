@@ -8,7 +8,7 @@ import HamburgerMenu from './HamburgerMenu';
 import UserDropdown from './UserDropdown';
 import NavButtons from './NavButtons';
 
-const Navbar = ({logout}) => {
+const Navbar = ({logout, auth}) => {
   const history = useHistory();
   const [openUserDropdown, setOpenUserDropdown] = useState(false);
   const [openHamburger, setOpenHamburger] = useState(false);
@@ -44,23 +44,27 @@ const Navbar = ({logout}) => {
               </button>
             </div>
             <div className="flex items-center hidden sm:block sm:ml-6">
-              <NavButtons history={history} />
+              <NavButtons history={history} auth={auth} />
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <div className="ml-3 relative">
-              <button onClick={ev => history.push('/account/login')} className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-pink-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Sign In</button>
-            </div>
-            <div className="ml-3 relative">
-              <div>
-                <button onClick={() => setOpenUserDropdown(!openUserDropdown)} className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-400 transition duration-150 ease-in-out p-2">
-                  <UserPlaceholder classes={'fill-current text-gray-400 h-6 w-6'} />
-                </button>
+            {!auth.id && (
+              <div className="ml-3 relative">
+                <button onClick={ev => history.push('/account/login')} className="ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-white hover:bg-pink-700 focus:outline-none focus:text-white focus:bg-gray-700 transition duration-150 ease-in-out">Sign In</button>
               </div>
-              {openUserDropdown && (
-                <UserDropdown userRef={userRef} logout={logout} />
-              )}
-            </div>
+            )}
+            {auth.id && (
+              <div className="ml-3 relative">
+                <div>
+                  <button onClick={() => setOpenUserDropdown(!openUserDropdown)} className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-400 transition duration-150 ease-in-out p-2">
+                    <UserPlaceholder classes={'fill-current text-gray-400 h-6 w-6'} />
+                  </button>
+                </div>
+                {openUserDropdown && (
+                  <UserDropdown userRef={userRef} logout={logout} />
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

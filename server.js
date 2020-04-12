@@ -50,17 +50,6 @@ app.use((req, res, next)=> {
     });
 });
 
-//create user
-app.post('/api/users', (req, res, next) => {
-  dl.createUser(req.body)
-    .then(user => {
-      const token = jwt.encode({ id: user.id }, process.env.JWT);
-      delete user.password;
-      res.send({user, token})
-    })
-    .catch(next);
-});
-
 //routes imported from routes folder
 app.use('/api/favorites', favorites.router);
 // app.use('/api/users', users.router);
@@ -87,6 +76,17 @@ app.post('/api/auth', (req, res, next)=> {
 
 app.get('/api/auth', isLoggedIn, (req, res, next) => {
   res.send(req.user);
+});
+
+//create user
+app.post('/api/users', (req, res, next) => {
+  dl.createUser({...req.body, role: "USER"})
+    .then(user => {
+      const token = jwt.encode({ id: user.id }, process.env.JWT);
+      delete user.password;
+      res.send({user, token})
+    })
+    .catch(next);
 });
 
 // Error handlers

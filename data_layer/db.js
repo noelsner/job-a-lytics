@@ -54,13 +54,15 @@ const sync = async() => {
         firstName: "Susan",
         lastName: "Johnson",
         username: "jobSeeker",
-        password: "simple"
+        password: "simple",
+        role: "ADMIN"
       },
       moe: {
         username: "moe",
         firstName: "Moe",
         lastName: "Stooge",
-        password: "MOE"
+        password: "MOE",
+        role: null
       }
     };
 
