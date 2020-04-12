@@ -42,10 +42,6 @@ const App = ()=> {
     exchangeTokenForAuth();
   }, []);
 
-  useEffect(() => {
-    fetchJobs().then((jobs) => setSavedJobs(jobs));
-  }, []);
-
   const createAccount = (user) => {
     axios.post('/api/users', user)
       .then(response => {
@@ -60,11 +56,23 @@ const App = ()=> {
     window.location.hash = '#'
   };
 
+  useEffect(
+    () => {
+      if(auth.id) {
+        const token = window.localStorage.getItem('token');
+        axios.get('/api/favorites', headers()).then(response => {
+          setSavedJobs(response.data);
+        });
+      }
+    }, [auth]
+  )
+
   console.log('auth :', auth);
+  console.log('savedJobs :', savedJobs);
   
   return (
     <div>
-      <Navbar logout={logout} />
+      <Navbar logout={logout} auth={auth} />
       <Route path='/' exact>
         <SearchBar setJobs = {setJobs}/>
         <div className='flex flex-col md:flex-row w-full h-screen px-6 mt-12'>
@@ -80,7 +88,7 @@ const App = ()=> {
         </div>
       </Route>
       <Route path='/jobs/saved' exact>
-        <SavedJobs />
+        <SavedJobs auth={auth} savedJobs={savedJobs} />
       </Route>
       <Route path='/account/login' exact>
         <Login login={login} />
