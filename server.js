@@ -6,6 +6,7 @@ const db = require('./data_layer/db');
 const favorites = require('./routes/favorites_routes');
 const users = require('./routes/users_routes');
 const job_listings = require('./routes/job_listings_routes');
+const github_routes = require('./routes/github_routes');
 const dl = require('./data_layer');
 const jwt = require('jwt-simple');
 
@@ -66,6 +67,7 @@ app.post('/api/users', (req, res, next) => {
 app.use('/api/favorites', favorites.router);
 // app.use('/api/users', users.router);
 app.use('/api/job_listings', job_listings.router);
+app.use('/api/github', github_routes.router);
 
 
 app.get('/', (req, res, next)=> {
@@ -89,30 +91,6 @@ app.post('/api/auth', (req, res, next)=> {
 app.get('/api/auth', isLoggedIn, (req, res, next) => {
   res.send(req.user);
 });
-
-
-
-//github
-app.get('/api/github/description=:inputQuery&location=:inputLocation', (req, res, next) => { 
-  
-  console.log("***** server.js Initiating Axios call to GitHub *****");
-  console.log("Recieved parameters: ");
-  // console.log(req.params);
-  const { inputQuery, inputLocation } = req.params; 
-  // console.log(inputQuery);
-  // console.log(inputLocation);
-  
-  const url = `https://jobs.github.com/positions.json?description=${inputQuery}&location=${inputLocation}`;
-  axios.get(url)
-    .then( response => {
-      res.send(response.data);
-    })
-    .catch( ex => {
-      res.send(ex);
-      next;
-  })
-  
-})
 
 // Error handlers
 app.use((req, res, next)=> {
