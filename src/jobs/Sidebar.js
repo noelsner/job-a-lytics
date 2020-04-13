@@ -4,8 +4,8 @@ import DropdownFilter from './DropdownFilter';
 
 const Sidebar = () => {
   return(
-    <div className='border border-gray-800 rounded-lg h-full text-gray-600 px-3'>
-      <div className="relative inline-block">
+    <div className='rounded-lg h-full text-gray-600'>
+      <div className="relative inline-block md:w-full">
         <DropdownFilter filterTitle={'Sort by'} ddOptions={
           [
             {
@@ -16,6 +16,32 @@ const Sidebar = () => {
               text: 'Date',
               click:  ()=>{console.log('date filter clicked!!!')}
             }
+          ]
+        }/>
+      </div>
+      <div className="relative inline-block pl-3 md:pl-0 md:w-full md:mt-6 ">
+        <DropdownFilter filterTitle={'Distance'} ddOptions={
+          [
+            {
+              text: '10 miles',
+              click: ()=>{console.log('10mi filter clicked!!!')}
+            },
+            {
+              text: '25 miles',
+              click:  ()=>{console.log('25mi filter clicked!!!')}
+            },
+            {
+              text: '50 miles',
+              click:  ()=>{console.log('50mi filter clicked!!!')}
+            },
+            {
+              text: '75 miles',
+              click:  ()=>{console.log('75mi filter clicked!!!')}
+            },
+            {
+              text: '100 miles',
+              click:  ()=>{console.log('100mi filter clicked!!!')}
+            },
           ]
         }/>
       </div>

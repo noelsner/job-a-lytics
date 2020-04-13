@@ -75,14 +75,14 @@ const App = ()=> {
       <Navbar logout={logout} auth={auth} />
       <Route path='/' exact>
         <SearchBar setJobs = {setJobs}/>
-        <div className='flex flex-col md:flex-row w-full h-screen px-6 mt-12'>
-          <div className='md:w-1/5'>
+        <div className='flex flex-col md:flex-row w-full h-screen px-6 mt-8 md:mt-12'>
+          <div className='md:w-32 px-3 md:pl-0 mb-6 md:mb-0'>
             <Sidebar jobs={jobs} />
           </div>
-          <div className='md:w-2/5'>
+          <div className='md:w-1/2'>
             <Jobs jobs={jobs} />
           </div>
-          <div className='hidden md:block md:w-2/5'>
+          <div className='hidden md:block md:w-1/2 md:pl-3'>
             <Details jobs={jobs} />
           </div>
         </div>
