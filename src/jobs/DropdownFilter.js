@@ -15,7 +15,7 @@ const DropdownFilter = ({filterTitle, ddOptions }) => {
   return(
     <div>
       <div>
-        <span className="rounded-md shadow-sm">
+        <span className="rounded-md shadow-sm w-full">
           <button type="button" onClick={() => setOpenDropdown(!openDropdown)} className="inline-flex justify-center w-full rounded-md px-2 py-1 border border-2 border-gray-500 text-gray-500 hover:text-gray-300 focus:outline-none focus:border-transparent focus:bg-gray-500 focus:text-gray-800 active:bg-gray-500 active:text-gray-800 ">
             {filterTitle}
             <svg className="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
