@@ -30,7 +30,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.7.5",
+    "fs": "0.0.1-security",
     "postcss-cli": "^7.1.0",
+    "puppeteer": "^2.1.1",
     "tailwind": "^4.0.0",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
