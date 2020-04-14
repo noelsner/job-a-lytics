@@ -1,8 +1,8 @@
 const client = require("./client");
 const { authenticate, compare, findUserFromToken, hash } = require('./auth');
-const { createListing } = require("./index");
-const { createUser } = require("./users");
-const { createFavorite } = require("./favorites");
+const { createListing, readListings } = require("./index");
+const { createUser, readUsers } = require("./users");
+const { createFavorite, checkForFavorites, readFavorites } = require("./favorites");
 
 const sync = async() => {
 
@@ -66,7 +66,10 @@ const sync = async() => {
       }
     };
 
+    // Create Users
     const [jobSeeker, moe] = await Promise.all(Object.values(_users).map( user => createUser(user)));
+
+    //Create job_listings
     //Job types are FULL-TIME, PART-TIME, CONTRACT, TEMPORARY, INTERNSHIP
     const[ Fullstack ] = await Promise.all([
       createListing({
@@ -75,13 +78,31 @@ const sync = async() => {
         job_title: "software developer",
         job_type: "FULL-TIME",
         contact: "Eric P. Katz",
-        job_description: "Recommend delicious recipes while coding flawlessly." 
+        job_description: "Recommend delicious recipes while coding flawlessly."
       })
     ]);
 
+    //Create favorites
     const [ susanFavorite ] = await Promise.all([
       createFavorite({ listing_id: Fullstack.id, user_id: jobSeeker.id })
     ]);
+
+    // Read from listings, users, and favorites
+    // Each function returns an array of objects
+    const listingsArr = await readListings();
+    console.log( listingsArr );
+
+    const usersArr = await readUsers();
+    console.log( usersArr );
+
+    for( let i = 0; i < usersArr.length; i++ ){
+      const user_id = usersArr[i].id;
+      console.log("user_id = ", user_id);
+      if( (await checkForFavorites( user_id )) === true ){
+        const userFavoritesArr = await readFavorites(user_id);
+        console.log( userFavoritesArr );
+      }
+    }
 
     return { susanFavorite }
 } //end sync

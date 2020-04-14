@@ -11,9 +11,9 @@ const createListing = async({ listing_date, listing_url, company_name, location,
 };
 
 const readListings = async() => {
-  // console.log("In read_job_listings");
+  console.log("In readListings");
   response = await client.query('SELECT * from job_listings');
-  // console.log(response.rows);
+  console.log(response.rows);
   return response.rows;
 };
 

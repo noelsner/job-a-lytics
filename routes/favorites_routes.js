@@ -16,14 +16,15 @@ router.post('', async(req, res, next)=> {
 });
 
 // Database favorites Read Route
-// TODO: pass user id into readFavorites
-router.get('', async(req, res, next)=> {
-  res.send("You've made it to favorites");
-  
-  readFavorites()
-  .then( response => res.send(response) )
+//router.get('/:id', async(req, res, next)=> {
+  //res.send("You've made it to favorites, id=", req.params.id);
+router.get('', async( req, res, next) => {
+  readFavorites( req.params.id )
+  .then( response => {
+    console.log("response from readFavorites:",response);
+    res.send(response)
+  })
   .catch( next )
-  
 });
 
 // Database favorites Update Route
