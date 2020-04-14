@@ -2,16 +2,19 @@ import React, {useState} from "react";
 import Heart from '../icons/heart';
 
 const Job = ({job}) => {
-  const [savedBtn, setSavedBtn] = useState(false)      
+  const [savedBtn, setSavedBtn] = useState(false)
 
   const toggleSaved = (ev, id) => {
     ev.preventDefault();
     setSavedBtn(!savedBtn);
     saveJob(id);
   };
-  
-  const saveJob = (id) => console.log(`Job with id=${id} saved!!!`); 
-  
+
+  const saveJob = (id) => {
+    console.log(`Job with id=${id} saved!!!`);
+    //Todo: save this job to the favorites table for the current user
+  }
+
   return(
     <li key={job.id}>
       <div className='bg-gray-800 text-gray-600 mt-6 rounded-lg p-4'>

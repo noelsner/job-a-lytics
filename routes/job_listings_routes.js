@@ -18,8 +18,12 @@ router.post('', async(req, res, next)=> {
 
 // Database job_listings Read Route
 router.get('', async(req, res, next)=> {
+  res.send("You made it to job_listings get route")
   readListings()
-  .then( response => res.send(response) )
+  .then( response => {
+    console.log("response from readListings = ", response);
+    res.send(response)
+  })
   .catch( next )
 });
 
