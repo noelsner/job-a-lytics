@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Heart from '../icons/heart';
+import axios from "axios";
 
 const Job = ({job}) => {
   const [savedBtn, setSavedBtn] = useState(false)
@@ -12,7 +13,11 @@ const Job = ({job}) => {
 
   const saveJob = (id) => {
     console.log(`Job with id=${id} saved!!!`);
-    //Todo: save this job to the favorites table for the current user
+    console.log(job);
+    // save this job to the listings table & favorites table for the current user
+    axios.post('/api/listings',[job])
+    .then(response => console.log(response))
+    .catch()
   }
 
   return(

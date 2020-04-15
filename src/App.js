@@ -25,7 +25,6 @@ const headers = () => {
 const App = ()=> {
   const [auth, setAuth] = useState({});
   const [jobs, setJobs] = useState(seedJobData);
-  const [listings, setListings] = useState([]);
   const [savedJobs, setSavedJobs] = useState([]);
 
   const login = async (credentials) => {
@@ -61,21 +60,16 @@ const App = ()=> {
     () => {
       if(auth.id) {
         const token = window.localStorage.getItem('token');
-        console.log("In useEffect: calling axios.get for /api/favorites")
-        axios.get('/api/favorites', headers()).then(response => {
+        console.log("In useEffect: calling axios.get for /api/favorites, auth.id= ",auth.id)
+        axios.get(`/api/favorites/${auth.id}`, headers())
+        .then(response => {
           setSavedJobs(response.data);
           console.log('savedJobs :', savedJobs);
         });
       }
     }, [auth]
   )
-/*
-  useEffect(() => {
-    const dbjobs = fetchJobs();
-    setListings(dbjobs);
-    console.log("listings:", listings);
-  })
-*/
+
  // console.log('auth :', auth);
  // console.log('savedJobs :', savedJobs);
 
