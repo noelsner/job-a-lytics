@@ -5,7 +5,7 @@ const { createFavorite, readFavorites, updateFavorite, deleteFavorite } = requir
 
 // Database favorites Create Route
 
-router.post('', async(req, res, next)=> {
+router.post('', (req, res, next)=> {
   const company_name = req.body;
   // console.log("In favorites_routes.js, router.post")
   // console.log(req.body);
@@ -16,9 +16,10 @@ router.post('', async(req, res, next)=> {
 });
 
 // Database favorites Read Route
-//router.get('/:id', async(req, res, next)=> {
+
+router.get('/:id', ( req, res, next) => {
+  console.log(req.params.id);
   //res.send("You've made it to favorites, id=", req.params.id);
-router.get('', async( req, res, next) => {
   readFavorites( req.params.id )
   .then( response => {
     console.log("response from readFavorites:",response);
@@ -28,14 +29,14 @@ router.get('', async( req, res, next) => {
 });
 
 // Database favorites Update Route
-router.put('/:id', async(req, res, next)=> {
+router.put('/:id', (req, res, next)=> {
   updateFavorite({...req.body, id: req.params.id})
   .then( response => res.send(response) )
   .catch( next )
 });
 
 // Database favorites Delete Route
-router.delete('/:id', async(req, res, next)=> {
+router.delete('/:id', (req, res, next)=> {
   deleteFavorite( req.params.id )
   .then( response => res.send(response) )
   .catch( next )

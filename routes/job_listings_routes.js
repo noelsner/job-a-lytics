@@ -6,18 +6,18 @@ const { createListing, readListings, updateListing, deleteListing } = require(".
 
 // Database job_listing Create Route
 
-router.post('', async(req, res, next)=> {
+router.post('', (req, res, next)=> {
   const company_name = req.body;
-  // console.log("In server.js, router.post")
-  // console.log(req.body);
-  // console.log(req.params);
+  console.log("In server.js, router.post")
+  console.log(req.body);
+  console.log(req.params);
   createListing(listing_date, listing_url, company_name, location, job_title, job_type, contact, company_url, annual_salary, job_description)
   .then( response => res.send(response) )
   .catch( next )
 });
 
 // Database job_listings Read Route
-router.get('', async(req, res, next)=> {
+router.get('', (req, res, next)=> {
   res.send("You made it to job_listings get route")
   readListings()
   .then( response => {
@@ -28,14 +28,14 @@ router.get('', async(req, res, next)=> {
 });
 
 // Database job_listings Update Route
-router.put('/:id', async(req, res, next)=> {
+router.put('/:id', (req, res, next)=> {
   updateListing({...req.body, id: req.params.id})
   .then( response => res.send(response) )
   .catch( next )
 });
 
 // Database job_listings Delete Route
-router.delete('/:id', async(req, res, next)=> {
+router.delete('/:id', (req, res, next)=> {
   deleteListing( req.params.id )
   .then( response => res.send(response) )
   .catch( next )
