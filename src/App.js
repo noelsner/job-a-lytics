@@ -26,6 +26,7 @@ const App = ()=> {
   const [auth, setAuth] = useState({});
   const [jobs, setJobs] = useState(seedJobData);
   const [savedJobs, setSavedJobs] = useState([]);
+  const userFavorites = [];
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
@@ -56,22 +57,26 @@ const App = ()=> {
     window.location.hash = '#'
   };
 
-  useEffect(
-    () => {
-      if(auth.id) {
+  useEffect(() => {
+    if(auth.id) {
         const token = window.localStorage.getItem('token');
-        console.log("In useEffect: calling axios.get for /api/favorites, auth.id= ",auth.id)
-        axios.get(`/api/favorites/${auth.id}`, headers())
+        console.log("In useEffect: calling axios.get");
+        axios.get(`/api/favorites/${auth.id}`)
         .then(response => {
-          setSavedJobs(response.data);
-          console.log('savedJobs :', savedJobs);
-        });
-      }
-    }, [auth]
-  )
+          // copy favorites data to userFavorites array
+          for(let jobIdx = 0; jobIdx < response.data.length; jobIdx++ ) {
+            userFavorites.push(response.data[jobIdx]);
+          }
+          console.log('userFavorites :', userFavorites);
 
- // console.log('auth :', auth);
- // console.log('savedJobs :', savedJobs);
+          /*get listings
+          axios.get(`/api/listings`)
+          .then(response => {
+            console.log(response.data.length," listings=", response.data);
+          })*/
+        });
+    }
+  })
 
 return (
     <div>
@@ -83,7 +88,7 @@ return (
             <Sidebar jobs={jobs} />
           </div>
           <div className='md:w-1/2'>
-            <Jobs jobs={jobs} />
+            <Jobs jobs={jobs} savedJobs={savedJobs} setSavedJobs={setSavedJobs}/>
           </div>
           <div className='hidden md:block md:w-1/2 md:pl-3'>
             <Details jobs={jobs} />

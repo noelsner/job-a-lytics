@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Heart from '../icons/heart';
 import axios from "axios";
 
-const Job = ({job}) => {
+const Job = ({job, savedJobs}) => {
   const [savedBtn, setSavedBtn] = useState(false)
 
   const toggleSaved = (ev, id) => {
@@ -12,12 +12,15 @@ const Job = ({job}) => {
   };
 
   const saveJob = (id) => {
-    console.log(`Job with id=${id} saved!!!`);
-    console.log(job);
-    // save this job to the listings table & favorites table for the current user
-    axios.post('/api/listings',[job])
+    //setSavedJobs([...savedJobs, job]);
+    console.log(`Save Job:`, job);
+    savedJobs.push(job);
+    //console.log("savedJobs = ", savedJobs);
+
+    //TODO: add this job to the listings table (& favorites table for the current user)
+    /*axios.post(`/api/job_listings`,job)
     .then(response => console.log(response))
-    .catch()
+    .catch()*/
   }
 
   return(
@@ -37,7 +40,6 @@ const Job = ({job}) => {
         </div>
         <button onClick={ev => {
           toggleSaved(ev, job.id)
-          // saveJob(job.id)
         }} className='block text-gray-400 text-xs underline mt-2'>Save Job</button>
       </div>
     </li>

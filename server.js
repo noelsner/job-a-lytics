@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const axios = require('axios');
 const db = require('./data_layer/db');
 const favorites = require('./routes/favorites_routes');
 const users = require('./routes/users_routes');
