@@ -5,20 +5,23 @@ const fs = require('fs');
 //let student = JSON.parse(rawdata);
 //console.log(student);
 
+const jobId = "1821989317";
 
+const scrapeJob = async(jobId) => {
 
-const scrapeNews = async() => {
+    const jobLink = `https://www.linkedin.com/jobs/view/${jobId}`;
+
     try {
         const browser = await puppeteer.launch({
             headless: false
         })
-        const jobPost = "https://www.linkedin.com/jobs/view/1792509104/";
+        
         const page = await browser.newPage();
 
-        await page.goto("https://www.linkedin.com/jobs/view/1792509104/");
+        await page.goto(jobLink);
         await page.waitForSelector("section.description");
 
-        const jobScrape = await page.evaluate(  () => {
+        const jobScrape = await page.evaluate(  (jobLink, jobId) => {
             const title = document.querySelector("h1.topcard__title").innerText;
             const company = document.querySelector("a.topcard__org-name-link.topcard__flavor--black-link").innerText;
             const location = document.querySelector("span.topcard__flavor.topcard__flavor--bullet").innerText;
@@ -29,10 +32,10 @@ const scrapeNews = async() => {
                     title: title,
                     company: company,
                     date: date,
-                    link: "https://www.linkedin.com/jobs/view/1792509104/",
+                    jobID: jobId,
+                    link: jobLink,
                     location: location,
                     description: description,
-
                 }
                 
             postings.push(singlePost);
@@ -57,4 +60,4 @@ const scrapeNews = async() => {
     }
 };
 
-scrapeNews();
+scrapeJob(jobId);
