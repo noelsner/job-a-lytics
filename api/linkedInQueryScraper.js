@@ -1,12 +1,4 @@
-import puppeteer from 'puppeteer';
-//import fs from 'fs';
-
-//const rawdata = fs.readFileSync('linkedin.json');
-//let student = JSON.parse(rawdata);
-//console.log(student);
-
-const query = "developer";
-const location = "chicago"
+const puppeteer = require('puppeteer');
 
 const scrapeQuery = async(query, location) => {
 
@@ -14,7 +6,7 @@ const scrapeQuery = async(query, location) => {
 
     try {
         const browser = await puppeteer.launch({
-            headless: false
+            headless: true
         })
         
         const page = await browser.newPage();
@@ -30,38 +22,40 @@ const scrapeQuery = async(query, location) => {
             const timeNodeList = document.querySelectorAll("time");
             const list = [];
             
-            //console.log here prevents the program from crashing, not sure why
-            //leaving the console.log here for now so the program works
-            console.log(locationNodeList[0].innerText); 
-            
-            
             for(let i = 0; i < jobNodeList.length; i++ ){
+                
                 const job = {
-                    id: jobNodeList[i].getAttribute("data-id"),
+                    id: "error loading",
                     type: "blank for now",
-                    url: `https://www.linkedin.com/jobs/view/${jobNodeList[i].getAttribute("data-id")}`,
-                    title: titleNodeList[i].innerText,
-                    company: companyNodeList[i].innerText,
+                    url: "error loading",
+                    title: "error loading",
+                    company: "error loading",
                     company_url: "blank for now",
-                    location: locationNodeList[i].innerText,
-                    created_at: timeNodeList[i].getAttribute("datetime"),
+                    location: "error loading",
+                    created_at: "error loading",
                     description: "will scrape seperately"
                 }
-                list.push(job)
+
+                if(jobNodeList[i]){
+                    job.id = jobNodeList[i].getAttribute("data-id");
+                    job.url = `https://www.linkedin.com/jobs/view/${jobNodeList[i].getAttribute("data-id")}`;
+                    job.title = titleNodeList[i].innerText;
+                    job.company = companyNodeList[i].innerText;
+                    job.location = locationNodeList[i].innerText;
+                    job.created_at = timeNodeList[i].getAttribute("datetime");
+                } 
+
+                list.push(job);
+                
             }
 
             return list;
         });
 
         await browser.close();
-        console.log(listScrape);
-        /*
-        fs.writeFile("linkedInQuery.json", JSON.stringify(listScrape), function(err){
-            if(err) throw err;
-            console.log("Saved!");
-        });
-        */
         console.log("Browser Closed");
+
+        return listScrape;
 
     } catch (err) {
         console.log(err);
@@ -70,6 +64,4 @@ const scrapeQuery = async(query, location) => {
     }
 };
 
-//scrapeQuery(query, location);
-
-export default scrapeQuery;
+module.exports = scrapeQuery;
