@@ -17,7 +17,6 @@ router.post('', (req, res, next)=> {
 
 // Database job_listings Read Route
 router.get('', (req, res, next)=> {
-  res.send("You made it to job_listings get route")
   readListings()
   .then( response => {
     console.log("response from readListings = ", response);

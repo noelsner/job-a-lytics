@@ -60,20 +60,45 @@ const App = ()=> {
   useEffect(() => {
     if(auth.id) {
         const token = window.localStorage.getItem('token');
-        console.log("In useEffect: calling axios.get");
+
         axios.get(`/api/favorites/${auth.id}`)
         .then(response => {
           // copy favorites data to userFavorites array
-          for(let jobIdx = 0; jobIdx < response.data.length; jobIdx++ ) {
+          const numFavorites = response.data.length;
+          for(let jobIdx = 0; jobIdx < numFavorites; jobIdx++ ) {
             userFavorites.push(response.data[jobIdx]);
           }
-          console.log('userFavorites :', userFavorites);
+          //console.log('userFavorites :', userFavorites);
 
-          /*get listings
-          axios.get(`/api/listings`)
+          // Read job_listings from the database
+          //console.log("In useEffect: calling axios.get for job_listings");
+          axios.get(`/api/job_listings`)
           .then(response => {
-            console.log(response.data.length," listings=", response.data);
-          })*/
+            const numListings = response.data.length;
+            //console.log(numListings," job_listings= ", response.data);
+            // copy job_listings data for this user to favoriteListings array
+            const favoriteListings = response.data.map((listing)=> {
+              // check if this listing id is in userFavorites
+              for(let jobIdx = 0; jobIdx < numFavorites; jobIdx++ ) {
+                if( userFavorites[jobIdx].listing_id === listing.id) {
+                  //save this listing for display
+                  savedJobs.push(listing);
+                  return listing;
+                } else { return false }
+              }
+            })
+            console.log("The (",numListings,") Favorite listings for ",auth.id," are: ", favoriteListings);
+
+            /*Add favoriteListings to savedJobs array
+            savedJobs.push(job);
+            if( savedJobs.length > 0 ){
+              setSavedJobs([...savedJobs, favoriteListings]);
+            } else {
+              setSavedJobs(favoriteListings);
+            }
+            console.log("savedJobs = ",savedJobs);*/
+          })
+          .catch( ()=> { (console.error("Error on get /api/job_listings")) } );
         });
     }
   })
