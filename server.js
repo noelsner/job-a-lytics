@@ -6,6 +6,7 @@ const favorites = require('./routes/favorites_routes');
 const users = require('./routes/users_routes');
 const job_listings = require('./routes/job_listings_routes');
 const github_routes = require('./routes/github_routes');
+const linkedin_routes = require('./routes/linkedIn_routes');
 const dl = require('./data_layer');
 const jwt = require('jwt-simple');
 
@@ -54,6 +55,7 @@ app.use('/api/favorites', favorites.router);
 // app.use('/api/users', users.router);
 app.use('/api/job_listings', job_listings.router);
 app.use('/api/github', github_routes.router);
+app.use('/api/linkedin', linkedin_routes.router);
 
 
 app.get('/', (req, res, next)=> {
