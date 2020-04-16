@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-//import puppeteer from 'puppeteer';
-//import scrapeQuery from '../api/linkedInQuery.js';
 
 const SearchBar = ({setJobs}) => {
   const [inputQuery, setInputQuery] = useState(' ');
@@ -9,7 +7,7 @@ const SearchBar = ({setJobs}) => {
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    axios.get(`/api/github/?description=${inputQuery}&location=${inputLocation}`)
+    axios.get(`/api/linkedin/?description=${inputQuery}&location=${inputLocation}`)
       .then( response => setJobs(response.data))
       .catch(ex => console.log(ex))
     //console.log(scrapeQuery);
