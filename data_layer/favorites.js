@@ -8,9 +8,15 @@ const createFavorite = async({ listing_id, user_id })=> {
 };
 
 const readFavorites = async( user_id ) => {
+<<<<<<< HEAD
+  // console.log("In readFavorites");
+  const SQL = 'SELECT * from favorites';
+  const response = await client.query(SQL,[]);
+=======
   console.log("In readFavorites, user_id = ", user_id);
   const SQL = 'SELECT * from favorites WHERE user_id = $1';
   const response = await client.query(SQL,[user_id]);
+>>>>>>> master
   //console.log(response.rows);
   return (response.rows);
 };
@@ -32,7 +38,7 @@ const deleteFavorite = async( id )=> {
 };
 
 const checkForFavorites = async (id) => {
-  console.log("In checkForFavorites");
+  // console.log("In checkForFavorites");
   const sql = 'SELECT * FROM favorites WHERE user_id = $1';
   const data = await client.query(sql, [id]);
   //console.log(data);

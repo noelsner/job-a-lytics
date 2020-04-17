@@ -7,6 +7,8 @@ import Jobs from './jobs';
 import SavedJobs from './SavedJobs.js';
 import seedJobData from './seedJobData';
 import Account from './account';
+import Details from './jobs/Details';
+import {useParams} from 'react-router-dom';
 
 const headers = () => {
   const token = window.localStorage.getItem('token');
@@ -106,6 +108,10 @@ return (
       <Route path='/account'>
         <Account login={login} createAccount={createAccount} />
       </Route>
+ 
+       <Route path='/job/:id' >
+         <Details job={jobs} />
+       </Route>
     </div>
   );
 }

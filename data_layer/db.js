@@ -90,6 +90,19 @@ const sync = async() => {
     // Read from listings, users, and favorites
     // Each function returns an array of objects
     const listingsArr = await readListings();
+<<<<<<< HEAD
+    // console.log( listingsArr );
+
+    const usersArr = await readUsers();
+    // console.log( usersArr );
+
+    for( let i = 0; i < usersArr.length; i++ ){
+      const user_id = usersArr[i].id;
+      // console.log("user_id = ", user_id);
+      if( (await checkForFavorites( user_id )) === true ){
+        const userFavoritesArr = await readFavorites(user_id);
+        // console.log( userFavoritesArr );
+=======
     //console.log( listingsArr );
 
     const usersArr = await readUsers();
@@ -101,6 +114,7 @@ const sync = async() => {
       if( (await checkForFavorites( user_id )) === true ){
         const userFavoritesArr = await readFavorites(user_id);
         //console.log( userFavoritesArr );
+>>>>>>> master
       }
     }
 

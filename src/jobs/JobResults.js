@@ -3,7 +3,7 @@ import Job from './Job';
 
 const JobResults = ({ jobs, savedJobs, setSavedJobs }) => {
   return (
-    <div className='px-3'>
+    <div className='pl-3 pr-3 md:pr-0'>
       <header>
         <div className='text-gray-500 text-xl'>Results for "{jobs[0].query}" in {jobs[0].location}.</div>
         <div className='text-gray-600 text-sm'>Showing 1-10 of {jobs[0].totalResults} jobs.</div>
