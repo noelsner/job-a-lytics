@@ -26,7 +26,7 @@ const App = ()=> {
   const [auth, setAuth] = useState({});
   const [jobs, setJobs] = useState(seedJobData);
   const [savedJobs, setSavedJobs] = useState([]);
-  const userFavorites = [];
+  const [userFavorites, setUserFavorites] = useState([]);
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
@@ -54,6 +54,8 @@ const App = ()=> {
   const logout = () => {
     window.localStorage.removeItem('token');
     setAuth({});
+    setUserFavorites([]);
+    setSavedJobs([]);
     window.location.hash = '#'
   };
 
@@ -88,15 +90,6 @@ const App = ()=> {
               }
             })
             console.log("The (",numListings,") Favorite listings for ",auth.id," are: ", favoriteListings);
-
-            /*Add favoriteListings to savedJobs array
-            savedJobs.push(job);
-            if( savedJobs.length > 0 ){
-              setSavedJobs([...savedJobs, favoriteListings]);
-            } else {
-              setSavedJobs(favoriteListings);
-            }
-            console.log("savedJobs = ",savedJobs);*/
           })
           .catch( ()=> { (console.error("Error on get /api/job_listings")) } );
         });
