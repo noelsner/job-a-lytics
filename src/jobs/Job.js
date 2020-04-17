@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Heart from '../icons/heart';
+import { Link } from 'react-router-dom';
 
 const Job = ({job}) => {
   const [savedBtn, setSavedBtn] = useState(false)
@@ -19,7 +20,7 @@ const Job = ({job}) => {
     <li key={job.id}>
       <div className='bg-gray-800 text-gray-600 mt-6 rounded-lg p-4'>
         <div className='flex justify-between align-middle w-full'>
-          <a className='text-gray-300 text-2xl mr-10 leading-tight'>{job.title}</a>
+          <Link to={`/jobs/${job.id}`} className='text-gray-300 text-2xl mr-10 leading-tight'>{job.title}</Link>
           <button onClick={ev => toggleSaved(ev, job.id)} className='focus:outline-none focus:text-gray-500'>
             <Heart classes={`fill-current text-gray-${savedBtn ? '200' : '700'} w-4 h-4`} />
           </button>

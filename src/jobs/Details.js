@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 
 const Details = (jobs = {jobs}) => {
 
+  let { id } = useParams()
+
+  console.log(id);
+
   const [jobPost, setJobPost] = useState({
     id: "e9e632a7-c756-40c9-b1ca-c3eb5c7f9ce3",
       type: "Full Time",
