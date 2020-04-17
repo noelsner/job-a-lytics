@@ -22,7 +22,7 @@ router.get('/:id', ( req, res, next) => {
   //res.send("You've made it to favorites, id=", req.params.id);
   readFavorites( req.params.id )
   .then( response => {
-    console.log("response from readFavorites:",response);
+    // console.log("response from readFavorites:",response);
     res.send(response)
   })
   .catch( next )

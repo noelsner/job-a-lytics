@@ -11,14 +11,14 @@ const createListing = async({ listing_date, listing_url, company_name, location,
 };
 
 const readListings = async() => {
-  console.log("In readListings");
+  // console.log("In readListings");
   response = await client.query('SELECT * from job_listings');
-  console.log(response.rows);
+  // console.log(response.rows);
   return response.rows;
 };
 
 const updateListing = async(listing)=> {
-  console.log("In updateListing, listing = ", listing);
+  // console.log("In updateListing, listing = ", listing);
 
   const SQL = 'UPDATE job_listings SET listing_date = $1, listing_url = $2, company_name = $3, location = $4, job_title = $5, job_type = $6, contact = $7, company_url = $8, annual_salary = $9, job_description = $10 WHERE id = $11 returning *';
 

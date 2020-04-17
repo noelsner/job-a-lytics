@@ -1,9 +1,11 @@
-import React, { useState, useParams } from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const Details = (jobs = {jobs}) => {
 
-  let params = useParams()
-  console.log('params :', params);
+  let { id } = useParams()
+  console.log('params :', id);
+  console.log('jobs :', jobs);
 
   const [jobPost, setJobPost] = useState({
     id: "e9e632a7-c756-40c9-b1ca-c3eb5c7f9ce3",
@@ -22,7 +24,7 @@ const Details = (jobs = {jobs}) => {
   })
 
   return(
-    <div className='bg-gray-800 h-full text-gray-600 px-3'>
+    <div className='h-full text-gray-600 p-3'>
       <h1>{jobPost.title}</h1>
       <h2> {jobPost.created_at}</h2>
       

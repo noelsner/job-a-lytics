@@ -2,7 +2,7 @@ const client = require("./client");
 const { hash } = require("./auth");
 
 const readUsers = async() => {
-  console.log("In readUsers")
+  // console.log("In readUsers")
   return (await client.query("SELECT * from users")).rows;
 };
 

@@ -22,7 +22,7 @@ const Job = ({job, savedJobs}) => {
     <li key={job.id}>
       <div className='bg-gray-800 text-gray-600 mt-6 rounded-lg p-4'>
         <div className='flex justify-between align-middle w-full'>
-          <Link to={`/jobs/${job.id}`} className='text-gray-300 text-2xl mr-10 leading-tight'>{job.title}</Link>
+          <Link to={`/job/${job.id}`} className='text-gray-300 text-2xl mr-10 leading-tight'>{job.title}</Link>
           <button onClick={ev => toggleSaved(ev, job.id)} className='focus:outline-none focus:text-gray-500'>
             <Heart classes={`fill-current text-gray-${savedBtn ? '200' : '700'} w-4 h-4`} />
           </button>
