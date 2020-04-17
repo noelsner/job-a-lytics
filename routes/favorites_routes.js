@@ -21,11 +21,7 @@ router.get('/:id', ( req, res, next) => {
   console.log(req.params.id);
   readFavorites( req.params.id )
   .then( response => {
-<<<<<<< HEAD
     // console.log("response from readFavorites:",response);
-=======
-    //console.log("response from readFavorites:",response);
->>>>>>> master
     res.send(response)
   })
   .catch( next )
