@@ -22,7 +22,7 @@ const updateListing = async(listing)=> {
 
   const SQL = 'UPDATE job_listings SET listing_date = $1, listing_url = $2, company_name = $3, location = $4, job_title = $5, job_type = $6, contact = $7, company_url = $8, annual_salary = $9, job_description = $10 WHERE id = $11 returning *';
 
-  const response = await client.query(SQL, [ listing.listing_date, listing.listing_url, listing.company_name, listing.location, listing.job_title, listing.job_type, listing.contact, listing.company_url, listing.annual_salary, listing.job_description ]);
+  const response = await client.query(SQL, [ listing.listing_date, listing.listing_url, listing.company_name, listing.location, listing.job_title, listing.job_type, listing.contact, listing.company_url, listing.annual_salary, listing.job_description, listing.listing_id ]);
 
   return response.rows[0];
 }

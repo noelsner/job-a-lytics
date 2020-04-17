@@ -19,16 +19,20 @@ router.post('', (req, res, next)=> {
 
 router.get('/:id', ( req, res, next) => {
   console.log(req.params.id);
-  //res.send("You've made it to favorites, id=", req.params.id);
   readFavorites( req.params.id )
   .then( response => {
+<<<<<<< HEAD
     // console.log("response from readFavorites:",response);
+=======
+    //console.log("response from readFavorites:",response);
+>>>>>>> master
     res.send(response)
   })
   .catch( next )
 });
 
 // Database favorites Update Route
+
 router.put('/:id', (req, res, next)=> {
   updateFavorite({...req.body, id: req.params.id})
   .then( response => res.send(response) )
@@ -36,6 +40,7 @@ router.put('/:id', (req, res, next)=> {
 });
 
 // Database favorites Delete Route
+
 router.delete('/:id', (req, res, next)=> {
   deleteFavorite( req.params.id )
   .then( response => res.send(response) )
