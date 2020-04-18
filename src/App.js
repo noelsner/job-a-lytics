@@ -22,7 +22,7 @@ const App = ()=> {
   const [auth, setAuth] = useState({});
   const [jobs, setJobs] = useState(seedJobData);
   const [savedJobs, setSavedJobs] = useState([]);
-  const [userFavorites, setUserFavorites] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
@@ -98,7 +98,7 @@ const App = ()=> {
         const token = window.localStorage.getItem('token');
         axios.get('/api/favorites', headers())
           .then((response) => {
-            setSavedJobs(response.data);
+            setFavorites(response.data);
           });
       }
     },
@@ -115,21 +115,19 @@ return (
     <div>
       <Navbar logout={logout} auth={auth} />
 
-      <Route exact path='/'>
+      <Route exact path='/' >
         <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs}  />
-      </Route>
+      </Route>        
 
       <Route exact path='/jobs/saved'>
-        <SavedJobs auth={auth} savedJobs={savedJobs} />
+        <SavedJobs auth={auth} savedJobs={savedJobs} favorites={favorites} />
       </Route>
 
       <Route path='/account'>
         <Account login={login} createAccount={createAccount} />
       </Route>
- 
-       <Route path='/job/:id' >
-         <Details job={jobs} />
-       </Route>
+      
+      <Route path='/job/:id' render={(params) => <Details {...params} jobs={jobs} />} />
     </div>
   );
 }
