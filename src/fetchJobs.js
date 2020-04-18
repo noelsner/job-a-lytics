@@ -4,7 +4,7 @@ import axios from "axios";
 const fetchJobs = async() => {
   console.log("In fetchJobs")
   try {
-    const response = await axios.get(`/api/job_listings`);
+    const response = await axios.get(`/api/saved_jobs`);
     console.log(response.data);
     return response.data;
   } catch(error) {

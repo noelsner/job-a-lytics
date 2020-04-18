@@ -1,13 +1,11 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const db = require('./data_layer/db');
-const favorites = require('./routes/favorites_routes');
-const users = require('./routes/users_routes');
-const job_listings = require('./routes/job_listings_routes');
-const github_routes = require('./routes/github_routes');
-const linkedin_routes = require('./routes/linkedIn_routes');
-const dl = require('./data_layer');
+const db = require('./db');
+const favorites = require('./routes/favorites');
+const saved_jobs = require('./routes/saved_jobs');
+const github_routes = require('./routes/github');
+const linkedin_routes = require('./routes/linkedIn');
 const jwt = require('jwt-simple');
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
@@ -15,6 +13,16 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
 // body parser
 app.use(express.json());
+
+//routes imported from routes folder
+app.use('/api/favorites', favorites.router);
+app.use('/api/saved_jobs', saved_jobs.router);
+app.use('/api/github', github_routes.router);
+app.use('/api/linkedin', linkedin_routes.router);
+
+app.get('/', (req, res, next)=> {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 //authentication
 const isLoggedIn = (req, res, next)=> {
@@ -38,7 +46,7 @@ app.use((req, res, next)=> {
   if(!token){
     return next();
   }
-  dl.findUserFromToken(token)
+  db.findUserFromToken(token)
     .then( auth => {
       req.user = auth;
       next();
@@ -50,21 +58,8 @@ app.use((req, res, next)=> {
     });
 });
 
-//routes imported from routes folder
-app.use('/api/favorites', favorites.router);
-// app.use('/api/users', users.router);
-app.use('/api/job_listings', job_listings.router);
-app.use('/api/github', github_routes.router);
-app.use('/api/linkedin', linkedin_routes.router);
-
-
-app.get('/', (req, res, next)=> {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-//authenticate user
 app.post('/api/auth', (req, res, next)=> {
-  dl.authenticate(req.body)
+  db.authenticate(req.body)
     .then( token => {
       res.send({ token })
     })
@@ -81,7 +76,7 @@ app.get('/api/auth', isLoggedIn, (req, res, next) => {
 
 //create user
 app.post('/api/users', (req, res, next) => {
-  dl.createUser({...req.body, role: "USER"})
+  db.createUser({...req.body, role: "USER"})
     .then(user => {
       const token = jwt.encode({ id: user.id }, process.env.JWT);
       delete user.password;
@@ -90,7 +85,7 @@ app.post('/api/users', (req, res, next) => {
     .catch(next);
 });
 
-// Error handlers
+// Error handbers
 app.use((req, res, next)=> {
   next({
     status: 404,
@@ -105,9 +100,7 @@ app.use((err, req, next)=> {
 });
 
 // UI connection
-
 const port = process.env.PORT || 3000;
-
 db.sync()
   .then(()=> {
     app.listen(port, ()=> {console.log(`listening on port ${port}`)

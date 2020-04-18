@@ -1,15 +1,16 @@
 const client = require("./client");
 const { authenticate, compare, findUserFromToken, hash } = require('./auth');
-const { createListing, readListings } = require("./index");
-const { createUser, readUsers } = require("./users");
-const { createFavorite, checkForFavorites, readFavorites } = require("./favorites");
+const { createUser, readUsers, updateUser, deleteUser } = require("./users");
+const { createFavorite, checkForFavorites, readFavorites, updateFavorite, deleteFavorite } = require("./favorites");
+const { createListing, readListings, updateListing, deleteListing } = require("./listings");
+
 
 const sync = async() => {
 
   const SQL = `
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
     DROP TABLE IF EXISTS favorites;
-    DROP TABLE IF EXISTS job_listings;
+    DROP TABLE IF EXISTS saved_jobs;
     DROP TABLE IF EXISTS users;
 
     CREATE TABLE users(
@@ -23,27 +24,27 @@ const sync = async() => {
       role VARCHAR(20) DEFAULT 'USER'
     );
 
-    CREATE TABLE job_listings(
+    CREATE TABLE saved_jobs(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      posted_date TIMESTAMP default CURRENT_TIMESTAMP,
-      listing_date VARCHAR(50),
-      listing_url VARCHAR(100),
-      job_type VARCHAR(20) DEFAULT 'FULL-TIME',
-      company_name VARCHAR(50) NOT NULL,
-      CHECK (length(company_name) > 0),
+      company VARCHAR(50) NOT NULL,
+      title VARCHAR(50) NOT NULL,
+      type VARCHAR(20) DEFAULT 'Full Time',
       location VARCHAR(50) NOT NULL,
-      job_title VARCHAR(50) NOT NULL,
-      contact VARCHAR(100) NOT NULL,
-      company_url VARCHAR(100),
-      annual_salary VARCHAR(50),
-      job_description TEXT
+      "postedDate" TIMESTAMP default CURRENT_TIMESTAMP,
+      "listingDate" VARCHAR(50),
+      contact VARCHAR(100),
+      salary VARCHAR(50),
+      description TEXT,
+      "companyURL" VARCHAR(100),
+      "listingURL" VARCHAR(100),
+      CHECK (length(company) > 0)
     );
 
     CREATE TABLE favorites(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       date TIMESTAMP default CURRENT_TIMESTAMP,
-      listing_id UUID REFERENCES job_listings(id),
-      user_id UUID REFERENCES users(id)
+      "listingId" UUID REFERENCES saved_jobs(id),
+      "userId" UUID REFERENCES users(id)
     );
     `;
     await client.query(SQL);
@@ -66,41 +67,41 @@ const sync = async() => {
       }
     };
 
+    const _favorites = {
+
+    };
+
     // Create Users
     const [jobSeeker, moe] = await Promise.all(Object.values(_users).map( user => createUser(user)));
 
-    //Create job_listings
+    //Create saved_jobs
     //Job types are FULL-TIME, PART-TIME, CONTRACT, TEMPORARY, INTERNSHIP
     const[ Fullstack ] = await Promise.all([
       createListing({
-        company_name: 'Fullstack',
+        company: 'Fullstack',
         location: "New York City",
-        job_title: "software developer",
-        job_type: "FULL-TIME",
+        title: "software developer",
+        type: "Full Time",
         contact: "Eric P. Katz",
-        job_description: "Recommend delicious recipes while coding flawlessly."
+        description: "Recommend delicious recipes while coding flawlessly."
       })
     ]);
 
     //Create favorites
     const [ susanFavorite ] = await Promise.all([
-      createFavorite({ listing_id: Fullstack.id, user_id: jobSeeker.id })
+      createFavorite({ listingId: Fullstack.id, userId: jobSeeker.id })
     ]);
 
     // Read from listings, users, and favorites
     // Each function returns an array of objects
     const listingsArr = await readListings();
-    console.log( listingsArr );
 
     const usersArr = await readUsers();
-    console.log( usersArr );
 
     for( let i = 0; i < usersArr.length; i++ ){
-      const user_id = usersArr[i].id;
-      console.log("user_id = ", user_id);
-      if( (await checkForFavorites( user_id )) === true ){
-        const userFavoritesArr = await readFavorites(user_id);
-        console.log( userFavoritesArr );
+      const userId = usersArr[i].id;
+      if( (await checkForFavorites( userId )) === true ){
+        const userFavoritesArr = await readFavorites(userId);
       }
     }
 
@@ -109,6 +110,8 @@ const sync = async() => {
 
 module.exports = {
     sync,
-    authenticate,
-    findUserFromToken,
+    createListing, readListings, updateListing, deleteListing,
+    createUser, readUsers, updateUser, deleteUser,
+    createFavorite, readFavorites, updateFavorite, deleteFavorite,
+    authenticate, compare, findUserFromToken, hash
 }

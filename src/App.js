@@ -4,11 +4,10 @@ import axios from 'axios';
 
 import Navbar from './navbar';
 import Jobs from './jobs';
+import Details from './jobs/Details';
 import SavedJobs from './SavedJobs.js';
 import seedJobData from './seedJobData';
 import Account from './account';
-import Details from './jobs/Details';
-import {useParams} from 'react-router-dom';
 
 const headers = () => {
   const token = window.localStorage.getItem('token');
@@ -56,49 +55,68 @@ const App = ()=> {
     window.location.hash = '#'
   };
 
-  useEffect(() => {
-    if(auth.id) {
+  // useEffect(() => {
+  //   if(auth.id) {
+  //       const token = window.localStorage.getItem('token');
+
+  //       axios.get(`/api/favorites/${auth.id}`)
+  //       .then(response => {
+  //         // copy favorites data to userFavorites array
+  //         const numFavorites = response.data.length;
+  //         for(let jobIdx = 0; jobIdx < numFavorites; jobIdx++ ) {
+  //           userFavorites.push(response.data[jobIdx]);
+  //         }
+  //         //console.log('userFavorites :', userFavorites);
+
+  //         // Read saved_jobs from the database
+  //         //console.log("In useEffect: calling axios.get for saved_jobs");
+  //         axios.get(`/api/saved_jobs`)
+  //         .then(response => {
+  //           const numListings = response.data.length;
+  //           //console.log(numListings," saved_jobs= ", response.data);
+  //           // copy saved_jobs data for this user to favoriteListings array
+  //           const favoriteListings = response.data.map((listing)=> {
+  //             // check if this listing id is in userFavorites
+  //             for(let jobIdx = 0; jobIdx < numFavorites; jobIdx++ ) {
+  //               if( userFavorites[jobIdx].listingId === listing.id) {
+  //                 //save this listing for display
+  //                 savedJobs.push(listing);
+  //                 return listing;
+  //               } else { return false }
+  //             }
+  //           })
+  //           console.log("The (",numListings,") Favorite listings for ",auth.id," are: ", favoriteListings);
+  //         })
+  //         .catch( ()=> { (console.error("Error on get /api/saved_jobs")) } );
+  //       });
+  //   }
+  // })
+
+  useEffect(
+    () => {
+      if (auth.id) {
         const token = window.localStorage.getItem('token');
+        axios.get('/api/favorites', headers())
+          .then((response) => {
+            setSavedJobs(response.data);
+          });
+      }
+    },
+    [auth]
+  );
 
-        axios.get(`/api/favorites/${auth.id}`)
-        .then(response => {
-          // copy favorites data to userFavorites array
-          const numFavorites = response.data.length;
-          for(let jobIdx = 0; jobIdx < numFavorites; jobIdx++ ) {
-            userFavorites.push(response.data[jobIdx]);
-          }
-          //console.log('userFavorites :', userFavorites);
+  const saveJob = () => {
+    console.log('save job')
+  };
 
-          // Read job_listings from the database
-          //console.log("In useEffect: calling axios.get for job_listings");
-          axios.get(`/api/job_listings`)
-          .then(response => {
-            const numListings = response.data.length;
-            //console.log(numListings," job_listings= ", response.data);
-            // copy job_listings data for this user to favoriteListings array
-            const favoriteListings = response.data.map((listing)=> {
-              // check if this listing id is in userFavorites
-              for(let jobIdx = 0; jobIdx < numFavorites; jobIdx++ ) {
-                if( userFavorites[jobIdx].listing_id === listing.id) {
-                  //save this listing for display
-                  savedJobs.push(listing);
-                  return listing;
-                } else { return false }
-              }
-            })
-            console.log("The (",numListings,") Favorite listings for ",auth.id," are: ", favoriteListings);
-          })
-          .catch( ()=> { (console.error("Error on get /api/job_listings")) } );
-        });
-    }
-  })
+  console.log('savedJobs :', savedJobs);
 
 return (
     <div>
       <Navbar logout={logout} auth={auth} />
 
       <Route exact path='/'>
-        <Jobs jobs={jobs} setJobs = {setJobs} />
+        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs}  />
       </Route>
 
       <Route exact path='/jobs/saved'>

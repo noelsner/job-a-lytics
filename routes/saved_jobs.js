@@ -1,21 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
-const { createListing, readListings, updateListing, deleteListing } = require("../data_layer/index.js");
+const { createListing, readListings, updateListing, deleteListing } = require("../db");
 
-// Database job_listing Create Route
-
+// Database saved_jobs Create Route
 router.post('', (req, res, next)=> {
-  const company_name = req.body;
+  const company = req.body;
   console.log("In router.post")
   console.log(req.body);
   console.log(req.params);
-  createListing(listing_date, listing_url, company_name, location, job_title, job_type, contact, company_url, annual_salary, job_description)
+  createListing(listingDate, listingURL, company, location, title, type, contact, companyURL, salary, description)
   .then( response => res.send(response) )
   .catch( next )
 });
 
-// Database job_listings Read Route
+// Database saved_jobs Read Route
 router.get('', (req, res, next)=> {
   readListings()
   .then( response => {
@@ -25,32 +23,18 @@ router.get('', (req, res, next)=> {
   .catch( next )
 });
 
-// Database job_listings Update Route
+// Database saved_jobs Update Route
 router.put('/:id', (req, res, next)=> {
   updateListing({...req.body, id: req.params.id})
   .then( response => res.send(response) )
   .catch( next )
 });
 
-// Database job_listings Delete Route
+// Database saved_jobs Delete Route
 router.delete('/:id', (req, res, next)=> {
   deleteListing( req.params.id )
   .then( response => res.send(response) )
   .catch( next )
-});
-
-// Error handlers
-router.use((req, res, next)=> {
-  next({
-    status: 404,
-    message: `Page not found for ${req.method} ${req.url}`
-  })
-});
-
-router.use((err, req, next)=> {
-  res.status(err.status || 500).send({
-    message: err.message || JSON.stringify(err)
-  });
 });
 
 module.exports = { router };

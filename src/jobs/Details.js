@@ -13,7 +13,7 @@ const Details = (jobs = {jobs}) => {
       url: "https://jobs.github.com/positions/e9e632a7-c756-40c9-b1ca-c3eb5c7f9ce3",
       created_at: "Sat Aug 03 00:50:23 UTC 2019",
       company: "Game Closure",
-      company_url: "http://gameclosure.com",
+      companyURL: "http://gameclosure.com",
       location: "USA",
       title: "Title",
       description: `<p>GAME CLOSURE</p>\n
