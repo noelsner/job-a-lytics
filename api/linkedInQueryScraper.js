@@ -27,35 +27,36 @@ const scrapeQuery = async(query, location) => {
                 
                 const job = {
                     id: "error loading, please run search again",
-                    type: "blank for now",
-                    url: "error loading, please run search again",
-                    title: "error loading, please run search again",
                     company: "error loading, please run search again",
-                    companyURL: "blank for now",
+                    title: "error loading, please run search again",
+                    type: "blank for now",
                     location: "error loading, please run search again",
-                    created_at: "error loading, please run search again",
+                    listingURL: "error loading, please run search again",
+                    companyURL: "blank for now",
+                    postedDate: "error loading, please run search again",
                     description: "error loading, please run search again"
                 }
 
-                if(jobNodeList[i]){
+               if(jobNodeList[i]){
                     job.id = jobNodeList[i].getAttribute("data-id");
-                    job.url = `https://www.linkedin.com/jobs/view/${jobNodeList[i].getAttribute("data-id")}`;
+                    job.listingURL = `https://www.linkedin.com/jobs/view/${jobNodeList[i].getAttribute("data-id")}`;
+                }
+
+                if(companyNodeList[i]){
+                    job.company = companyNodeList[i].innerText;
                 }
 
                 if(titleNodeList[i]){
                     job.title = titleNodeList[i].innerText;
                 }
 
-                if(companyNodeList[i]){
-                    job.company = companyNodeList[i].innerText;
-                }
                 
                 if(locationNodeList[i]){
                     job.location = locationNodeList[i].innerText;
                 }
                 
                 if(timeNodeList[i]){
-                    job.created_at = timeNodeList[i].getAttribute("datetime");
+                    job.postedDate = timeNodeList[i].getAttribute("datetime");
                 }
                 
                 if(snippetNodeList[i]){
