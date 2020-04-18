@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 
-const Details = (jobs = {jobs}) => {
+const Details = ({match, jobs}) => {
 
-  let { id } = useParams()
-  console.log('params :', id);
-  console.log('jobs :', jobs);
+  console.log('match :', match);
 
   const [jobPost, setJobPost] = useState({
     id: "e9e632a7-c756-40c9-b1ca-c3eb5c7f9ce3",
