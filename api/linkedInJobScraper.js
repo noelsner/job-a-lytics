@@ -1,18 +1,18 @@
 const puppeteer = require('puppeteer');
 
-const scrapeJob = async(linkedInURL) => {
+const scrapeJob = async(id) => {
 
     try {
         const browser = await puppeteer.launch({
             headless: true
         })
-        
+        const linkedInURL = `https://www.linkedin.com/jobs/view/${id}`;
         const page = await browser.newPage();
 
         await page.goto(linkedInURL);
         await page.waitForSelector("main");
 
-        const scrapeJobId = await page.evaluate( (linkedInURL) => {
+        const scrapeJobId = await page.evaluate( (linkedInURL, id) => {
 
             const descriptionNode = document.querySelector("section.description");
             const titleNode = document.querySelector("h1.topcard__title");
@@ -21,24 +21,23 @@ const scrapeJob = async(linkedInURL) => {
             const timeNode = document.querySelector("span.topcard__flavor--metadata.posted-time-ago__text");
            
             const job = {
-                id: "blank for now",
-                type: "blank for now",
-                url: linkedInURL,
-                title: "error loading, please run search again",
-                seniority: "Error loading description. Please try again at a later time",
+                id: id,
                 company: "error loading, please run search again",
-                companyURL: "blank for now",
+                title: "error loading, please run search again",
+                type: "blank for now",
                 location: "error loading, please run search again",
-                created_at: "error loading, please run search again",
+                listingURL: linkedInURL,
+                companyURL: "blank for now",
+                postedDate: "error loading, please run search again",
                 description: "error loading, please run search again", 
             };
+            
+            if(companyNode){
+                job.company = companyNode.innerText;
+            }
 
             if(titleNode){
                 job.title = titleNode.innerText;
-            }
-
-            if(companyNode){
-                job.company = companyNode.innerText;
             }
 
             if(locationNode){
@@ -46,7 +45,7 @@ const scrapeJob = async(linkedInURL) => {
             }
 
             if(timeNode){
-                job.created_at = timeNode.innerText;
+                job.postedDate = timeNode.innerText;
             }
 
             if(descriptionNode) {
@@ -58,7 +57,7 @@ const scrapeJob = async(linkedInURL) => {
 
         await browser.close();
         console.log("Browser Closed");
-        console.log(scrapeJobId);
+        //console.log(scrapeJobId);
         return scrapeJobId;
 
     } catch (err) {
@@ -68,6 +67,6 @@ const scrapeJob = async(linkedInURL) => {
     }
 };
 
-scrapeJob("https://www.linkedin.com/jobs/view/1823436034");
+//scrapeJob("1823436034");
 
 module.exports = scrapeJob;

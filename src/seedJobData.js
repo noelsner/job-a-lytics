@@ -1,6 +1,6 @@
 const seedJobData = [
   {
-    id: "e9e632a7-c756-40c9-b1ca-c3eb5c7f9ce3",
+    id: "1825003219",
     company: "Game Closure",
     title: "Senior Game Engineer (REMOTE)",
     type: "Full Time",
@@ -11,7 +11,7 @@ const seedJobData = [
     listingURL: "https://jobs.github.com/positions/e9e632a7-c756-40c9-b1ca-c3eb5c7f9ce3",
   },
   {
-    id: "0b183e14-9064-44cb-afa1-52585b124ed2",
+    id: "1727813562",
     company: "GetThru",
     title: "Vice President of Engineering",
     type: "Full Time",
@@ -22,7 +22,7 @@ const seedJobData = [
     listingURL: "https://jobs.github.com/positions/0b183e14-9064-44cb-afa1-52585b124ed2",
   },
   {
-    id: "051f00e9-068c-47b8-a85a-674a626eff17",
+    id: "1825057931",
     company: "Gorgias",
     title: "Full-Stack Engineer",
     type: "Full Time",
@@ -31,18 +31,7 @@ const seedJobData = [
     description: "We created the company in Paris and are now a San Francisco based startup with a newly opened Paris office. We're making a SaaS helpdesk that automates a big part of the repetitive customer support tasks. We're close to 2000+ paying companies using our product and growing fast.",
     companyURL: "https://www.gorgias.com/",
     listingURL: "https://jobs.github.com/positions/051f00e9-068c-47b8-a85a-674a626eff17",
-  },
-  {
-  id: "0111dd85-71cd-45e3-972c-023b152005d6",
-  company: "Triplebyte",
-  title: "Full Stack Engineer",
-  type: "Full Time",
-  location: "San Francisco or Remote",
-  postedDate: "Wed Mar 18 23:23:32 UTC 2020",
-  description: "Triplebyte is transforming the way software engineers are hired. Our mission is to build an open, valuable and skills-based credential for all engineers. This is important because millions of people have skills (and deserve good jobs), but don’t fit the profile that recruiters seek. Another way of saying this is that talent is uniformly distributed, but opportunity is not. Our goal is to broaden the distribution of opportunity.",
-  companyURL: "http://www.triplebyte.com",
-  listingURL: "https://jobs.github.com/positions/0111dd85-71cd-45e3-972c-023b152005d6",
-  },
+  }
 ]
 
 export default seedJobData;
