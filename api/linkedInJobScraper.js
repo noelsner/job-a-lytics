@@ -27,7 +27,7 @@ const scrapeJob = async(linkedInURL) => {
                 title: "error loading, please run search again",
                 seniority: "Error loading description. Please try again at a later time",
                 company: "error loading, please run search again",
-                company_url: "blank for now",
+                companyURL: "blank for now",
                 location: "error loading, please run search again",
                 created_at: "error loading, please run search again",
                 description: "error loading, please run search again", 

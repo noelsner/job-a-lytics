@@ -31,7 +31,7 @@ const scrapeQuery = async(query, location) => {
                     url: "error loading, please run search again",
                     title: "error loading, please run search again",
                     company: "error loading, please run search again",
-                    company_url: "blank for now",
+                    companyURL: "blank for now",
                     location: "error loading, please run search again",
                     created_at: "error loading, please run search again",
                     description: "error loading, please run search again"
