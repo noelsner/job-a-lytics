@@ -1,18 +1,18 @@
 const puppeteer = require('puppeteer');
 
-const scrapeJob = async(linkedInURL) => {
+const scrapeJob = async(id) => {
 
     try {
         const browser = await puppeteer.launch({
             headless: true
         })
-        
+        const linkedInURL = `https://www.linkedin.com/jobs/view/${id}`;
         const page = await browser.newPage();
 
         await page.goto(linkedInURL);
         await page.waitForSelector("main");
 
-        const scrapeJobId = await page.evaluate( (linkedInURL) => {
+        const scrapeJobId = await page.evaluate( (linkedInURL, id) => {
 
             const descriptionNode = document.querySelector("section.description");
             const titleNode = document.querySelector("h1.topcard__title");
@@ -21,7 +21,7 @@ const scrapeJob = async(linkedInURL) => {
             const timeNode = document.querySelector("span.topcard__flavor--metadata.posted-time-ago__text");
            
             const job = {
-                id: "blank for now",
+                id: id,
                 type: "blank for now",
                 url: linkedInURL,
                 title: "error loading, please run search again",
@@ -58,7 +58,7 @@ const scrapeJob = async(linkedInURL) => {
 
         await browser.close();
         console.log("Browser Closed");
-        console.log(scrapeJobId);
+        //console.log(scrapeJobId);
         return scrapeJobId;
 
     } catch (err) {
@@ -68,6 +68,6 @@ const scrapeJob = async(linkedInURL) => {
     }
 };
 
-scrapeJob("https://www.linkedin.com/jobs/view/1823436034");
+//scrapeJob("1823436034");
 
 module.exports = scrapeJob;
