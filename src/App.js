@@ -5,7 +5,7 @@ import axios from 'axios';
 import Navbar from './navbar';
 import Jobs from './jobs';
 import Details from './jobs/Details';
-import SavedJobs from './SavedJobs.js';
+import SavedJobs from './jobs/SavedJobs.js';
 import seedJobData from './seedJobData';
 import Account from './account';
 
@@ -55,43 +55,6 @@ const App = ()=> {
     window.location.hash = '#'
   };
 
-  // useEffect(() => {
-  //   if(auth.id) {
-  //       const token = window.localStorage.getItem('token');
-
-  //       axios.get(`/api/favorites/${auth.id}`)
-  //       .then(response => {
-  //         // copy favorites data to userFavorites array
-  //         const numFavorites = response.data.length;
-  //         for(let jobIdx = 0; jobIdx < numFavorites; jobIdx++ ) {
-  //           userFavorites.push(response.data[jobIdx]);
-  //         }
-  //         //console.log('userFavorites :', userFavorites);
-
-  //         // Read saved_jobs from the database
-  //         //console.log("In useEffect: calling axios.get for saved_jobs");
-  //         axios.get(`/api/saved_jobs`)
-  //         .then(response => {
-  //           const numListings = response.data.length;
-  //           //console.log(numListings," saved_jobs= ", response.data);
-  //           // copy saved_jobs data for this user to favoriteListings array
-  //           const favoriteListings = response.data.map((listing)=> {
-  //             // check if this listing id is in userFavorites
-  //             for(let jobIdx = 0; jobIdx < numFavorites; jobIdx++ ) {
-  //               if( userFavorites[jobIdx].savedJobId === listing.id) {
-  //                 //save this listing for display
-  //                 savedJobs.push(listing);
-  //                 return listing;
-  //               } else { return false }
-  //             }
-  //           })
-  //           console.log("The (",numListings,") Favorite listings for ",auth.id," are: ", favoriteListings);
-  //         })
-  //         .catch( ()=> { (console.error("Error on get /api/saved_jobs")) } );
-  //       });
-  //   }
-  // })
-
   useEffect(
     () => {
       if (auth.id) {
@@ -105,13 +68,24 @@ const App = ()=> {
     [auth]
   );
 
-
+  useEffect(
+    () => {
+      if (auth.id) {
+        const token = window.localStorage.getItem('token');
+        axios.get(`/api/saved_jobs/${auth.id}`, headers())
+          .then((response) => {
+            setSavedJobs(response.data);
+          });
+      }
+    },
+    [favorites]
+  );
 
   const saveJob = () => {
     console.log('save job')
   };
 
-  // console.log('savedJobs :', savedJobs);
+  console.log('savedJobs :', savedJobs);
   console.log('favorites :', favorites);
 
 return (

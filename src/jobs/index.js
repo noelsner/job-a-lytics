@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import JobResults from './JobResults';
 import Sidebar from './Sidebar';
-import Details from './Details';
-
-import {useParams} from 'react-router-dom';
-
-
 
 const Jobs = ({jobs, setJobs, savedJobs, setSavedJobs}) => {
   return (
@@ -23,20 +18,11 @@ const Jobs = ({jobs, setJobs, savedJobs, setSavedJobs}) => {
           </div>
         </div>
       </Route>
-      <Route path='/job/:id' >
-        <Test />
-        {/* <Details jobs={jobs} /> */}
-      </Route>
+      {/* <Route path='/job/:id' >
+        <Details jobs={jobs} />
+      </Route> */}
     </Switch>
   );
 };
-
-const Test = () =>  {
-  let { id } = useParams()
-  console.log('id :', id);
-  return (
-    <h1>hello world</h1>
-  )
-}
 
 export default Jobs;
