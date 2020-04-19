@@ -78,7 +78,7 @@ const App = ()=> {
   //           const favoriteListings = response.data.map((listing)=> {
   //             // check if this listing id is in userFavorites
   //             for(let jobIdx = 0; jobIdx < numFavorites; jobIdx++ ) {
-  //               if( userFavorites[jobIdx].listingId === listing.id) {
+  //               if( userFavorites[jobIdx].savedJobId === listing.id) {
   //                 //save this listing for display
   //                 savedJobs.push(listing);
   //                 return listing;
@@ -96,7 +96,7 @@ const App = ()=> {
     () => {
       if (auth.id) {
         const token = window.localStorage.getItem('token');
-        axios.get('/api/favorites', headers())
+        axios.get(`/api/favorites/${auth.id}`, headers())
           .then((response) => {
             setFavorites(response.data);
           });
@@ -105,11 +105,14 @@ const App = ()=> {
     [auth]
   );
 
+
+
   const saveJob = () => {
     console.log('save job')
   };
 
-  console.log('savedJobs :', savedJobs);
+  // console.log('savedJobs :', savedJobs);
+  console.log('favorites :', favorites);
 
 return (
     <div>

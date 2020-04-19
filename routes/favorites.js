@@ -5,7 +5,7 @@ const { createFavorite, readFavorites, updateFavorite, deleteFavorite } = requir
 // Database favorites Create Route
 router.post('', (req, res, next)=> {
   const company = req.body;
-  createFavorite(listingId, userId)
+  createFavorite(savedJobId, userId)
   .then( response => res.send(response) )
   .catch( next )
 });
