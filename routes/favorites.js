@@ -3,9 +3,11 @@ const router = express.Router();
 const { createFavorite, readFavorites, updateFavorite, deleteFavorite } = require("../db/index.js");
 
 // Database favorites Create Route
-router.post('', (req, res, next)=> {
-  const company = req.body;
-  createFavorite(savedJobId, userId)
+router.post('/:id', (req, res, next)=> {
+  console.log('req.params.id :', req.params.id);
+  console.log('req.body :', req.body);
+  const {savedJobId} = req.body;
+  createFavorite({userId: req.params.id, savedJobId})
   .then( response => res.send(response) )
   .catch( next )
 });

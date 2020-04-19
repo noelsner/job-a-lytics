@@ -1,6 +1,6 @@
 const seedJobData = [
   {
-    id: "1825003219",
+    listingId: "1825003219",
     company: "Game Closure",
     title: "Senior Game Engineer (REMOTE)",
     type: "Full Time",
@@ -11,18 +11,18 @@ const seedJobData = [
     listingURL: "https://jobs.github.com/positions/e9e632a7-c756-40c9-b1ca-c3eb5c7f9ce3",
   },
   {
-    id: "1727813562",
+    listingId: "1727813562",
     company: "GetThru",
-    title: "Vice President of Engineering",
+    title: "Vice PreslistingIdent of Engineering",
     type: "Full Time",
     location: "Remote",
     postedDate: "Tue Mar 31 19:05:41 UTC 2020",
-    description: "GetThru is hiring a Vice President of Engineering to define and drive the technical strategy, architectural vision, and development methodology for our software-as-a-service products. The VP of Engineering will instill the structure and processes necessary to build high quality software while maintaining the flexibility needed for a rapidly growing, entrepreneurial enterprise.",
+    description: "GetThru is hiring a Vice PreslistingIdent of Engineering to define and drive the technical strategy, architectural vision, and development methodology for our software-as-a-service products. The VP of Engineering will instill the structure and processes necessary to build high quality software while maintaining the flexibility needed for a raplistingIdly growing, entrepreneurial enterprise.",
     companyURL: "http://www.getthru.io",
     listingURL: "https://jobs.github.com/positions/0b183e14-9064-44cb-afa1-52585b124ed2",
   },
   {
-    id: "1825057931",
+    listingId: "1825057931",
     company: "Gorgias",
     title: "Full-Stack Engineer",
     type: "Full Time",

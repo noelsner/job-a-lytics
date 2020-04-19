@@ -81,15 +81,13 @@ const sync = async() => {
         description: "Recommend delicious recipes while coding flawlessly.",
       },
       job1: {
-        listingId: "1825057931",
-        company: "Gorgias",
+        listingId: "1234567891234567",
+        company: "Acme Developers",
         title: "Full-Stack Engineer",
-        type: "Full Time",
-        location: "Paris and San Francisco",
+        type: "Part Time",
+        location: "Remote",
         postedDate: "Thu Mar 19 17:57:51 UTC 2020",
-        description: "We created the company in Paris and are now a San Francisco based startup with a newly opened Paris office. We're making a SaaS helpdesk that automates a big part of the repetitive customer support tasks. We're close to 2000+ paying companies using our product and growing fast.",
-        companyURL: "https://www.gorgias.com/",
-        listingURL: "https://jobs.github.com/positions/051f00e9-068c-47b8-a85a-674a626eff17",
+        description: "You will work to create a capstone project of your choosing.",
       }
     };
     const [fullstack, job1] = await Promise.all(Object.values(_savedJobs).map( job => createSavedListing(job)));
