@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createListing, readListings, updateListing, deleteListing } = require("../db");
+const { createSavedListing, readSavedListings, updateSavedListing, deleteSavedListing } = require("../db");
 
 // Database saved_jobs Create Route
 router.post('', (req, res, next)=> {
@@ -8,16 +8,16 @@ router.post('', (req, res, next)=> {
   console.log("In router.post")
   console.log(req.body);
   console.log(req.params);
-  createListing(listingDate, listingURL, company, location, title, type, contact, companyURL, salary, description)
+  createSavedListing(listingDate, listingURL, company, location, title, type, contact, companyURL, salary, description)
   .then( response => res.send(response) )
   .catch( next )
 });
 
 // Database saved_jobs Read Route
 router.get('', (req, res, next)=> {
-  readListings()
+  readSavedListings()
   .then( response => {
-    console.log("response from readListings = ", response);
+    console.log("response from readSavedListings = ", response);
     res.send(response)
   })
   .catch( next )
@@ -25,14 +25,14 @@ router.get('', (req, res, next)=> {
 
 // Database saved_jobs Update Route
 router.put('/:id', (req, res, next)=> {
-  updateListing({...req.body, id: req.params.id})
+  updateSavedListing({...req.body, id: req.params.id})
   .then( response => res.send(response) )
   .catch( next )
 });
 
 // Database saved_jobs Delete Route
 router.delete('/:id', (req, res, next)=> {
-  deleteListing( req.params.id )
+  deleteSavedListing( req.params.id )
   .then( response => res.send(response) )
   .catch( next )
 });

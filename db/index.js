@@ -2,7 +2,7 @@ const client = require("./client");
 const { authenticate, compare, findUserFromToken, hash } = require('./auth');
 const { createUser, readUsers, updateUser, deleteUser } = require("./users");
 const { createFavorite, checkForFavorites, readFavorites, updateFavorite, deleteFavorite } = require("./favorites");
-const { createListing, readListings, updateListing, deleteListing } = require("./listings");
+const { createSavedListing, readSavedListings, updateSavedListing, deleteSavedListing } = require("./listings");
 
 
 const sync = async() => {
@@ -26,6 +26,7 @@ const sync = async() => {
 
     CREATE TABLE saved_jobs(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+      "listingId" VARCHAR(50) NOT NULL,
       company VARCHAR(50) NOT NULL,
       title VARCHAR(50) NOT NULL,
       type VARCHAR(20) DEFAULT 'Full Time',
@@ -43,13 +44,13 @@ const sync = async() => {
     CREATE TABLE favorites(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       date TIMESTAMP default CURRENT_TIMESTAMP,
-      "listingId" UUID REFERENCES saved_jobs(id),
+      "savedJobId" UUID REFERENCES saved_jobs(id),
       "userId" UUID REFERENCES users(id)
     );
     `;
     await client.query(SQL);
 
-    // Seed data
+    // Create Users
     const _users = {
       jobSeeker: {
         firstName: "Susan",
@@ -66,51 +67,61 @@ const sync = async() => {
         role: null
       }
     };
-
-    const _favorites = {
-
-    };
-
-    // Create Users
     const [jobSeeker, moe] = await Promise.all(Object.values(_users).map( user => createUser(user)));
 
     //Create saved_jobs
-    //Job types are FULL-TIME, PART-TIME, CONTRACT, TEMPORARY, INTERNSHIP
-    const[ Fullstack ] = await Promise.all([
-      createListing({
-        company: 'Fullstack',
-        location: "New York City",
-        title: "software developer",
+    const _savedJobs = {
+      fullstack: {
+        listingId: "04b95b9d-5877-4e35-9d54-9ee28f1a38f7",
+        company: "Fullstack Academy",
+        title: "Full-Stack Engineer",
         type: "Full Time",
+        location: "New York City",
         contact: "Eric P. Katz",
-        description: "Recommend delicious recipes while coding flawlessly."
-      })
-    ]);
-
+        description: "Recommend delicious recipes while coding flawlessly.",
+      },
+      job1: {
+        listingId: "1825057931",
+        company: "Gorgias",
+        title: "Full-Stack Engineer",
+        type: "Full Time",
+        location: "Paris and San Francisco",
+        postedDate: "Thu Mar 19 17:57:51 UTC 2020",
+        description: "We created the company in Paris and are now a San Francisco based startup with a newly opened Paris office. We're making a SaaS helpdesk that automates a big part of the repetitive customer support tasks. We're close to 2000+ paying companies using our product and growing fast.",
+        companyURL: "https://www.gorgias.com/",
+        listingURL: "https://jobs.github.com/positions/051f00e9-068c-47b8-a85a-674a626eff17",
+      }
+    };
+    const [fullstack, job1] = await Promise.all(Object.values(_savedJobs).map( job => createSavedListing(job)));
+    
     //Create favorites
-    const [ susanFavorite ] = await Promise.all([
-      createFavorite({ listingId: Fullstack.id, userId: jobSeeker.id })
-    ]);
-
-    // Read from listings, users, and favorites
-    // Each function returns an array of objects
-    const listingsArr = await readListings();
-
-    const usersArr = await readUsers();
-
-    for( let i = 0; i < usersArr.length; i++ ){
-      const userId = usersArr[i].id;
-      if( (await checkForFavorites( userId )) === true ){
-        const userFavoritesArr = await readFavorites(userId);
+    const _favorites = {
+      fav1: {
+        savedJobId: fullstack.id,
+        userId: jobSeeker.id
+      },
+      fav2: {
+        savedJobId: job1.id,
+        userId: jobSeeker.id
+      },
+      fav3: {
+        savedJobId: fullstack.id,
+        userId: moe.id
+      },
+      fav4: {
+        savedJobId: job1.id,
+        userId: moe.id
       }
     }
+    const [fav1, fav2, fav3, fav4] = await Promise.all(Object.values(_favorites).map( favorite => {
+      createFavorite(favorite);
+    }));
 
-    return { susanFavorite }
 } //end sync
 
 module.exports = {
     sync,
-    createListing, readListings, updateListing, deleteListing,
+    createSavedListing, readSavedListings, updateSavedListing, deleteSavedListing,
     createUser, readUsers, updateUser, deleteUser,
     createFavorite, readFavorites, updateFavorite, deleteFavorite,
     authenticate, compare, findUserFromToken, hash
