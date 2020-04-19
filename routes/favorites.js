@@ -12,7 +12,6 @@ router.post('', (req, res, next)=> {
 
 // Database favorites Read Route
 router.get('/:id', ( req, res, next) => {
-  console.log(req.params.id);
   readFavorites( req.params.id )
   .then( response => {
     res.send(response)

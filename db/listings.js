@@ -10,8 +10,8 @@ const createSavedListing = async({ listingId, company, title, type, location, po
   return response.rows[0];
 };
 
-const readSavedListings = async() => {
-  response = await client.query('SELECT * from saved_jobs');
+const readSavedListings = async(userId) => {
+  response = await client.query('SELECT * FROM favorites JOIN saved_jobs ON favorites."savedJobId" = saved_jobs.id WHERE favorites."userId" = $1', [userId]);
   return response.rows;
 };
 

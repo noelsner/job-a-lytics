@@ -2,20 +2,20 @@ import React, {useState, useEffect} from "react";
 import Heart from '../icons/heart';
 import { Link } from 'react-router-dom';
 
-const Job = ({job, savedJobs}) => {
+const Job = ({job, setSavedJobs}) => {
   const [savedBtn, setSavedBtn] = useState(false)
 
-  useEffect(
-    () => {
-      if (savedJobs) {
-        const filtered = savedJobs.filter(savedJob => {
-          job.id === savedJob.id
-        })
-        // console.log('filtered :', filtered);
-      }
-    },
-    [savedJobs]
-  )
+  // useEffect(
+  //   () => {
+  //     if (savedJobs) {
+  //       const filtered = savedJobs.filter(savedJob => {
+  //         job.id === savedJob.id
+  //       })
+  //       // console.log('filtered :', filtered);
+  //     }
+  //   },
+  //   [savedJobs]
+  // )
 
   const toggleSaved = (ev, id) => {
     ev.preventDefault();
@@ -25,7 +25,7 @@ const Job = ({job, savedJobs}) => {
 
   const saveJob = (id) => {
     console.log(`Save Job:`, job);
-    savedJobs.push(job);
+    // savedJobs.push(job);
 
     //TODO: add this job to the listings table (& favorites table for the current user)
   }

@@ -14,10 +14,9 @@ router.post('', (req, res, next)=> {
 });
 
 // Database saved_jobs Read Route
-router.get('', (req, res, next)=> {
-  readSavedListings()
+router.get('/:id', (req, res, next)=> {
+  readSavedListings( req.params.id )
   .then( response => {
-    console.log("response from readSavedListings = ", response);
     res.send(response)
   })
   .catch( next )
