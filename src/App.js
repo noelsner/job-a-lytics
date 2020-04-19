@@ -81,19 +81,26 @@ const App = ()=> {
     [favorites]
   );
 
-  const saveJob = () => {
-    console.log('save job')
+  const addToFavorites = (newJob) => {
+    axios.post('/api/saved_jobs', newJob, headers())
+      .then(response => {
+        const savedJobId = response.data.id;
+        axios.post(`api/favorites/${auth.id}`, {savedJobId}, headers())
+          .then(_response => {
+            setFavorites([...favorites, _response.data])
+          })
+      })
   };
 
-  console.log('savedJobs :', savedJobs);
-  console.log('favorites :', favorites);
+  // console.log('savedJobs :', savedJobs);
+  // console.log('favorites :', favorites);
 
 return (
     <div>
       <Navbar logout={logout} auth={auth} />
 
       <Route exact path='/' >
-        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs}  />
+        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} />
       </Route>        
 
       <Route exact path='/jobs/saved'>

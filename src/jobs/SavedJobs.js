@@ -11,7 +11,7 @@ const SavedJobs = ({ savedJobs, setSavedJobs }) => {
         {
           savedJobs.map((job) => {
             return (
-              <Job job={job} key={job.id} setSavedJobs={setSavedJobs}/>
+              <Job job={job} key={job.id} savedJobs={savedJobs}/>
             )
           })
         }
