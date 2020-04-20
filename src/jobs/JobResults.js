@@ -1,7 +1,7 @@
 import React from "react";
 import Job from './Job';
 
-const JobResults = ({ jobs, savedJobs, addToFavorites }) => {
+const JobResults = ({ jobs, savedJobs, favorites, addToFavorites, removeFromFavorites }) => {
   return (
     <div className='pl-3 pr-3 md:pr-0'>
       <header>
@@ -12,7 +12,7 @@ const JobResults = ({ jobs, savedJobs, addToFavorites }) => {
         {
           jobs.map((job) => {
             return (
-              <Job job={job} key={job.listingId} savedJobs={savedJobs} addToFavorites={addToFavorites} />
+              <Job job={job} key={job.listingId} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />
             )
           })
         }

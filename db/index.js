@@ -26,7 +26,7 @@ const sync = async() => {
 
     CREATE TABLE saved_jobs(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      "listingId" VARCHAR(50) NOT NULL,
+      "listingId" VARCHAR(50) UNIQUE NOT NULL,
       company VARCHAR(50) NOT NULL,
       title VARCHAR(50) NOT NULL,
       type VARCHAR(20) DEFAULT 'Full Time',
@@ -45,7 +45,8 @@ const sync = async() => {
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
       date TIMESTAMP default CURRENT_TIMESTAMP,
       "savedJobId" UUID REFERENCES saved_jobs(id),
-      "userId" UUID REFERENCES users(id)
+      "userId" UUID REFERENCES users(id),
+      "listingId" VARCHAR REFERENCES saved_jobs("listingId")
     );
     `;
     await client.query(SQL);
@@ -96,19 +97,23 @@ const sync = async() => {
     const _favorites = {
       fav1: {
         savedJobId: fullstack.id,
-        userId: jobSeeker.id
+        userId: jobSeeker.id,
+        listingId: fullstack.listingId
       },
       fav2: {
         savedJobId: job1.id,
-        userId: jobSeeker.id
+        userId: jobSeeker.id,
+        listingId: job1.listingId
       },
       fav3: {
         savedJobId: fullstack.id,
-        userId: moe.id
+        userId: moe.id,
+        listingId: fullstack.listingId
       },
       fav4: {
         savedJobId: job1.id,
-        userId: moe.id
+        userId: moe.id,
+        listingId: job1.listingId
       }
     }
     const [fav1, fav2, fav3, fav4] = await Promise.all(Object.values(_favorites).map( favorite => {

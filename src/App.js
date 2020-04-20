@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from './navbar';
@@ -50,9 +50,9 @@ const App = ()=> {
   const logout = () => {
     window.localStorage.removeItem('token');
     setAuth({});
-    setUserFavorites([]);
+    setFavorites([]);
     setSavedJobs([]);
-    window.location.hash = '#'
+    history.push('/');
   };
 
   useEffect(
@@ -85,26 +85,37 @@ const App = ()=> {
     axios.post('/api/saved_jobs', newJob, headers())
       .then(response => {
         const savedJobId = response.data.id;
-        axios.post(`api/favorites/${auth.id}`, {savedJobId}, headers())
+        const listingId = response.data.listingId;
+        axios.post(`api/favorites/${auth.id}`, {savedJobId, listingId}, headers())
           .then(_response => {
             setFavorites([...favorites, _response.data])
           })
       })
   };
 
-  // console.log('savedJobs :', savedJobs);
-  // console.log('favorites :', favorites);
+  const removeFromFavorites = (listingId) => {
+    console.log("remove from favs")
+    axios.delete(`/api/favorites/${auth.id}`, {data: {listingId}}, headers())
+      .then(() => {
+        setFavorites(favorites.filter(favorite => favorite.listingId !== listingId));
+        setSavedJobs(savedJobs.filter(saved => saved.listingId !== listingId));
+      })
+  };
 
+  console.log('savedJobs :', savedJobs);
+  console.log('favorites :', favorites);
+  
+const history = useHistory();
 return (
     <div>
       <Navbar logout={logout} auth={auth} />
 
       <Route exact path='/' >
-        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} />
+        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />
       </Route>        
 
       <Route exact path='/jobs/saved'>
-        <SavedJobs auth={auth} savedJobs={savedJobs} favorites={favorites} />
+        <SavedJobs auth={auth} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />
       </Route>
 
       <Route path='/account'>
