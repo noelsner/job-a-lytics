@@ -4,10 +4,8 @@ const { createFavorite, readFavorites, updateFavorite, deleteFavorite } = requir
 
 // Database favorites Create Route
 router.post('/:id', (req, res, next)=> {
-  console.log('req.params.id :', req.params.id);
-  console.log('req.body :', req.body);
-  const {savedJobId} = req.body;
-  createFavorite({userId: req.params.id, savedJobId})
+  const { savedJobId, listingId } = req.body;
+  createFavorite({userId: req.params.id, savedJobId, listingId})
   .then( response => res.send(response) )
   .catch( next )
 });
@@ -30,7 +28,8 @@ router.put('/:id', (req, res, next)=> {
 
 // Database favorites Delete Route
 router.delete('/:id', (req, res, next)=> {
-  deleteFavorite( req.params.id )
+  const {listingId} = req.body;
+  deleteFavorite({ userId: req.params.id, listingId })
   .then( response => res.send(response) )
   .catch( next )
 });

@@ -1,9 +1,9 @@
 const client = require("./client");
 
 // favorite_listings Methods
-const createFavorite = async({ savedJobId, userId })=> {
-  const SQL = 'INSERT INTO favorites( "savedJobId", "userId" ) VALUES ($1, $2) returning *';
-  const response = await client.query(SQL, [savedJobId, userId]);
+const createFavorite = async({ savedJobId, userId, listingId })=> {
+  const SQL = 'INSERT INTO favorites( "savedJobId", "userId", "listingId" ) VALUES ($1, $2, $3) returning *';
+  const response = await client.query(SQL, [savedJobId, userId, listingId]);
   return response.rows[0];
 };
 
@@ -21,9 +21,9 @@ const updateFavorite = async( favorite )=> {
   return response.rows[0];
 };
 
-const deleteFavorite = async( id )=> {
-  const SQL = 'DELETE FROM favorites WHERE id = $1';
-  return (await client.query(SQL, [id])).rows;
+const deleteFavorite = async({userId, listingId })=> {
+  const SQL = 'DELETE FROM favorites WHERE "listingId" = $1 AND "userId" = $2';
+  return (await client.query(SQL, [listingId, userId])).rows;
 };
 
 const checkForFavorites = async (id) => {
