@@ -26,7 +26,7 @@ const scrapeQuery = async(query, location) => {
             for(let i = 0; i < jobNodeList.length; i++ ){
                 
                 const job = {
-                    id: "error loading, please run search again",
+                    listingId: "error loading, please run search again",
                     company: "error loading, please run search again",
                     title: "error loading, please run search again",
                     type: "blank for now",
@@ -38,7 +38,7 @@ const scrapeQuery = async(query, location) => {
                 }
 
                if(jobNodeList[i]){
-                    job.id = jobNodeList[i].getAttribute("data-id");
+                    job.listingId = jobNodeList[i].getAttribute("data-id");
                     job.listingURL = `https://www.linkedin.com/jobs/view/${jobNodeList[i].getAttribute("data-id")}`;
                 }
 
