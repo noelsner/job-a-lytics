@@ -1,5 +1,5 @@
 const client = require("./client");
-const { authenticate, compare, findUserFromToken, hash } = require('./auth');
+
 const { createListing, readListings } = require("./index");
 const { createUser, readUsers } = require("./users");
 const { createFavorite, checkForFavorites, readFavorites } = require("./favorites");
@@ -107,8 +107,8 @@ const sync = async() => {
     return { susanFavorite }
 } //end sync
 
-module.exports = {
-    sync,
-    authenticate,
-    findUserFromToken,
-}
+sync()
+  .then(() => {
+    console.log("We created the tables!");
+  })
+  .catch(console.error);
