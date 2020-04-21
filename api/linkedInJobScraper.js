@@ -21,7 +21,7 @@ const scrapeJob = async(id) => {
             const timeNode = document.querySelector("span.topcard__flavor--metadata.posted-time-ago__text");
            
             const job = {
-                id: id,
+                listingId: id,
                 company: "error loading, please run search again",
                 title: "error loading, please run search again",
                 type: "blank for now",
