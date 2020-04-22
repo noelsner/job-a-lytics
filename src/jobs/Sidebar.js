@@ -2,7 +2,7 @@ import React from 'react';
 import DropdownFilter from './DropdownFilter';
 import moment from 'moment';
 
-const Sidebar = ({jobs}) => {
+const Sidebar = ({jobs, setJobs}) => {
   return(
     <div className='rounded-lg h-full text-gray-600'>
       <div className="relative inline-block md:w-full">
@@ -17,6 +17,8 @@ const Sidebar = ({jobs}) => {
               click:  ()=>{
                 // sort jobs by most recent date
                 jobs.sort((l, r) => moment(r.postedDate) - moment(l.postedDate));
+                //console.log(jobs);
+                setJobs(jobs);
               }
             }
           ]
