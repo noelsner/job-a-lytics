@@ -49,7 +49,7 @@ const scrapeJob = async(id) => {
             }
 
             if(descriptionNode) {
-                job.description = descriptionNode.innerText;
+                job.description = descriptionNode.innerHTML;
             };
 
             return job;
