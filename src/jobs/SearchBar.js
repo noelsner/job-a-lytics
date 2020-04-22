@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-const SearchBar = ({setJobs}) => {
-  const [inputQuery, setInputQuery] = useState(' ');
-  const [inputLocation, setInputLocation] = useState(' ');
+const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputLocation}) => {
 
   const onSubmit = (ev) => {
     ev.preventDefault();
