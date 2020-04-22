@@ -3,6 +3,9 @@ import DropdownFilter from './DropdownFilter';
 import moment from 'moment';
 
 const Sidebar = ({jobs, setJobs}) => {
+  const apiKey = 'CCfGLRhnGaQZ4YqoTFOIX8A8ocJJueJa4CCydPNskRstjsyjD07mAwBNeTm5PiUA';
+  const distances = [10, 25, 50, 75, 100];
+
   return(
     <div className='rounded-lg h-full text-gray-600'>
       <div className="relative inline-block md:w-full">
