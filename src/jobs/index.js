@@ -11,7 +11,7 @@ const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFa
         <SearchBar setJobs = {setJobs}/>
         <div className='flex flex-col md:flex-row w-full h-screen px-6 mt-8 md:mt-12'>
           <div className='md:w-32 px-3 md:pl-0 mb-6 md:mb-0'>
-            <Sidebar jobs={jobs} />
+            <Sidebar jobs={jobs} setJobs={setJobs}/>
           </div>
           <div className='w-full'>
             <JobResults jobs={jobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} />
