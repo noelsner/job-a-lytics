@@ -2,7 +2,7 @@ import React from 'react';
 import DropdownFilter from './DropdownFilter';
 import moment from 'moment';
 
-const Sidebar = () => {
+const Sidebar = ({jobs}) => {
   return(
     <div className='rounded-lg h-full text-gray-600'>
       <div className="relative inline-block md:w-full">
