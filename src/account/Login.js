@@ -17,10 +17,12 @@ const CreateAccount = ({ login }) => {
         history.push('/');
         setError("");
       })
-      .catch((ex) => setError(ex.response.data.message));
+      .catch((ex) => {
+        if(ex.response.status === 401) {
+          setError("Username and password don't match our records. Please try again.")
+        }
+      });
   };
-
-  if(error) {console.log(error)};
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
@@ -40,8 +42,10 @@ const CreateAccount = ({ login }) => {
           </p>
         </div>
 
-
         <div className='bg-gray-800 rounded-lg p-6 mt-6'>
+          {error && (
+            <div className='px-3 pb-2 text-red-600 font-bold text-center'>{ error }</div>
+          )}
           <form onSubmit={onSubmit}>
 
             <div className='flex-1 px-3'>
