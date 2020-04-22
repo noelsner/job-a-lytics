@@ -23,6 +23,7 @@ const App = ()=> {
   const [jobs, setJobs] = useState(seedJobData);
   const [savedJobs, setSavedJobs] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [tempJob, setTempJob] = useState(null);
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
@@ -52,6 +53,7 @@ const App = ()=> {
     setAuth({});
     setFavorites([]);
     setSavedJobs([]);
+    setTempJob(null);
     history.push('/');
   };
 
@@ -81,6 +83,16 @@ const App = ()=> {
     [favorites]
   );
 
+  useEffect(
+    () => {
+      if(tempJob !== null) {
+        addToFavorites(tempJob);
+        setTempJob(null);
+      }
+    }, 
+    [auth]
+  )
+
   const addToFavorites = (newJob) => {
     axios.post('/api/saved_jobs', newJob, headers())
       .then(response => {
@@ -94,7 +106,6 @@ const App = ()=> {
   };
 
   const removeFromFavorites = (listingId) => {
-    console.log("remove from favs")
     axios.delete(`/api/favorites/${auth.id}`, {data: {listingId}}, headers())
       .then(() => {
         setFavorites(favorites.filter(favorite => favorite.listingId !== listingId));
@@ -102,8 +113,6 @@ const App = ()=> {
       })
   };
 
-  console.log('savedJobs :', savedJobs);
-  console.log('favorites :', favorites);
   
 const history = useHistory();
 return (
@@ -111,7 +120,7 @@ return (
       <Navbar logout={logout} auth={auth} />
 
       <Route exact path='/' >
-        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />
+        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} />
       </Route>        
 
       <Route exact path='/jobs/saved'>

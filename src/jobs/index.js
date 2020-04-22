@@ -4,7 +4,7 @@ import SearchBar from './SearchBar';
 import JobResults from './JobResults';
 import Sidebar from './Sidebar';
 
-const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFavorites}) => {
+const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob}) => {
   return (
     <Switch>
       <Route>
@@ -14,7 +14,7 @@ const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFa
             <Sidebar jobs={jobs} />
           </div>
           <div className='w-full'>
-            <JobResults jobs={jobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} />
+            <JobResults jobs={jobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} />
           </div>
         </div>
       </Route>

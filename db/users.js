@@ -2,7 +2,6 @@ const client = require("./client");
 const { hash } = require("./auth");
 
 const readUsers = async() => {
-  // console.log("In readUsers")
   return (await client.query("SELECT * from users")).rows;
 };
 
@@ -25,7 +24,6 @@ const updateUser = async({ id, password }) => {
 }
 
 const deleteUser = async({ id }) => {
-  console.log("In deleteUser, id = ", id);
   const SQL = 'DELETE FROM users WHERE id = $1';
   return (await client.query(SQL, [id])).rows;
 }
