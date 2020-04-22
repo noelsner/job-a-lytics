@@ -29,6 +29,9 @@ const Details = ({match, jobs}) => {
 
     },[]);
 
+    const jobHTML = () => {
+      return {__html: jobPost.description};
+    };
 
   return(
     <div className='h-full text-gray-600 p-3'>
@@ -39,7 +42,7 @@ const Details = ({match, jobs}) => {
       <h2> {jobPost.location}</h2>
       <h2> {jobPost.postedDate}</h2>
       <br/>
-      <h2>{jobPost.description}</h2>
+      <h2 dangerouslySetInnerHTML = {jobHTML()}></h2>
     </div>
   );
 };

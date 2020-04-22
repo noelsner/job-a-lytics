@@ -11,7 +11,10 @@ const scrapeQuery = async(query, location) => {
         
         const page = await browser.newPage();
 
-        await page.goto(searchURL);
+        await page.goto(searchURL, {
+            waitUntil: 'networkidle2'
+          });
+        
         await page.waitForSelector("main");
 
         const listScrape = await page.evaluate(  (jobLink, jobId) => {
@@ -34,7 +37,7 @@ const scrapeQuery = async(query, location) => {
                     listingURL: "error loading, please run search again",
                     companyURL: "blank for now",
                     postedDate: "error loading, please run search again",
-                    description: "error loading, please run search again"
+                    description: "Click Job Title for more details"
                 }
 
                if(jobNodeList[i]){
