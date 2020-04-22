@@ -1,6 +1,6 @@
 import React from 'react';
 import DropdownFilter from './DropdownFilter';
-
+import moment from 'moment';
 
 const Sidebar = () => {
   return(
@@ -14,7 +14,10 @@ const Sidebar = () => {
             },
             {
               text: 'Date',
-              click:  ()=>{console.log('date filter clicked!!!')}
+              click:  ()=>{
+                // sort jobs by most recent date
+                jobs.sort((l, r) => moment(r.postedDate) - moment(l.postedDate));
+              }
             }
           ]
         }/>
