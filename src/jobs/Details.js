@@ -17,7 +17,8 @@ const Details = ({match, jobs}) => {
       listingURL: "loading",
       companyURL: "loading",
       postedDate: "loading",
-      description: "loading"
+      description: "loading",
+      descriptionText: ""
   });
 
   useEffect( ()=> {
@@ -33,7 +34,7 @@ const Details = ({match, jobs}) => {
     const jobHTML = () => {
       return {__html: jobPost.description};
     };
-
+    
   return(
     <div className='h-full text-gray-600 p-3'>
       <h1>{jobPost.title}</h1>
@@ -42,7 +43,7 @@ const Details = ({match, jobs}) => {
       <br/>
       <h2> {jobPost.location}</h2>
       <h2> {jobPost.postedDate}</h2>
-      <WordCount text = {jobPost.description}/>
+      <WordCount text = {jobPost.descriptionText}/>
       <br/>
       <h2 dangerouslySetInnerHTML = {jobHTML()}></h2>
     </div>
