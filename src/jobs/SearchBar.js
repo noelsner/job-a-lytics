@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputLocation}) => {
+const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputLocation, setLoading }) => {
 
-  const onSubmit = (ev) => {
+  const onSubmit = async (ev) => {
     ev.preventDefault();
+    setLoading(true);
     axios.get(`/api/linkedin/?description=${inputQuery}&location=${inputLocation}`)
-      .then( response => setJobs(response.data))
+      .then( response => {
+        setJobs(response.data);
+      })
       .catch(ex => console.log(ex))
-    //console.log(scrapeQuery);
-
+      .finally(() => setLoading(false))
   };
 
   return (
