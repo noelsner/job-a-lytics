@@ -2,17 +2,17 @@ import React, {useState, useEffect} from "react";
 import Heart from '../icons/heart';
 import { Link, useHistory } from 'react-router-dom';
 
-const Job = ({job, savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob}) => {
+const Job = ({job, savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet}) => {
   const history = useHistory();
 
   const toggleSaved = (ev) => {
     ev.preventDefault();
     if(auth.id) {
-      const savedJobIds = savedJobs.map(fav => fav.listingId);
+      // const savedJobIds = savedJobs.map(fav => fav.listingId);
   
-      if(savedJobIds.includes(job.listingId))
+      if(savedJobSet.has(job.listingId))
         removeFromFavorites(job.listingId);
-      if(!savedJobIds.includes(job.listingId))
+      if(!savedJobSet.has(job.listingId))
         addToFavorites(job);
 
      } else {
