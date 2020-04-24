@@ -21,10 +21,10 @@ const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFa
           jobs.length ? (
             <div className='flex flex-col md:flex-row w-full h-screen px-6 mt-8 md:mt-12'>
               <div className='md:w-32 px-3 md:pl-0 mb-6 md:mb-0'>
-                <Sidebar jobs={jobs} setJobs={setJobs}/>
+                <Sidebar jobs={jobs} setJobs={setJobs} inputLocation={inputLocation}/>
               </div>
               <div className='w-full'>
-                <JobResults jobs={jobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} />
+                <JobResults jobs={jobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} inputQuery={inputQuery} inputLocation={inputLocation}/>
               </div>
             </div>
           ) : (

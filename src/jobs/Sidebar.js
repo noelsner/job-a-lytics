@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import DropdownFilter from './DropdownFilter';
 import moment from 'moment';
 
-const Sidebar = ({jobs, setJobs}) => {
-
+const Sidebar = ({jobs, setJobs, inputLocation}) => {
+  console.log("In Sidebar, Input Location:", inputLocation);
   const [openDropdown1, setOpenDropdown1] = useState(false);
   const [openDropdown2, setOpenDropdown2] = useState(false);
 
@@ -25,7 +25,7 @@ const Sidebar = ({jobs, setJobs}) => {
                 // sort jobs by most recent date
                 jobs.sort((l, r) => moment(r.postedDate) - moment(l.postedDate));
                 //console.log(jobs);
-                setJobs(jobs);
+                setJobs([...jobs]);
                 setOpenDropdown1(false);
               }
             }
