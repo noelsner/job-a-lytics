@@ -101,7 +101,14 @@ const parseText = (text) => {
       return b[1] - a[1];
   });
 
-  return sorted.slice(0,10);
+  const sortedObject = sorted.slice(1,11).map( pair => {
+    return {
+      name: pair[0],
+      count: pair[1]
+    } 
+  })
+
+  return sortedObject;
 
 };
 
