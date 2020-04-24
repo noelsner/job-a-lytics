@@ -22,7 +22,10 @@ const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputL
         setJobs(response.data);
       })
       .catch(ex => console.log(ex))
-      .finally(() => setLoading(false))
+      .finally(() => {
+        setLoading(false);
+        setInputLocation('')
+      })
   };
 
   let input;
@@ -73,19 +76,21 @@ const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputL
     }
   }
 
-  // function geolocate() {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(function(position) {
-  //       var geolocation = {
-  //         lat: position.coords.latitude,
-  //         lng: position.coords.longitude
-  //       };
-  //       var circle = new google.maps.Circle(
-  //           {center: geolocation, radius: position.coords.accuracy});
-  //       autocomplete.setBounds(circle.getBounds());
-  //     });
-  //   }
-  // }
+  function geolocate() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var geolocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+
+        };
+        console.log(geolocation)
+        var circle = new google.maps.Circle(
+            {center: geolocation, radius: position.coords.accuracy});
+        autocomplete.setBounds(circle.getBounds());
+      });
+    }
+  }
 
 
   return (
@@ -97,8 +102,8 @@ const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputL
             <input value={inputQuery} onChange={ev => setInputQuery(ev.target.value)} className='appearance-none block w-full bg-gray-400 text-gray-600 placeholder-gray-700 border border-gray-400 rounded-md py-1 px-2 focus:outline-none focus:bg-gray-200' id='what' type='text' placeholder='Job title, keywords, or company'></input>
           </div>
           <div className='flex-1 px-3'>
-            <label className='block tracking-wide text-gray-400 text-md font-bold mb-1 px-1' htmlFor='where'>Where</label>
-            <input value={inputLocation} onChange={ev => setInputLocation(ev.target.value)} className='appearance-none block w-full bg-gray-400 text-gray-600 placeholder-gray-700 border border-gray-400 rounded-md py-1 px-2 focus:outline-none focus:bg-gray-200' id='where' type='text' placeholder='City,state, or zip code' id='autocomplete' ref={el => input=el}></input>
+            <label className='block tracking-wide text-gray-400 text-md font-bold mb-1 px-1' htmlFor='autocomplete'>Where</label>
+            <input value={inputLocation} onChange={ev => setInputLocation(ev.target.value)} className='appearance-none block w-full bg-gray-400 text-gray-600 placeholder-gray-700 border border-gray-400 rounded-md py-1 px-2 focus:outline-none focus:bg-gray-200' type='text' placeholder='City,state, or zip code' id='autocomplete' ref={el => input=el} onFocus={geolocate}></input>
           </div>
           <button className='bg-pink-700 text-gray-200 font-bold rounded-md px-6 py-1 ml-3 mr-3 md:mr-6 mt-6 hover:bg-pink-800 focus:outline-none focus:bg-pink-800'>Search</button>
         </div>
