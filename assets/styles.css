@@ -5,3 +5,7 @@ body {
 .drop-down-width {
   width: 150px;
 }
+
+.loading {
+  margin: 0px auto;
+}

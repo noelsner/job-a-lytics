@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import JobResults from './JobResults';
 import Sidebar from './Sidebar';
+import ReactLoading from 'react-loading';
 
 const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet, loading, setLoading}) => {
 
@@ -15,7 +16,7 @@ const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFa
       <Route>
         <SearchBar setJobs = {setJobs} inputQuery = {inputQuery} setInputQuery={setInputQuery} inputLocation={inputLocation} setInputLocation={setInputLocation} setLoading={setLoading} loading={loading} />
         {loading ? (
-          <div>loadinggggg</div>
+          <ReactLoading className='loading' type={'bubbles'} color={'#718096'} height={'100px'} width={'100px'} />
         ) : (
           jobs.length ? (
             <div className='flex flex-col md:flex-row w-full h-screen px-6 mt-8 md:mt-12'>
@@ -28,7 +29,7 @@ const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFa
             </div>
           ) : (
             <div>
-              <div className='text-gray-600 text-2xl mx-6 px-3 leading-tight text-center mt-10'>Please enter a job keyword or location above.</div>
+              <div className='text-gray-600 text-2xl mx-6 px-3 leading-tight text-center mt-16'>Please enter a job keyword or location above.</div>
             </div>
           )
         )}
