@@ -23,6 +23,7 @@ const App = ()=> {
   const [savedJobs, setSavedJobs] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [tempJob, setTempJob] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
@@ -116,6 +117,7 @@ const App = ()=> {
   savedJobs.forEach(job => {
     savedJobSet.add(job.listingId)
   });
+
       
 const history = useHistory();
 return (
@@ -123,11 +125,11 @@ return (
       <Navbar logout={logout} auth={auth} />
 
       <Route exact path='/' >
-        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} />
+        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} loading={loading} setLoading={setLoading} />
       </Route>        
 
       <Route exact path='/jobs/saved'>
-        <SavedJobs auth={auth} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} />
+        <SavedJobs auth={auth} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} loading={loading} setLoading={setLoading} />
       </Route>
 
       <Route path='/account'>
