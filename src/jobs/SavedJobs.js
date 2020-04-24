@@ -8,7 +8,7 @@ const SavedJobs = ({ savedJobs, favorites, addToFavorites, removeFromFavorites, 
       { savedJobs.length ? (
         <div>
           <header>
-            <div className='text-gray-500 text-xl'>Saved Jobs</div>
+            <div className='text-gray-300 text-xl mt-6'>Your Saved Jobs ({savedJobs.length})</div>
           </header>
           <ul>
             {
