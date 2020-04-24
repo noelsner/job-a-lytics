@@ -14,7 +14,14 @@ const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFa
             <Sidebar jobs={jobs} />
           </div>
           <div className='w-full'>
-            <JobResults jobs={jobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} />
+            {jobs.length ? (
+              <JobResults jobs={jobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} />
+            ) : (
+              <div>
+                <div className='text-gray-300 text-2xl px-3 md:pr-0 leading-tight'>Please enter a job keyword or location in the search bars above.</div>
+              </div>
+            )
+          }
           </div>
         </div>
       </Route>

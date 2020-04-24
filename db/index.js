@@ -70,6 +70,7 @@ const sync = async() => {
     };
     const [jobSeeker, moe] = await Promise.all(Object.values(_users).map( user => createUser(user)));
 
+    /*
     //Create saved_jobs
     const _savedJobs = {
       fullstack: {
@@ -119,6 +120,7 @@ const sync = async() => {
     const [fav1, fav2, fav3, fav4] = await Promise.all(Object.values(_favorites).map( favorite => {
       createFavorite(favorite);
     }));
+    */
 
 } //end sync
 

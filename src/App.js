@@ -6,7 +6,6 @@ import Navbar from './navbar';
 import Jobs from './jobs';
 import Details from './jobs/Details';
 import SavedJobs from './jobs/SavedJobs.js';
-import seedJobData from './seedJobData';
 import Account from './account';
 
 const headers = () => {
@@ -20,7 +19,7 @@ const headers = () => {
 
 const App = ()=> {
   const [auth, setAuth] = useState({});
-  const [jobs, setJobs] = useState(seedJobData);
+  const [jobs, setJobs] = useState([]);
   const [savedJobs, setSavedJobs] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [tempJob, setTempJob] = useState(null);
