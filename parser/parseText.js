@@ -1,5 +1,5 @@
 console.clear();
-const text = `Who We Are
+const sampleText = `Who We Are
 
 Fueled by a fundamental belief that having access to financial services creates opportunity, PayPal (NASDAQ: PYPL) is committed to democratizing financial services and empowering people and businesses to join and thrive in the global economy. Our open digital payments platform gives PayPal’s 305 million active account holders the confidence to connect and transact in new and powerful ways, whether they are online, on a mobile device, in an app, or in person. Through a combination of technological innovation and strategic partnerships, PayPal creates better ways to manage and move money, and offers choice and flexibility when sending payments, paying or getting paid. Available in more than 200 markets around the world, the PayPal platform, including Braintree, Venmo and Xoom, enables consumers and merchants to receive money in more than 100 currencies, withdraw funds in 56 currencies and hold balances in their PayPal accounts in 25 currencies.
 
@@ -76,7 +76,7 @@ EngineeringInformation Technology
 Industries
 Computer SoftwareFinancial ServicesInternet`;
 
-const wordCount = (text) => {
+const parseText = (text) => {
 
   const regex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
   const cleaned = text.replace(regex ," ")
@@ -105,6 +105,6 @@ const wordCount = (text) => {
 
 };
 
-console.log(wordCount(text) );
+//console.log(parseText(sampleText) );
 
-
+module.exports = parseText;

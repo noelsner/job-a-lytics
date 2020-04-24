@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import WordCount from './WordCount';
 
 const Details = ({match, jobs}) => {
 
@@ -41,6 +42,7 @@ const Details = ({match, jobs}) => {
       <br/>
       <h2> {jobPost.location}</h2>
       <h2> {jobPost.postedDate}</h2>
+      <WordCount text = {jobPost.description}/>
       <br/>
       <h2 dangerouslySetInnerHTML = {jobHTML()}></h2>
     </div>
