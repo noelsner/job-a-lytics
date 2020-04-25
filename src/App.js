@@ -120,8 +120,6 @@ const App = ()=> {
     savedJobSet.add(job.listingId)
   });
 
-  console.log(window);
-
 const history = useHistory();
 return (
     <div>
