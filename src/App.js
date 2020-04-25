@@ -134,9 +134,11 @@ return (
         </Route>
       )}
 
-      <Route exact path='/jobs/saved'>
-        <SavedJobs auth={auth} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} loading={loading} setLoading={setLoading} userLocation={userLocation} />
-      </Route>
+      {window.hasOwnProperty('google') && (
+        <Route exact path='/jobs/saved'>
+          <SavedJobs auth={auth} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} loading={loading} setLoading={setLoading} userLocation={userLocation} />
+        </Route>
+      )}
 
       <Route path='/account'>
         <Account login={login} createAccount={createAccount} />

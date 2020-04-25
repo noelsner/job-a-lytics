@@ -12,7 +12,7 @@ const Map = ({ savedJobs, userLocation }) => {
 
       savedJobs.forEach(job => {
         if(job.lat && job.lng) {
-          new google.maps.Marker({position: {lat: job.lat * 1, lng: job.lng * 1}, map: map});
+          const marker = new google.maps.Marker({position: {lat: job.lat * 1, lng: job.lng * 1}, map: map});
           bounds.extend({lat: job.lat * 1, lng: job.lng * 1});
         }
       });
