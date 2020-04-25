@@ -79,6 +79,7 @@ app.get('/api/auth', isLoggedIn, (req, res, next) => {
 
 //create user
 app.post('/api/users', (req, res, next) => {
+  console.log('req.body :>> ', req.body);
   db.createUser({...req.body, role: "USER"})
     .then(user => {
       const token = jwt.encode({ id: user.id }, process.env.JWT);
