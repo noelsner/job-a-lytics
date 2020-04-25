@@ -7,6 +7,11 @@ const saved_jobs = require('./routes/saved_jobs');
 const github_routes = require('./routes/github');
 const linkedin_routes = require('./routes/linkedIn');
 const jwt = require('jwt-simple');
+const ejs = require('ejs');
+
+require('dotenv').config()
+const GOOGLE_API_KEY = process.env.GOOGLE_API;
+app.engine('html', ejs.renderFile);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
@@ -20,9 +25,7 @@ app.use('/api/saved_jobs', saved_jobs.router);
 app.use('/api/github', github_routes.router);
 app.use('/api/linkedin', linkedin_routes.router);
 
-app.get('/', (req, res, next)=> {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+app.get('/', (req, res, next)=> res.render(path.join(__dirname, 'index.html'), { GOOGLE_API_KEY }));
 
 //authentication
 const isLoggedIn = (req, res, next)=> {

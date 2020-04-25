@@ -24,6 +24,7 @@ const App = ()=> {
   const [favorites, setFavorites] = useState([]);
   const [tempJob, setTempJob] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [openUserDropdown, setOpenUserDropdown] = useState(false);
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
@@ -56,6 +57,7 @@ const App = ()=> {
     setFavorites([]);
     setSavedJobs([]);
     setTempJob(null);
+    setOpenUserDropdown(false);
     history.push('/');
   };
 
@@ -120,15 +122,16 @@ const App = ()=> {
     savedJobSet.add(job.listingId)
   });
 
-
 const history = useHistory();
 return (
     <div>
-      <Navbar logout={logout} auth={auth} />
+      <Navbar logout={logout} auth={auth} openUserDropdown={openUserDropdown} setOpenUserDropdown={setOpenUserDropdown} />
 
-      <Route exact path='/' >
-        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} loading={loading} setLoading={setLoading} />
-      </Route>
+      {window.hasOwnProperty('google') && (
+        <Route exact path='/' >
+          <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} loading={loading} setLoading={setLoading} />
+        </Route>
+      )}
 
       <Route exact path='/jobs/saved'>
         <SavedJobs auth={auth} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} loading={loading} setLoading={setLoading} />
