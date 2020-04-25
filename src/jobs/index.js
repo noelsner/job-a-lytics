@@ -8,13 +8,16 @@ import ReactLoading from 'react-loading';
 const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet, loading, setLoading}) => {
 
   // These state variables are set by user input in SearchBar
-  const [inputQuery, setInputQuery] = useState(' ');
-  const [inputLocation, setInputLocation] = useState(' ');
+  const [inputQuery, setInputQuery] = useState('');
+  const [inputLocation, setInputLocation] = useState('');
+  const [searchResults, setSearchResults] = useState({});
+
+
 
  return (
     <Switch>
       <Route>
-        <SearchBar setJobs = {setJobs} inputQuery = {inputQuery} setInputQuery={setInputQuery} inputLocation={inputLocation} setInputLocation={setInputLocation} setLoading={setLoading} loading={loading} />
+        <SearchBar setJobs = {setJobs} inputQuery = {inputQuery} setInputQuery={setInputQuery} inputLocation={inputLocation} setInputLocation={setInputLocation} setLoading={setLoading} loading={loading} setSearchResults={setSearchResults} />
         {loading ? (
           <ReactLoading className='loading' type={'bubbles'} color={'#718096'} height={'100px'} width={'100px'} />
         ) : (
@@ -24,7 +27,7 @@ const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFa
                 <Sidebar jobs={jobs} setJobs={setJobs} inputLocation={inputLocation}/>
               </div>
               <div className='w-full'>
-                <JobResults jobs={jobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} inputQuery={inputQuery} inputLocation={inputLocation}/>
+                <JobResults jobs={jobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} inputQuery={inputQuery} inputLocation={inputLocation} searchResults={searchResults} />
               </div>
             </div>
           ) : (
