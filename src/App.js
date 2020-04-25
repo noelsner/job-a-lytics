@@ -30,6 +30,8 @@ const App = ()=> {
     const token = (await axios.post('/api/auth', credentials)).data.token;
     window.localStorage.setItem('token', token);
     exchangeTokenForAuth();
+    // reset jobs display
+    setJobs([]);
   };
 
   const exchangeTokenForAuth = async () => {
@@ -91,7 +93,7 @@ const App = ()=> {
         addToFavorites(tempJob);
         setTempJob(null);
       }
-    }, 
+    },
     [auth]
   )
 
@@ -126,10 +128,9 @@ return (
       <Navbar logout={logout} auth={auth} openUserDropdown={openUserDropdown} setOpenUserDropdown={setOpenUserDropdown} />
 
       {window.hasOwnProperty('google') && (
-      <Route exact path='/' >
-        <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} loading={loading} setLoading={setLoading} />
-      </Route>        
-        
+        <Route exact path='/' >
+          <Jobs jobs={jobs} setJobs = {setJobs} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} loading={loading} setLoading={setLoading} />
+        </Route>
       )}
 
       <Route exact path='/jobs/saved'>
@@ -139,7 +140,7 @@ return (
       <Route path='/account'>
         <Account login={login} createAccount={createAccount} />
       </Route>
-      
+
       <Route path='/job/:id' render={(params) => <Details {...params} jobs={jobs} />} />
     </div>
   );
