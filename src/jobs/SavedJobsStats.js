@@ -20,6 +20,7 @@ const SavedJobsStats = ({savedJobs} ) => {
     return (
         <div className='bg-gray-800 text-gray-600 mt-6 rounded-lg p-4'>
             <button style={{color: "white"}} onClick = {()=> runStats() }> Run Stats</button>
+            <h1>Most used skill words for your favorite jobs</h1>
             {showGraph && <WordCount text = {jobText} />}
         </div>
     );
