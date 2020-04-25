@@ -1,7 +1,12 @@
 const uselessWords = require('./uselessWords');
+const skillWords = require('./skillWords');
 
 const isInsignificant = (word) => { 
     return uselessWords.includes(word);
+}
+
+const isSkill = (word) => { 
+    return skillWords.includes(word);
 }
 
 const parseText = (text) => {
@@ -22,7 +27,7 @@ const parseText = (text) => {
 
   const sortArray = [];
     for (let word in hashTable) {
-      if(!isInsignificant(word.toLowerCase())){
+      if(isSkill(word.toLowerCase())){
         sortArray.push([word.toLowerCase(), hashTable[word]]);
       }
     }
@@ -31,7 +36,7 @@ const parseText = (text) => {
       return b[1] - a[1];
   });
 
-  const sortedObject = sorted.slice(0,11).map( pair => {
+  const sortedObject = sorted.slice(0,20).map( pair => {
     return {
       name: pair[0],
       count: pair[1]
