@@ -122,7 +122,6 @@ const App = ()=> {
     savedJobSet.add(job.listingId)
   });
 
-  console.log('auth :>> ', auth);
 const history = useHistory();
 return (
     <div>
