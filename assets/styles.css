@@ -9,3 +9,8 @@ body {
 .loading {
   margin: 0px auto;
 }
+
+#map {
+  height: 400px;
+  width: 100%;
+}

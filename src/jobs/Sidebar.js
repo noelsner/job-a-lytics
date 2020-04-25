@@ -3,7 +3,6 @@ import DropdownFilter from './DropdownFilter';
 import moment from 'moment';
 
 const Sidebar = ({jobs, setJobs, inputLocation}) => {
-  console.log("In Sidebar, Input Location:", inputLocation);
   const [openDropdown1, setOpenDropdown1] = useState(false);
   const [openDropdown2, setOpenDropdown2] = useState(false);
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import Job from './Job';
+import Map from './SavedJobsMap';
 
-const SavedJobs = ({ savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet }) => {
+const SavedJobs = ({ savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet, userLocation }) => {
   console.log('savedJobs :>> ', savedJobs);
   return (
     <div className='px-3'>
@@ -19,6 +20,7 @@ const SavedJobs = ({ savedJobs, favorites, addToFavorites, removeFromFavorites, 
               })
             }
           </ul>
+          <Map savedJobs={savedJobs} userLocation={userLocation} />
         </div>
       ) : (
         <div>

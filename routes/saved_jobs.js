@@ -4,6 +4,7 @@ const { createSavedListing, readSavedListings, updateSavedListing, deleteSavedLi
 
 // Database saved_jobs Create Route
 router.post('', (req, res, next)=> {
+  console.log('req.body :>> ', req.body);
   createSavedListing(req.body)
   .then( response => res.send(response) )
   .catch( next )

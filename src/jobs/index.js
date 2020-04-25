@@ -5,19 +5,17 @@ import JobResults from './JobResults';
 import Sidebar from './Sidebar';
 import ReactLoading from 'react-loading';
 
-const Jobs = ({jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet, loading, setLoading}) => {
+const Jobs = ({ jobs, setJobs, savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet, loading, setLoading, setUserLocation }) => {
 
   // These state variables are set by user input in SearchBar
   const [inputQuery, setInputQuery] = useState('');
   const [inputLocation, setInputLocation] = useState('');
   const [searchResults, setSearchResults] = useState({});
 
-
-
  return (
     <Switch>
       <Route>
-        <SearchBar setJobs = {setJobs} inputQuery = {inputQuery} setInputQuery={setInputQuery} inputLocation={inputLocation} setInputLocation={setInputLocation} setLoading={setLoading} loading={loading} setSearchResults={setSearchResults} />
+        <SearchBar setJobs = {setJobs} inputQuery = {inputQuery} setInputQuery={setInputQuery} inputLocation={inputLocation} setInputLocation={setInputLocation} setLoading={setLoading} loading={loading} setSearchResults={setSearchResults} setUserLocation={setUserLocation} />
         {loading ? (
           <ReactLoading className='loading' type={'bubbles'} color={'#718096'} height={'100px'} width={'100px'} />
         ) : (
