@@ -2,8 +2,7 @@ import React, {useState, useRef} from 'react';
 import outsideClick from '../navbar/OutsideClick';
 import DropdownOptions from './DropdownOptions';
 
-const DropdownFilter = ({filterTitle, ddOptions }) => {
-  const [openDropdown, setOpenDropdown] = useState(false);
+const DropdownFilter = ({filterTitle, ddOptions, openDropdown, setOpenDropdown }) => {
   const ref = useRef();
 
   outsideClick(ref, () => {
@@ -25,7 +24,7 @@ const DropdownFilter = ({filterTitle, ddOptions }) => {
         </span>
       </div>
       { openDropdown && (
-        <DropdownOptions _ref={ref} ddOptions={ddOptions} />
+        <DropdownOptions _ref={ref} ddOptions={ddOptions} openDropdown={openDropdown} setOpenDropdown={setOpenDropdown} />
       )}
     </div>
   );

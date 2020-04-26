@@ -5,3 +5,18 @@ body {
 .drop-down-width {
   width: 150px;
 }
+
+.loading {
+  margin: 0px auto;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+}
+
+.description__text, .description__text--rich, .job-criteria__list {
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}

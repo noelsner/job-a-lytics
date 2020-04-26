@@ -50,6 +50,7 @@ const scrapeJob = async(id) => {
 
             if(descriptionNode) {
                 job.description = descriptionNode.innerHTML;
+                job.descriptionText = descriptionNode.innerText;
             };
 
             return job;
