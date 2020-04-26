@@ -4,7 +4,6 @@ import Map from './SavedJobsMap';
 import SavedJobsStats from './SavedJobsStats';
 
 const SavedJobs = ({ savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet, userLocation }) => {
-  console.log('savedJobs :>> ', savedJobs);
   return (
     <div className='px-3'>
       

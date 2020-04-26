@@ -14,7 +14,7 @@ require('dotenv').config()
 const GOOGLE_API_KEY = process.env.GOOGLE_API;
 app.engine('html', ejs.renderFile);
 
-console.log(zipcodes_routes);
+// console.log(zipcodes_routes);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
