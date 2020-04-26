@@ -21,13 +21,6 @@ const Sidebar = ({jobs, setJobs, inputLocation}) => {
     }
   };
 
-<<<<<<< HEAD
-const Sidebar = ({jobs, setJobs}) => {
-  const apiKey = 'CCfGLRhnGaQZ4YqoTFOIX8A8ocJJueJa4CCydPNskRstjsyjD07mAwBNeTm5PiUA';
-  const distances = [10, 25, 50, 75, 100];
-
-=======
->>>>>>> fceb793b3add8191f749ad625991f40b31a370e4
   return(
     <div className='rounded-lg h-full text-gray-600'>
       <div className="relative inline-block md:w-full">
@@ -60,12 +53,16 @@ const Sidebar = ({jobs, setJobs}) => {
               text: '10 miles',
               click: (ev)=>{
                 console.log('10mi filter clicked!!!');
-                const zips = getZips( inputZip, 10 );
-                console.log("zips=", zips);
-                /* Next step
-                for( let i = 0; i < zips.length; i++ ) {
-                  const okCities = getCityFromZip( zips[i] );
-                }*/
+                if( inputZip ){
+                  const zips = getZips( inputZip, 10 );
+                  console.log("zips=", zips);
+                  /* Next step
+                  for( let i = 0; i < zips.length; i++ ) {
+                    // filter jobs by zip
+                  }*/
+                } else {
+                  console.log("No Search Location Specified.")
+                }
                 setOpenDropdown2(false);
               }
             },
