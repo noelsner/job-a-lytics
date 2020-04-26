@@ -1,22 +1,17 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 
-const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputLocation, setLoading, setSearchResults }) => {
+const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputLocation, setLoading, setSearchResults, setUserLocation }) => {
 
   const [city, setCity] = useState('');
   const [myState, setMyState] = useState('');
   const [zip, setZip] = useState('');
-
-  console.log('city :>> ', city);
-  console.log('myState :>> ', myState);
-  console.log('inputLocation :>> ', inputLocation);
 
   if(zip) {
     setInputLocation(zip);
     setZip('');
   }
   if (city && myState) {
-    // document.getElementById('autocomplete').value = `${city}, ${myState}`;
     setInputLocation(`${city}, ${myState}`);
     setCity('');
     setMyState('');
@@ -102,6 +97,7 @@ const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputL
               console.log('results : ', results[0])
               const place = results[0].address_components;
               fillLocationStates(place);
+              setUserLocation(geolocation);
             } else {
               window.alert('No results found');
             }
@@ -131,7 +127,7 @@ const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputL
           </div>
           <div className='flex-1 px-3'>
             <label className='block tracking-wide text-gray-400 text-md font-bold mb-1 px-1' htmlFor='autocomplete'>Where</label>
-            <input value={inputLocation} onChange={ev => setInputLocation(ev.target.value)} className='appearance-none block w-full bg-gray-400 text-gray-600 placeholder-gray-700 border border-gray-400 rounded-md py-1 px-2 focus:outline-none focus:bg-gray-200' type='text' placeholder='City,state, or zip code' id='autocomplete' ref={el => input = el}></input>
+            <input value={inputLocation} onChange={ev => setInputLocation(ev.target.value)} className='appearance-none block w-full bg-gray-400 text-gray-600 placeholder-gray-700 border border-gray-400 rounded-md py-1 px-2 focus:outline-none focus:bg-gray-200' type='text' placeholder='City, state, or zip code' id='autocomplete' ref={el => input = el}></input>
           </div>
           <button className='bg-pink-700 text-gray-200 font-bold rounded-md px-6 py-1 ml-3 mr-3 md:mr-6 mt-6 hover:bg-pink-800 focus:outline-none focus:bg-pink-800'>Search</button>
         </div>

@@ -26,11 +26,13 @@ const sync = async() => {
 
     CREATE TABLE saved_jobs(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      "listingId" VARCHAR(50) UNIQUE NOT NULL,
-      company VARCHAR(50) NOT NULL,
-      title VARCHAR(50) NOT NULL,
+      "listingId" VARCHAR(100) UNIQUE NOT NULL,
+      company VARCHAR(100) NOT NULL,
+      title VARCHAR(100) NOT NULL,
       type VARCHAR(20) DEFAULT 'Full Time',
-      location VARCHAR(50) NOT NULL,
+      location VARCHAR(100) NOT NULL,
+      lat VARCHAR(100),
+      lng VARCHAR(100),
       "postedDate" TIMESTAMP default CURRENT_TIMESTAMP,
       "listingDate" VARCHAR(50),
       contact VARCHAR(100),

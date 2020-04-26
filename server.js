@@ -14,7 +14,7 @@ require('dotenv').config()
 const GOOGLE_API_KEY = process.env.GOOGLE_API;
 app.engine('html', ejs.renderFile);
 
-console.log(zipcodes_routes);
+// console.log(zipcodes_routes);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
@@ -83,7 +83,6 @@ app.get('/api/auth', isLoggedIn, (req, res, next) => {
 
 //create user
 app.post('/api/users', (req, res, next) => {
-  console.log('req.body :>> ', req.body);
   db.createUser({...req.body, role: "USER"})
     .then(user => {
       const token = jwt.encode({ id: user.id }, process.env.JWT);

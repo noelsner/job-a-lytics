@@ -4,7 +4,7 @@ import moment from 'moment';
 import axios from 'axios';
 
 const Sidebar = ({jobs, setJobs, inputLocation}) => {
-  console.log("In Sidebar, Input Location:", inputLocation);
+  // console.log("In Sidebar, Input Location:", inputLocation);
   const inputZip = inputLocation;
 
   const [openDropdown1, setOpenDropdown1] = useState(false);

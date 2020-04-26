@@ -8,17 +8,25 @@ const Job = ({job, savedJobs, favorites, addToFavorites, removeFromFavorites, au
   const toggleSaved = (ev) => {
     ev.preventDefault();
     if(auth.id) {
-      // const savedJobIds = savedJobs.map(fav => fav.listingId);
-  
       if(savedJobSet.has(job.listingId))
         removeFromFavorites(job.listingId);
-      if(!savedJobSet.has(job.listingId))
-        addToFavorites(job);
-
-     } else {
-       setTempJob(job);
-       history.push('/account/login');
-     }
+      if(!savedJobSet.has(job.listingId)) {
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'address': job.location}, function(results, status) {
+          if (status === 'OK') {
+            const _lat = results[0].geometry.location.lat()
+            const _lng = results[0].geometry.location.lng()
+            addToFavorites({...job, lat: _lat, lng: _lng})
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+      
+    } else {
+      setTempJob(job);
+      history.push('/account/login');
+    }
   };
 
   return(
