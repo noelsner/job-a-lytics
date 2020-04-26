@@ -3,10 +3,13 @@ const client = require("./client");
 // saved_jobs Methods
 const createSavedListing = async({ listingId, company, title, type, location, lat, lng, postedDate, listingDate, contact, salary, description, companyURL, listingURL })=> {
 
-  const SQL = 'INSERT INTO saved_jobs ("listingId", company, title, type, location, lat, lng, "postedDate", "listingDate", contact, salary, description, "companyURL", "listingURL") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) returning *';
+  const SQL = 'INSERT INTO saved_jobs ("listingId", company, title, type, location, lat, lng, "postedDate", "listingDate", contact, salary, description, "companyURL", "listingURL") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *'
+
+  // const SQL = 'INSERT INTO saved_jobs ("listingId", company, title, type, location, lat, lng, "postedDate", "listingDate", contact, salary, description, "companyURL", "listingURL") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) SELECT * FROM saved_jobs WHERE NOT EXISTS (SELECT * FROM saved_jobs WHERE "listingId" = $1); SELECT * FROM saved_jobs WHERE "listingId" = $1'
 
   const response = await client.query(SQL, [ listingId, company, title, type, location, lat, lng, postedDate, listingDate, contact, salary, description, companyURL, listingURL ]);
 
+  console.log('response.rows[0] :>> ', response.rows[0]);
   return response.rows[0];
 };
 

@@ -27,7 +27,7 @@ const Map = ({ savedJobs, userLocation }) => {
   useEffect(
     () => {
       const _map = new google.maps.Map(
-        el, {zoom: 7, center: {lat: 37.39484160000001, lng: -121.86419199999999}}
+        el, {zoom: 4, center: {lat: 37.39484160000001, lng: -121.86419199999999}}
       );
       setMyMap(_map);
     },

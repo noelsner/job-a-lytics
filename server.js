@@ -10,17 +10,45 @@ const zipcodes_routes = require('./routes/zipcodes');
 const jwt = require('jwt-simple');
 const ejs = require('ejs');
 
+const fs = require('fs');
+const https = require('https');
+const passport = require('passport');
+const session = require('express-session');
+const cors = require('cors');
+const sockio = require('socket.io');
+const authRouter = require('./routes/auth.router');
+const passportInit = require('./routes/passport.init');
+
 require('dotenv').config()
 const GOOGLE_API_KEY = process.env.GOOGLE_API;
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const GOOGLE_CALLBACK = 'https://localhost:3000/google/callback'
+const CLIENT_ORIGIN = ['https://127.0.0.1:3000', 'https://localhost:3000']
 app.engine('html', ejs.renderFile);
-
-// console.log(zipcodes_routes);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
+const certOptions = {
+  key: fs.readFileSync(path.resolve('certs/server.key')),
+  cert: fs.readFileSync(path.resolve('certs/server.crt'))
+}
+
+const server = http.createServer(certOptions, app)
+
 // body parser
 app.use(express.json());
+app.use(passport.initialize());
+passportInit();
+
+app.use(cors({
+  origin: CLIENT_ORIGIN
+}));
+
+app.use(session({
+  secret: 
+}))
 
 //routes imported from routes folder
 app.use('/api/favorites', favorites.router);

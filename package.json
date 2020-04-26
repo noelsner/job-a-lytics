@@ -29,9 +29,11 @@
     "puppeteer": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-fontawesome": "^1.7.1",
     "react-loading": "^2.0.3",
     "react-router-dom": "^5.1.2",
     "recharts": "^1.8.5",
+    "socket.io-client": "^2.3.0",
     "tailwindcss": "^1.2.0"
   },
   "devDependencies": {
