@@ -36,7 +36,7 @@ const Map = ({ savedJobs, userLocation }) => {
 
   return (
     <div>
-      <div className='text-gray-600 text-xl'>MAP</div>
+      {/* <div className='text-gray-600 text-xl'>MAP</div> */}
       <div id='map' ref={ref => el = ref}></div>
     </div>
   )

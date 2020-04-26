@@ -43,7 +43,8 @@ const Details = ({match, jobs}) => {
       <br/>
       <h2> {jobPost.location}</h2>
       <h2> {jobPost.postedDate}</h2>
-      <WordCount text = {jobPost.descriptionText}/>
+        <h1>Most used skill words in this job</h1>
+        <WordCount text = {jobPost.descriptionText}/>
       <br/>
       <h2 dangerouslySetInnerHTML = {jobHTML()}></h2>
     </div>

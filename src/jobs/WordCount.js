@@ -10,19 +10,19 @@ const WordCount = ({text})=> {
         const data = parseText(text);
         const Graph = () => {
             return (
-                <BarChart width={500} height={500} layout= "vertical" barSize = {15} data={data}  margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+                <BarChart width={500} height={1000} layout= "vertical" barSize = {15} data={data}  margin={{top: 5, right: 30, left: 20, bottom: 5}}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis type="number"/>
                     <YAxis type="category" dataKey="name"/>
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="count" fill="#82ca9d" />
+                    <Bar dataKey="count" fill="#82ca9d"></Bar>
                 </BarChart>
             );
         };
 
         return (
-            <div style={{color: "white"}}>
+            <div style={{color: "white"}, {padding: "1rem" }}>
                 <Graph />    
             </div>
             )
