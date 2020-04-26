@@ -36,17 +36,21 @@ const Details = ({match, jobs}) => {
     };
     
   return(
-    <div className='h-full text-gray-600 p-3'>
-      <h1>{jobPost.title}</h1>
-      <hr/>
-      <h2> {jobPost.company}</h2>
-      <br/>
-      <h2> {jobPost.location}</h2>
-      <h2> {jobPost.postedDate}</h2>
-        <h1>Most used skill words in this job</h1>
+    <div>
+      <div className='h-full text-gray-500 py-6 px-3 flex flex-col md:flex-row'>
+        <div className='flex-1 pl-6 pr-12 justify-center max-w-sm sm:max-w-4xl md:max-w-2xl lg:max-w-2xl xl:max-w-3xl '>
+          <div className='text-gray-300 text-2xl leading-tight font-bold'>{jobPost.title}</div>
+          <hr/>
+          <div className='text-gray-400 text-lg font-bold mt-2'> {jobPost.company}</div>
+          <div className='text-gray-400 text-lg mt-2 mr-3 leading-snug'> {jobPost.location} <span className='text-gray-600 text-md ml-3 text-sm'>Posted {jobPost.postedDate}</span> </div>
+          <div className='text-sm mt-3 flex flex-col flex-wrap' dangerouslySetInnerHTML = {jobHTML()}></div>
+        </div>
+      <div className='flex-1 -mx-50'>
+        <div className='text-gray-300 text-lg text-center font-bold mb-4'>Most used skill words in this job</div>
         <WordCount text = {jobPost.descriptionText}/>
-      <br/>
-      <h2 dangerouslySetInnerHTML = {jobHTML()}></h2>
+      </div>
+        
+      </div>
     </div>
   );
 };
