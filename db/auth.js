@@ -40,9 +40,21 @@ const authenticate = async ({ username, password }) => {
   return jwt.encode({ id: user.id }, process.env.JWT);
 };
 
+const authenticateWithGithub = async({ username, name, password}) => {
+  let rows = (await client.query('SELECT * FROM users WHERE username=$1', [username])).rows;
+  if(rows.length) {
+    return jwt.encode({ id: rows[0].id }, process.env.JWT);
+  } else {
+    rows = (await client.query('INSERT INTO users (username, name, password) values($1, $2, $3) returning *', [username, name, password])).rows;
+    return jwt.encode({ id: rows[0].id }, process.env.JWT);
+  }
+
+}
+
 module.exports = {
   findUserFromToken,
   authenticate,
   compare,
-  hash
+  hash,
+  authenticateWithGithub,
 };

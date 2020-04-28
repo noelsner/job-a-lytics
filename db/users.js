@@ -5,12 +5,11 @@ const readUsers = async() => {
   return (await client.query("SELECT * from users")).rows;
 };
 
-const createUser = async ({ firstName, lastName, username, password, role }) => {
-  const SQL = `INSERT INTO users("firstName", "lastName", username, password, role) values($1, $2, $3, $4, $5) returning *`;
+const createUser = async ({ name, username, password, role }) => {
+  const SQL = `INSERT INTO users(name, username, password, role) values($1, $2, $3, $4) returning *`;
   return (
     await client.query(SQL, [
-      firstName,
-      lastName,
+      name,
       username,
       await hash(password),
       role

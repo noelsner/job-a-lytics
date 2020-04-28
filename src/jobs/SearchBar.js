@@ -7,9 +7,9 @@ const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputL
   const [myState, setMyState] = useState('');
   const [zip, setZip] = useState('');
 
-  console.log('city :>> ', city);
-  console.log('myState :>> ', myState);
-  console.log('inputLocation :>> ', inputLocation);
+  // console.log('city :>> ', city);
+  // console.log('myState :>> ', myState);
+  // console.log('inputLocation :>> ', inputLocation);
 
   if(zip) {
     setInputLocation(zip);
