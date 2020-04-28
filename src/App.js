@@ -35,6 +35,10 @@ const App = ()=> {
     setJobs([]);
   };
 
+  const loginGoogle = () => {
+    axios.get('/api/auth/google')
+  };
+
   const exchangeTokenForAuth = async () => {
     const response = await axios.get('/api/auth', headers());
     setAuth(response.data);
@@ -123,6 +127,8 @@ const App = ()=> {
     savedJobSet.add(job.listingId)
   });
 
+  console.log('auth :>> ', auth);
+
 const history = useHistory();
 return (
     <div>
@@ -141,7 +147,7 @@ return (
       )}
 
       <Route path='/account'>
-        <Account login={login} createAccount={createAccount} />
+        <Account login={login} createAccount={createAccount} loginGoogle={loginGoogle} />
       </Route>
 
       <Route path='/job/:id' render={(params) => <Details {...params} jobs={jobs} />} />
