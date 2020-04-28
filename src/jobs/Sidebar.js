@@ -4,7 +4,7 @@ import moment from 'moment';
 import axios from 'axios';
 
 const Sidebar = ({jobs, setJobs, inputLocation}) => {
-  console.log("In Sidebar, Input Location:", inputLocation);
+  // console.log("In Sidebar, Input Location:", inputLocation);
   const inputZip = inputLocation;
 
   const [openDropdown1, setOpenDropdown1] = useState(false);
@@ -53,12 +53,16 @@ const Sidebar = ({jobs, setJobs, inputLocation}) => {
               text: '10 miles',
               click: (ev)=>{
                 console.log('10mi filter clicked!!!');
-                const zips = getZips( inputZip, 10 );
-                console.log("zips=", zips);
-                /* Next step
-                for( let i = 0; i < zips.length; i++ ) {
-                  const okCities = getCityFromZip( zips[i] );
-                }*/
+                if( inputZip ){
+                  const zips = getZips( inputZip, 10 );
+                  console.log("zips=", zips);
+                  /* Next step
+                  for( let i = 0; i < zips.length; i++ ) {
+                    // filter jobs by zip
+                  }*/
+                } else {
+                  console.log("No Search Location Specified.")
+                }
                 setOpenDropdown2(false);
               }
             },

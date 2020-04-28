@@ -1,11 +1,11 @@
 const client = require("./client");
 
 // saved_jobs Methods
-const createSavedListing = async({ listingId, company, title, type, location, postedDate, listingDate, contact, salary, description, companyURL, listingURL })=> {
+const createSavedListing = async({ listingId, company, title, type, location, lat, lng, postedDate, listingDate, contact, salary, description, companyURL, listingURL })=> {
 
-  const SQL = 'INSERT INTO saved_jobs ("listingId", company, title, type, location, "postedDate", "listingDate", contact, salary, description, "companyURL", "listingURL") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) returning *';
+  const SQL = 'INSERT INTO saved_jobs ("listingId", company, title, type, location, lat, lng, "postedDate", "listingDate", contact, salary, description, "companyURL", "listingURL") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) returning *';
 
-  const response = await client.query(SQL, [ listingId, company, title, type, location, postedDate, listingDate, contact, salary, description, companyURL, listingURL ]);
+  const response = await client.query(SQL, [ listingId, company, title, type, location, lat, lng, postedDate, listingDate, contact, salary, description, companyURL, listingURL ]);
 
   return response.rows[0];
 };
