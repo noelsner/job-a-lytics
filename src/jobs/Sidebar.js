@@ -93,18 +93,6 @@ const Sidebar = ({jobs, setJobs, inputLocation}) => {
               text: '10 miles',
               click: (ev)=>{
                 console.log('10mi filter clicked!!!');
-<<<<<<< HEAD
-                if( inputZip ){
-                  const zips = getZips( inputZip, 10 );
-                  console.log("zips=", zips);
-                  /* Next step
-                  for( let i = 0; i < zips.length; i++ ) {
-                    // filter jobs by zip
-                  }*/
-                } else {
-                  console.log("No Search Location Specified.")
-                }
-=======
                 console.log("locType = ",locType)
                 switch (locType) {
                   case ZIPCODE:
@@ -115,7 +103,6 @@ const Sidebar = ({jobs, setJobs, inputLocation}) => {
                     break;
                   default: console.log("No Search Location Specified.")
                 }//end switch
->>>>>>> 1a234ae1b7700d83cf48bd4254cc121c7df71ba7
                 setOpenDropdown2(false);
               }//end click
             },
