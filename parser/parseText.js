@@ -3,7 +3,7 @@ const skillWords = require('./skillWords');
 const parseText = (text) => {
 
   const hashArray = skillWords.reduce( (acc, word) => {
-    const regex = new RegExp(word,'gi');
+    const regex = new RegExp(` ${word}`,'gi');
     const count = (text.match(regex) || []).length;
     if(count > 0) {
       acc.push({'name': word,'count': count });
@@ -15,7 +15,7 @@ const parseText = (text) => {
       return b.count - a.count;
   });
 
-  return sorted;
+  return sorted.slice(0,20);
 
 };
 
