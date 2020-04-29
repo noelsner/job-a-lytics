@@ -1,5 +1,5 @@
 const client = require("./client");
-const { authenticate, compare, findUserFromToken, hash, authenticateWithGithub } = require('./auth');
+const { authenticate, compare, findUserFromToken, hash, authenticateWithGithub, authenticateWithGoogle, authenticateWithLinkedin } = require('./auth');
 const { createUser, readUsers, updateUser, deleteUser } = require("./users");
 const { createFavorite, checkForFavorites, readFavorites, updateFavorite, deleteFavorite } = require("./favorites");
 const { createSavedListing, readSavedListings, updateSavedListing, deleteSavedListing } = require("./listings");
@@ -15,9 +15,13 @@ const sync = async() => {
 
     CREATE TABLE users(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      name VARCHAR(100) NOT NULL,
+      name VARCHAR(100),
       username VARCHAR(100) NOT NULL UNIQUE,
-      password VARCHAR(100) NOT NULL,
+      password VARCHAR(100),
+      "linkedinId" VARCHAR(200),
+      "googleId" VARCHAR(200),
+      "githubId" VARCHAR(200),
+      picture VARCHAR(300),
       CHECK (char_length(username) > 0),
       CHECK (char_length(name) > 0),
       role VARCHAR(20) DEFAULT 'USER'
@@ -126,5 +130,5 @@ module.exports = {
     createSavedListing, readSavedListings, updateSavedListing, deleteSavedListing,
     createUser, readUsers, updateUser, deleteUser,
     createFavorite, readFavorites, updateFavorite, deleteFavorite,
-    authenticate, compare, findUserFromToken, hash, authenticateWithGithub
+    authenticate, compare, findUserFromToken, hash, authenticateWithGithub, authenticateWithGoogle, authenticateWithLinkedin
 }

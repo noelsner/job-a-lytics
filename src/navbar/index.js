@@ -56,7 +56,11 @@ const Navbar = ({logout, auth, openUserDropdown, setOpenUserDropdown}) => {
               <div className="ml-3 relative">
                 <div>
                   <button onClick={() => setOpenUserDropdown(!openUserDropdown)} className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-400 transition duration-150 ease-in-out p-2">
-                    <UserPlaceholder classes={'fill-current text-gray-400 h-6 w-6'} />
+                    {auth.picture ? (
+                      <img src={auth.picture} className='h-6 w-6 rounded-full' />
+                    ) : (
+                      <UserPlaceholder classes={'fill-current text-gray-400 h-6 w-6'} />
+                    )}
                   </button>
                 </div>
                 {openUserDropdown && (

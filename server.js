@@ -13,7 +13,7 @@ const axios = require('axios');
 const qs = require('qs');
 
 require('dotenv').config()
-const { GOOGLE_API_KEY, GOOGLE_CLIENT_ID, GOOGLE_REDIRECT, GOOGLE_SECRET, GITHUB_CLIENT_ID, GITHUB_SECRET } = process.env;
+const { GOOGLE_API_KEY, GOOGLE_CLIENT_ID, GOOGLE_REDIRECT, GOOGLE_SECRET, GITHUB_CLIENT_ID, GITHUB_SECRET, LINKEDIN_CLIENT_ID, LINKEDIN_SECRET, LINKEDIN_REDIRECT } = process.env;
 app.engine('html', ejs.renderFile);
 
 // console.log(zipcodes_routes);
@@ -21,8 +21,67 @@ app.engine('html', ejs.renderFile);
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
+//linkedin oauth
+app.get('/api/auth/linkedin', (req, res, next)=> {
+  const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_REDIRECT}&state=wmQ7F78pEsExqVG6GGihQrK7&scope=r_liteprofile%20r_emailaddress%20w_member_social`;
+  res.redirect(url);
+});
+app.get('/api/auth/linkedin/callback', (req, res, next)=> {
+  const _url = 'https://www.linkedin.com/oauth/v2/accessToken';
+  const payload = {
+    grant_type: 'authorization_code', 
+    code: req.query.code,
+    redirect_uri: LINKEDIN_REDIRECT, 
+    client_id: LINKEDIN_CLIENT_ID,
+    client_secret: LINKEDIN_SECRET 
+  }
+  axios({
+    method: 'post',
+    url: _url,
+    data: qs.stringify({
+      grant_type: 'authorization_code', 
+      code: req.query.code,
+      redirect_uri: LINKEDIN_REDIRECT, 
+      client_id: LINKEDIN_CLIENT_ID,
+      client_secret: LINKEDIN_SECRET 
+    }),
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    }
+  })
+    .then( response => {
+      console.log('response1:', response.data);
+      return axios.get('https://api.linkedin.com/v2/me', {
+        headers: {
+          authorization: `Bearer ${response.data.access_token}`
+        }
+      });
+    })
+    .then( response => {
+      console.log('response2:', response.data);
+      const first = response.data.localizedFirstName;
+      const last = response.data.localizedLastName;
+      return db.authenticateWithLinkedin({
+        username: `${first} ${last}`,
+        name: `${first} ${last}`,
+        googleId: response.data.id,
+        picture: response.data.profilePicture.displayImage
+      })
+    })
+    .then( token => {
+      res.send(`
+        <script>
+          window.localStorage.setItem('token', '${token}');
+          window.location = '/';
+        </script>
+      `);
+    })
+    .catch(next);
+});
+
+//google oauth
 app.get('/api/auth/google', (req, res, next)=> {
-  const url = `https://accounts.google.com/o/oauth2/v2/auth?scope=email&response_type=code&redirect_uri=${ GOOGLE_REDIRECT }&client_id=${GOOGLE_CLIENT_ID}`;
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?scope=email&response_type=code&redirect_uri=${GOOGLE_REDIRECT}&client_id=${GOOGLE_CLIENT_ID}`;
   res.redirect(url);
 });
 app.get('/api/auth/google/callback', (req, res, next)=> {
@@ -34,11 +93,10 @@ app.get('/api/auth/google/callback', (req, res, next)=> {
     redirect_uri: GOOGLE_REDIRECT, 
     grant_type: 'authorization_code' 
   }
-  // console.log(payload);
   axios.post(url, payload)
     .then( response => {
       console.log(response.data);
-      return axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
+      return axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
         headers: {
           authorization: `Bearer ${response.data.access_token}`
         }
@@ -46,11 +104,25 @@ app.get('/api/auth/google/callback', (req, res, next)=> {
     })
     .then( response => {
       console.log(response.data);
-      res.send(response.data.id_token)
+      return db.authenticateWithGoogle({
+        username: response.data.email,
+        name: 'moe',
+        googleId: response.data.id,
+        picture: response.data.picture
+      })
+    })
+    .then( token => {
+      res.send(`
+        <script>
+          window.localStorage.setItem('token', '${token}');
+          window.location = '/';
+        </script>
+      `);
     })
     .catch(next);
 });
 
+//github oauth
 app.get('/api/auth/github', (req, res, next) => {
   res.redirect(`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`);
 });
@@ -76,7 +148,8 @@ app.get('/github/callback', (req, res, next) => {
           return db.authenticateWithGithub({
             username: response.data.login,
             name: response.data.name,
-            password: response.data.id
+            githubId: response.data.id,
+            picture: response.data.avatar_url
           })
         })
         .then( token => {
@@ -87,6 +160,7 @@ app.get('/github/callback', (req, res, next) => {
             </script>
           `);
         })
+        .catch(next);
       }
     })
 });

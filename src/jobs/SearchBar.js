@@ -33,7 +33,7 @@ const SearchBar = ({setJobs, inputQuery, setInputQuery, inputLocation, setInputL
       .catch(ex => console.log(ex))
       .finally(() => {
         setLoading(false);
-        setInputLocation('')
+        // setInputLocation('')
       })
   };
 
