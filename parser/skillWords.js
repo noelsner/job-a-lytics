@@ -10,6 +10,7 @@ const skillWords = [
     "server",
     "scrum",
     "ruby",
+    "ruby rails",
     "team",
     "adaptive",
     "responsive",
@@ -42,11 +43,9 @@ const skillWords = [
     "framework",
     "frameworks",
     "fullstack",
-    "full",
-    "stack",
+    "full stack",
     "git",
-    "source",
-    "control",
+    "source control",
     "lead",
     "tech",
     "azure",
@@ -67,7 +66,6 @@ const skillWords = [
     "machine",
     "learning",
     "responsive",
-    "c",
     "language",
     "languages",
     "library",
@@ -80,8 +78,7 @@ const skillWords = [
     "mvp",
     "mysql",
     "heroku",
-    "operating",
-    "system",
+    "operating system",
     "plugin",
     "plug",
     "cloud",
@@ -131,8 +128,16 @@ const skillWords = [
     "test",
     "testing",
     "qa",
-    "empathy"
-
+    "empathy",
+    "scrum",
+    "scalable",
+    "repeatable",
+    "automated",
+    "restful api",
+    "redis",
+    "oauth",
+    "mysql",
+    "scrape"
     ];
 
 module.exports = skillWords;
