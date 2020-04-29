@@ -25,10 +25,10 @@ const SavedJobs = ({ savedJobs, favorites, addToFavorites, removeFromFavorites, 
               </ul>
             </div>
             <div className='flex-1 px-3'>
-              <SavedJobsStats savedJobs = {savedJobs}/>
               <div className='mt-6 rounded-lg overflow-auto'>
                 <Map savedJobs={savedJobs} userLocation={userLocation} />
               </div>
+              <SavedJobsStats savedJobs = {savedJobs}/>
             </div>
           </div>
         </div>

@@ -4,7 +4,11 @@ const scrapeJob = async(id) => {
 
     try {
         const browser = await puppeteer.launch({
-            headless: true
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+              ]
         })
         const linkedInURL = `https://www.linkedin.com/jobs/view/${id}`;
         const page = await browser.newPage();
