@@ -39,7 +39,7 @@ const Navbar = ({logout, auth, openUserDropdown, setOpenUserDropdown}) => {
             <div className="flex-shrink-0">
               <button onClick={ev => history.push('/')} className="block p-0 flex items-center focus:outline-none">
                 <Logo classes={'fill-current text-gray-200 h-8 w-8'} />
-                <div className='text-2xl text-gray-200 ml-4'>Websitename</div>
+                <div className='text-2xl text-gray-200 ml-4'>Job-A-Lytics</div>
               </button>
             </div>
             <div className="flex items-center hidden sm:block sm:ml-6">
@@ -57,7 +57,7 @@ const Navbar = ({logout, auth, openUserDropdown, setOpenUserDropdown}) => {
                 <div>
                   <button onClick={() => setOpenUserDropdown(!openUserDropdown)} className="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-400 transition duration-150 ease-in-out p-2">
                     {auth.picture ? (
-                      <img src={auth.picture} className='h-6 w-6 rounded-full' />
+                      <img src={auth.picture} className='h-10 w-10 rounded-full' />
                     ) : (
                       <UserPlaceholder classes={'fill-current text-gray-400 h-6 w-6'} />
                     )}

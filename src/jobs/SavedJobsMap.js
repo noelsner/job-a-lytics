@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const Map = ({ savedJobs, userLocation }) => {
+const Map = ({ savedJobs, userLocation, setHighlight }) => {
   // console.log(savedJobs)
   const [map, setMyMap] = useState({});
   let el;
@@ -12,10 +12,21 @@ const Map = ({ savedJobs, userLocation }) => {
 
       savedJobs.forEach(job => {
         if(job.lat && job.lng) {
-          const marker = new google.maps.Marker({position: {lat: job.lat * 1, lng: job.lng * 1}, map: map});
+          const marker = new google.maps.Marker({
+            position: {lat: job.lat * 1, lng: job.lng * 1},
+            map: map,
+            title: 'Click to highlight job'
+          });
+
+          marker.addListener('click', function () {
+            setHighlight(job.listingId);
+          })
+
           bounds.extend({lat: job.lat * 1, lng: job.lng * 1});
         }
+        
       });
+
 
       if (map.fitBounds) {
         map.fitBounds(bounds);

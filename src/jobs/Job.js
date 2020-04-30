@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import Heart from '../icons/heart';
 import { Link, useHistory } from 'react-router-dom';
 
-const Job = ({job, savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet}) => {
+const Job = ({job, savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet, highlight}) => {
   const history = useHistory();
 
   const toggleSaved = (ev) => {
@@ -31,7 +31,7 @@ const Job = ({job, savedJobs, favorites, addToFavorites, removeFromFavorites, au
 
   return(
     <li key={job.listingId}>
-      <div className='bg-gray-800 text-gray-600 mt-6 rounded-lg p-4'>
+      <div className={`bg-gray-800 text-gray-600 mt-6 rounded-lg p-4 border-2 ${highlight === job.listingId ? 'border-gray-300': 'border-transparent'} `}>
         <div className='flex justify-between align-middle w-full'>
           <Link to={`/job/${job.listingId}`} className='text-gray-300 text-2xl mr-10 leading-tight'>{job.title}</Link>
           <button onClick={ev => toggleSaved(ev)} className='focus:outline-none focus:text-gray-500'>
