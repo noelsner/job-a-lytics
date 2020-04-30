@@ -81,7 +81,7 @@ app.get('/api/auth/linkedin/callback', (req, res, next)=> {
 
 //google oauth
 app.get('/api/auth/google', (req, res, next)=> {
-  const url = `https://accounts.google.com/o/oauth2/v2/auth?scope=email&response_type=code&redirect_uri=${GOOGLE_REDIRECT}&client_id=${GOOGLE_CLIENT_ID}`;
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?scope=openid%20profile%20email&response_type=code&redirect_uri=${GOOGLE_REDIRECT}&client_id=${GOOGLE_CLIENT_ID}`;
   res.redirect(url);
 });
 app.get('/api/auth/google/callback', (req, res, next)=> {
@@ -106,7 +106,7 @@ app.get('/api/auth/google/callback', (req, res, next)=> {
       console.log(response.data);
       return db.authenticateWithGoogle({
         username: response.data.email,
-        name: 'moe',
+        name: response.data.name,
         googleId: response.data.id,
         picture: response.data.picture
       })

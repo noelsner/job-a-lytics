@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Job from './Job';
 import Map from './SavedJobsMap';
 import SavedJobsStats from './SavedJobsStats';
 
 const SavedJobs = ({ savedJobs, favorites, addToFavorites, removeFromFavorites, auth, setTempJob, savedJobSet, userLocation }) => {
+  const [highlight, setHighlight] = useState('')
   return (
     <div className='px-3'>
       
       { savedJobs.length ? (
         <div>
           <header>
-            <div className='text-gray-300 text-xl mt-6'>Your Saved Jobs ({savedJobs.length})</div>
+            <div className='text-gray-300 text-xl mt-6 mx-3 font-bold'>Your Saved Jobs ({savedJobs.length})</div>
           </header>
           <div className='flex flex-row justify-between'>
             <div className='flex-1 px-3'>
@@ -18,7 +19,7 @@ const SavedJobs = ({ savedJobs, favorites, addToFavorites, removeFromFavorites, 
                 {
                   savedJobs.map((job) => {
                     return (
-                      <Job job={job} key={job.listingId} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} />
+                      <Job job={job} key={job.listingId} savedJobs={savedJobs} favorites={favorites} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} highlight={highlight} />
                     )
                   })
                 }
@@ -26,7 +27,7 @@ const SavedJobs = ({ savedJobs, favorites, addToFavorites, removeFromFavorites, 
             </div>
             <div className='flex-1 px-3'>
               <div className='mt-6 rounded-lg overflow-auto'>
-                <Map savedJobs={savedJobs} userLocation={userLocation} />
+                <Map savedJobs={savedJobs} userLocation={userLocation} setHighlight={setHighlight} />
               </div>
               <SavedJobsStats savedJobs = {savedJobs}/>
             </div>

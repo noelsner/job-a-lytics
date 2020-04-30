@@ -4,7 +4,7 @@ import { useHistory, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faLinkedinIn, faGithub } from '@fortawesome/free-brands-svg-icons';
 
-const CreateAccount = ({ login, loginGoogle }) => {
+const CreateAccount = ({ login }) => {
   const history = useHistory();
 
   const [ username, setUsername ] = useState('');
@@ -24,10 +24,6 @@ const CreateAccount = ({ login, loginGoogle }) => {
         }
       });
   };
-
-  const signInGoogle = () => {
-    loginGoogle();
-  }
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8'>
