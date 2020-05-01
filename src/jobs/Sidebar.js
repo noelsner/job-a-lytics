@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Sidebar = ({jobs, setJobs, inputLocation}) => {
   //console.log("In Sidebar, Input Location:", inputLocation);
-  console.log("In Sidebar, jobs=", jobs);
+  //console.log("In Sidebar, jobs=", jobs);
 
   const ZIPCODE = 1;
   const CITYNAME = 2;
@@ -13,7 +13,7 @@ const Sidebar = ({jobs, setJobs, inputLocation}) => {
   const numbers = ['1','2','3','4','5','6','7','8','9','0'];
   // Determine type of input location: city name, or zip
   if( numbers.includes(inputLocation[0]) ){
-    console.log("inputLocation is a zip code.")
+    //console.log("inputLocation is a zip code.")
     locType = ZIPCODE;
   } else {
     locType = CITYNAME;
@@ -37,7 +37,7 @@ const Sidebar = ({jobs, setJobs, inputLocation}) => {
         cities.push(zip_codes[i].city);
       }
     }
-    console.log("(",cities.length,") acceptable cities: ", cities);
+    //console.log("(",cities.length,") acceptable cities: ", cities);
     // Filter jobs by cities
     let jobsLocStr = '';
     const filteredJobs = jobs.filter( (job)=> {
@@ -60,7 +60,7 @@ const Sidebar = ({jobs, setJobs, inputLocation}) => {
     try {
       const response = await axios.get(`/api/zipcodes?searchType=${locType}&centerZip=${zip}&radius=${radius}`)
       //console.log("response.data=",response.data)
-      console.log("Number of acceptable zip codes = ", response.data.length);
+      //console.log("Number of acceptable zip codes = ", response.data.length);
       filterJobs( response.data )
     } catch (ex) {
       console.log(ex);
@@ -77,7 +77,7 @@ const Sidebar = ({jobs, setJobs, inputLocation}) => {
     try {
       const response = await axios.get(`/api/zipcodes?searchType=${locType}&city=${city}&state=${state}&radius=${radius}`)
       //console.log("In getCities, response=", response);
-      console.log("Number of acceptable zip codes = ", response.data.length);
+      //console.log("Number of acceptable zip codes = ", response.data.length);
       filterJobs(response.data);
     } catch (ex) {
       console.log(ex);

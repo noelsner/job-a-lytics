@@ -10,7 +10,7 @@ const getZipsWithinRadius = async ( centerZip, distance ) => {
     console.log("In getZipsWithinRadius, URL:",URL);
     const response = await axios.get(URL);
     const zipObjsArray = response.data.zip_codes;
-    console.log("There are (",zipObjsArray.length,") zipcodes within ", distance," miles.");
+    //console.log("There are (",zipObjsArray.length,") zipcodes within ", distance," miles.");
     return zipObjsArray;
   } catch (error) {
     console.error( "in getZipsWithinRadius",error.message );
@@ -22,10 +22,10 @@ const getZipsFromCity = async ( city, state ) => {
     // remove any leading spaces in state
     const urlState = state.trimStart();
     const URL = `https://www.zipcodeapi.com/rest/${APIkey}/city-zips.json/${city}/${urlState}`
-    console.log(URL);
+    //console.log(URL);
     const response = await axios.get(URL);
     const zipArray = response.data.zip_codes;
-    console.log("zipcodes within ", city," are:",zipArray);
+    //console.log("zipcodes within ", city," are:",zipArray);
     return zipArray;
   } catch (error) {
     console.error( "in getZipsFromCity",error.message );
@@ -34,12 +34,12 @@ const getZipsFromCity = async ( city, state ) => {
 
 router.get('', (req, res, next) => {
   const { searchType, city, state, centerZip, radius } = req.query;
-  console.log("searchType=", searchType, "city=", city, "state=", state, "centerZip=", centerZip,"radius=",radius);
+  //console.log("searchType=", searchType, "city=", city, "state=", state, "centerZip=", centerZip,"radius=",radius);
   const ZIPCODE = '1';
   const CITYNAME = '2';
   switch (searchType) {
     case ZIPCODE:
-      console.log("searchType is", ZIPCODE);
+      //console.log("searchType is", ZIPCODE);
       getZipsWithinRadius(centerZip, radius)
       .then ( zipObjs => {
         //console.log(zipObjs)
@@ -62,7 +62,7 @@ router.get('', (req, res, next) => {
           acceptableZips.push(cityZipsArray[i]);
 
         }//end for loop through city zips
-        console.log("(",zipObjsWithinRadius.length,") zipObjsWithinRadius")
+        //console.log("(",zipObjsWithinRadius.length,") zipObjsWithinRadius")
         res.send(zipObjsWithinRadius)
       })//end .then
       .catch( ex => {
