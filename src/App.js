@@ -146,7 +146,7 @@ return (
         <Account login={login} createAccount={createAccount} auth={auth} logout={logout} savedJobs={savedJobs} />
       </Route>
 
-      <Route path='/job/:id' render={(params) => <Details {...params} jobs={jobs} />} />
+      <Route path='/job/:id' render={(params) => <Details {...params} jobs={jobs} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} auth={auth} setTempJob={setTempJob} savedJobSet={savedJobSet} savedJobs={savedJobs} loading={loading} setLoading={setLoading} />} />
     </div>
   );
 }
