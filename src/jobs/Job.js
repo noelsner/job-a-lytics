@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import moment from "moment";
 import Heart from '../icons/heart';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -40,6 +41,7 @@ const Job = ({job, savedJobs, favorites, addToFavorites, removeFromFavorites, au
         </div>
         <div className='text-gray-400 text-lg font-bold mt-2'>{job.company}</div>
         <div className='text-gray-400 text-lg mt-2 leading-snug'>{job.location}</div>
+        <div className='text-gray-400 text-lg mt-2 leading-snug'>Job Posted: {moment(job.postedDate).format("LL")}</div>
         <div className='text-gray-500 text-md mt-3'>
           <span className='capitalize leading-snug'>{job.description.slice(0,100)}...</span>
         </div>
