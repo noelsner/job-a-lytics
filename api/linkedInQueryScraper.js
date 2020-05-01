@@ -7,6 +7,7 @@ const scrapeQuery = async(query, location) => {
     try {
         const browser = await puppeteer.launch({
             headless: true,
+            timeout: 0,
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
